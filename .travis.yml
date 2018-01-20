@@ -1,0 +1,9 @@
+language: java
+
+jdk:
+  - oraclejdk9
+
+sudo: false
+
+script:
+  - ./gradlew check jacocoTestReport coveralls sendCoverageToCodacy
