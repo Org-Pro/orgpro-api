@@ -7,3 +7,6 @@ sudo: false
 
 script:
   - ./gradlew check jacocoTestReport coveralls sendCoverageToCodacy
+
+before_install:
+ - chmod +x gradlew
