@@ -10,3 +10,6 @@ script:
 
 before_install:
  - chmod +x gradlew
+
+after_success:
+ - ./gradlew jacocoRootReport coveralls
