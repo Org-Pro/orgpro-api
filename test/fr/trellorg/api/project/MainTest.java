@@ -1,6 +1,6 @@
 package fr.trellorg.api.project;
 
-//import org.testng.annotations.Test;
+import org.testng.annotations.Test;
 
 /**
  * template-java-project
@@ -21,8 +21,8 @@ package fr.trellorg.api.project;
 
 public class MainTest {
 
-    /*@Test
+    @Test
     public void testMain() throws Exception {
         String args[] = {};
-    }*/
+    }
 }
