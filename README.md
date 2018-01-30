@@ -19,6 +19,8 @@ cd trellorg-api
 
 2.Build the project
 
+chmod +x gradlew
+
 ./gradlew build
 
 3.Find jar file
