@@ -13,6 +13,7 @@ cd trellorg-api
 2.Build the project
 
 ./gradlew build
+
 3.Find jar file
 
 `trellorg-api/build/libs/trellorg-api-0.0.1-SNAPSHOT.jar`
