@@ -12,5 +12,5 @@ before_install:
  - chmod +x gradlew
 
 after_success:
- - ./gradlew test jacocoTestReport coveralls
+ - ./gradlew jacocoTestReport coveralls
  - ~/jpm/bin/codacy-coverage-reporter -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
