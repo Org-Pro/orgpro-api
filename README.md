@@ -11,6 +11,8 @@ Pré-requis:
 
 Installer git : sudo apt-get install git
 
+Installer java : sudo apt-get install default-jre
+
 1.Clone the repository
 
 git clone https://github.com/Trellorg/trellorg-api
