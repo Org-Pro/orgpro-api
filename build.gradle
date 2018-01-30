@@ -18,17 +18,14 @@ buildscript {
 
 apply plugin: 'application'
 apply plugin: 'jacoco'
-
+apply plugin: 'com.github.kt3k.coveralls'
 
 dependencies {
     testCompile "org.testng:testng:6.9.10"
     compile "org.apache.logging.log4j:log4j-api:2.5"
     compile "org.apache.logging.log4j:log4j-core:2.5"
     compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.5.0"
-    classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2"
 }
-
-apply plugin: 'com.github.kt3k.coveralls'
 
 repositories {
     mavenCentral()
