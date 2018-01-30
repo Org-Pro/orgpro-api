@@ -9,7 +9,9 @@ In Linux/Mac
 1.Clone the repository
 
 git clone https://github.com/Trellorg/trellorg-api
+
 cd trellorg-api
+
 2.Build the project
 
 ./gradlew build
