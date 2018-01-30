@@ -3,6 +3,6 @@ package fr.trellorg.api.project;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Hello World! Coucou");
+        System.out.println("Hello World!");
     }
 }
