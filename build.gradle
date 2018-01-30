@@ -25,6 +25,7 @@ dependencies {
     compile "org.apache.logging.log4j:log4j-api:2.5"
     compile "org.apache.logging.log4j:log4j-core:2.5"
     compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.5.0"
+    compile 'com.orgzly:org-java:1.1.1'
 }
 
 repositories {
