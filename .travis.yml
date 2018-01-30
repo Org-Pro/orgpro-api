@@ -9,7 +9,7 @@ script:
   - ./gradlew check jacocoTestReport coveralls sendCoverageToCodacy
 
 before_install:
- - chmod +x gradlew
+ #- chmod +x gradlew
 
 after_success:
  - ./gradlew jacocoTestReport coveralls
