@@ -14,10 +14,10 @@ import java.util.Date;
  * Created by sartr on 01/02/2018.
  */
 public class Tache {
-    OrgHead tache;
+    private OrgHead tache;
 
-    OrgParserWriter ecriture;
-    SimpleDateFormat dateFormat;
+    private OrgParserWriter ecriture;
+    private SimpleDateFormat dateFormat;
 
     public Tache(String title,String deadline,int level) {
         ecriture = new OrgParserWriter();
