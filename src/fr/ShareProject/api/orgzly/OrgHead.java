@@ -12,6 +12,9 @@ import java.util.List;
  * Does not contain any coordinates (position within the outline), not even a level.
  */
 public class OrgHead {
+
+    private int level;
+
     private String title;
 
     private List<String> tags;
@@ -296,6 +299,14 @@ public class OrgHead {
         initLogbook();
 
         logbook.add(log);
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public String toString() {
