@@ -1,4 +1,4 @@
-package fr.trellorg.api.project;
+package fr.ShareProject.api.project;
 
 
 import org.testng.annotations.Test;
