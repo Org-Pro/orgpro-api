@@ -19,39 +19,45 @@ public class Tache {
     private OrgParserWriter ecriture;
     private SimpleDateFormat dateFormat;
 
-    public Tache(String title,String deadline,int level) {
+    public Tache(String title,int level) {
         ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
         this.tache.setLevel(level);
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date deadlineDate = dateFormat.parse(deadline);
-            tache.setDeadline(deadlineDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     public void ajoutTag(String[] tag){
         tache.setTags(tag);
     }
 
-    public void ajoutScheduled(String scheduled){
+    public boolean ajoutDeadline(String deadline){
+        try {
+            Date deadlineDate = dateFormat.parse(deadline);
+            tache.setDeadline(deadlineDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public boolean ajoutScheduled(String scheduled){
         try {
             Date scheduledDate = dateFormat.parse(scheduled);
             tache.setScheduled(scheduledDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return true;
     }
 
-    public void ajoutClosed(String closed){
+    public boolean ajoutClosed(String closed){
         try {
             Date closedDate = dateFormat.parse(closed);
             tache.setClosed(closedDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return true;
     }
 
     public void ajoutProperties(OrgProperties properties){

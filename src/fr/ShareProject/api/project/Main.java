@@ -16,11 +16,12 @@ public class Main {
 
     public static void main(String[] args) throws ParseException {
         System.out.println("Share Project");
-        Tache tache = new Tache("Faire les courses", "2018-02-03",1);
+        Tache tache = new Tache("Faire les courses",1);
         String[] tags = new String[2];
         tags[0] = "COURSE";
         tags[1] = "URGENT";
         tache.ajoutTag(tags);
+        tache.ajoutDeadline("2018-03-03");
         tache.ajoutScheduled("2018-01-31");
         tache.ajoutClosed("2018-02-02");
         OrgProperties properties = new OrgProperties();
