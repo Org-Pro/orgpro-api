@@ -9,6 +9,7 @@ import fr.ShareProject.api.orgzly.datetime.OrgRange;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -122,15 +123,15 @@ class OrgSaxyParser extends OrgParser {
 
                             switch (timeKey) {
                                 case "SCHEDULED:":
-                                    currentElement.getHead().setScheduled(OrgRange.parse(timeString));
+                                    currentElement.getHead().setScheduled(/*OrgRange.parse(timeString)*/new Date(timeString));
                                     break;
 
                                 case "CLOSED:":
-                                    currentElement.getHead().setClosed(OrgRange.parse(timeString));
+                                    currentElement.getHead().setClosed(/*OrgRange.parse(timeString)*/new Date(timeString));
                                     break;
 
                                 case "DEADLINE:":
-                                    currentElement.getHead().setDeadline(OrgRange.parse(timeString));
+                                    currentElement.getHead().setDeadline(/*OrgRange.parse(timeString)*/new Date(timeString));
                                     break;
 
                                 default:

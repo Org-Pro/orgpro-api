@@ -4,6 +4,8 @@ import fr.ShareProject.api.orgzly.OrgHead;
 import fr.ShareProject.api.orgzly.OrgProperties;
 import fr.ShareProject.api.orgzly.OrgStringUtils;
 
+import java.text.SimpleDateFormat;
+
 public class OrgParserWriter {
     /** org-log-note-headings */
     private static final String[] ORG_LOG_NOTE_HEADINGS = new String[] {
@@ -122,7 +124,7 @@ public class OrgParserWriter {
         if (head.hasClosed()) {
             s.append("\n");
             appendIndent(s, level, isIndented);
-            s.append("CLOSED: ").append(head.getClosed());
+            s.append("CLOSED: ").append(new SimpleDateFormat("<yyyy-MM-dd>").format(head.getClosed()));
 
             hasUnderHead = true;
         }
@@ -135,7 +137,7 @@ public class OrgParserWriter {
                 appendIndent(s, level, isIndented);
             }
 
-            s.append("DEADLINE: ").append(head.getDeadline());
+            s.append("DEADLINE: ").append(new SimpleDateFormat("<yyyy-MM-dd>").format(head.getDeadline()));
 
             hasUnderHead = true;
         }
@@ -148,7 +150,7 @@ public class OrgParserWriter {
                 appendIndent(s, level, isIndented);
             }
 
-            s.append("SCHEDULED: ").append(head.getScheduled());
+            s.append("SCHEDULED: ").append(new SimpleDateFormat("<yyyy-MM-dd>").format(head.getScheduled()));
 
             hasUnderHead = true;
         }

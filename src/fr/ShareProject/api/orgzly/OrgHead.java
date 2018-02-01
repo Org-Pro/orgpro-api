@@ -3,6 +3,7 @@ package fr.ShareProject.api.orgzly;
 import fr.ShareProject.api.orgzly.datetime.OrgRange;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,9 +20,9 @@ public class OrgHead {
 
     private String priority;
 
-    private OrgRange scheduled;
-    private OrgRange deadline;
-    private OrgRange closed;
+    private Date scheduled;
+    private Date deadline;
+    private Date closed;
 
     private OrgRange clock; // TODO: Create OrgClock with elapsed time?
 
@@ -135,7 +136,7 @@ public class OrgHead {
      *
      * @return scheduled time or {@code null} if not set
      */
-    public OrgRange getScheduled() {
+    public Date getScheduled() {
         if (hasScheduled()) {
             return scheduled;
         }
@@ -143,10 +144,10 @@ public class OrgHead {
     }
 
     public boolean hasScheduled() {
-        return scheduled != null && scheduled.isSet();
+        return scheduled != null/* && scheduled.isSet()*/;
     }
 
-    public void setScheduled(OrgRange time) {
+    public void setScheduled(Date time) {
         scheduled = time;
     }
 
@@ -155,7 +156,7 @@ public class OrgHead {
      *
      * @return closed time or {@code null} if not set
      */
-    public OrgRange getClosed() {
+    public Date getClosed() {
         if (hasClosed()) {
             return closed;
         }
@@ -163,10 +164,10 @@ public class OrgHead {
     }
 
     public boolean hasClosed() {
-        return closed != null && closed.isSet();
+        return closed != null/* && closed.isSet()*/;
     }
 
-    public void setClosed(OrgRange time) {
+    public void setClosed(Date time) {
         closed = time;
     }
 
@@ -175,7 +176,7 @@ public class OrgHead {
      *
      * @return deadline time or {@code null} if not set
      */
-    public OrgRange getDeadline() {
+    public Date getDeadline() {
         if (hasDeadline()) {
             return deadline;
         }
@@ -183,10 +184,10 @@ public class OrgHead {
     }
 
     public boolean hasDeadline() {
-        return deadline != null && deadline.isSet();
+        return deadline != null/* && deadline.isSet()*/;
     }
 
-    public void setDeadline(OrgRange time) {
+    public void setDeadline(Date time) {
         deadline = time;
     }
 
