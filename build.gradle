@@ -1,52 +1,27 @@
-group 'fr.trellorg'
-version '0.1'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: "jacoco"
+apply plugin: "com.github.kt3k.coveralls"
+
+sourceCompatibility = 1.8
 
 buildscript {
-    dependencies {
-        classpath 'org.jacoco:jacoco-maven-plugin:0.7.9'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
-    }
     repositories {
-        mavenCentral()
         maven {
-            url 'https://plugins.gradle.org/m2/'
+            url "https://plugins.gradle.org/m2/"
         }
-        // you can also use this for your local cache:
-        // mavenLocal()
+    }
+    dependencies {
+        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2"
     }
 }
-
-apply plugin: 'application'
-apply plugin: 'jacoco'
-apply plugin: 'com.github.kt3k.coveralls'
-
-dependencies {
-    testCompile "org.testng:testng:6.9.10"
-    compile "org.apache.logging.log4j:log4j-api:2.5"
-    compile "org.apache.logging.log4j:log4j-core:2.5"
-    compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.5.0"
-    compile 'com.orgzly:org-java:1.1.1'
-}
-
 repositories {
     mavenCentral()
-    // you can also use this for your local cache:
-    // mavenLocal()
 }
 
-mainClassName = 'fr.trellorg.api.project.Main'
-
-defaultTasks 'run'
-
-jar {
-    manifest {
-        attributes 'Main-Class': mainClassName
-    }
-}
-
-test {
-    useTestNG()
-    include '**'
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 jacocoTestReport {
@@ -55,26 +30,3 @@ jacocoTestReport {
         html.enabled = true
     }
 }
-
-
-// Added to send coverage information to codacy
-// see https://github.com/codacy/codacy-coverage-reporter
-configurations { codacy }
-repositories {
-    maven { url "https://jitpack.io" }
-    maven { url "http://dl.bintray.com/typesafe/maven-releases" }
-}
-dependencies {
-    codacy 'com.github.codacy:codacy-coverage-reporter:-SNAPSHOT'
-}
-task sendCoverageToCodacy(type: JavaExec, dependsOn: jacocoTestReport) {
-    main = "com.codacy.CodacyCoverageReporter"
-    classpath = configurations.codacy
-    args = [
-            "-l",
-            "Java",
-            "-r",
-            "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-    ]
-}
-
