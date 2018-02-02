@@ -1,7 +1,7 @@
 package fr.trellorg.api.project;
 
 
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 /**
  * template-java-project
