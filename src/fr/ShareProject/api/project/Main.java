@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class Main {
 
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args){
         System.out.println("Share Project");
         Tache tache = new Tache("Faire les courses",1);
         String[] tags = new String[2];
