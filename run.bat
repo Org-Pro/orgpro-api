@@ -1,1 +1,1 @@
-./gradlew.bat build
+start cmd /k java -classpath build/classes/java/main fr.trellorg.api.project.Main
