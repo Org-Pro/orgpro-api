@@ -8,47 +8,47 @@
 ## Pour Linux
 
 ### Pré-Requis
-Installer JAVA 8
-Les commandes : 
-    1. sudo add-apt-repository ppa:webupd8team/java
-    2. sudo apt-get update
-    3. sudo apt-get install oracle-java8-installer
-
+Installer JAVA 8  
+Les commandes :  
+    1. sudo add-apt-repository ppa:webupd8team/java  
+    2. sudo apt-get update  
+    3. sudo apt-get install oracle-java8-installer  
+ 
 Puis décompresser le projet
     
 ### Compilation
-A partir du répertoire courant du projet :
-Puis : 
-    1. chmod +x gradlew 
-    2. ./gradlew build
+A partir du répertoire courant du projet :  
+Puis :  
+    1. chmod +x gradlew  
+    2. ./gradlew build  
     
 ### Lancer l'application
-A partir du répertoire courant du projet :
-Les commandes : (Remplacer xxx.jar par le nom du fichier)
-    1. cd build/libs/
+A partir du répertoire courant du projet :  
+Les commandes : (Remplacer xxx.jar par le nom du fichier)  
+    1. cd build/libs/  
     2. java -classpath xxx.jar fr.trellorg.api.project.Main
     
 ## Pour Windows
 
 ### Pré-Requis
-Installer JAVA 8 (Version 8)
-Via le site : https://www.java.com/fr/download/
+Installer JAVA 8 (Version 8)  
+Via le site : https://www.java.com/fr/download/  
 
 Puis décompresser le projet
 
 ### Compilation
-A partir du répertoire courant du projet :
-Lancer le fichier "build.bat"
+A partir du répertoire courant du projet :  
+Lancer le fichier "build.bat"  
 
-Ou depuis un terminal :
-Les commandes :
+Ou depuis un terminal :  
+Les commandes :  
     1. gradlew.bat build
 
 ###  Lancer l'application
-A partir du répertoire courant du projet :
-Lancer le fichier "run.bat"
+A partir du répertoire courant du projet :  
+Lancer le fichier "run.bat"  
 
-Ou depuis un terminal :
-Les commandes : (Remplacer xxx.jar par le nom du fichier)
-    1. cd build/libs/
-    2. java -classpath xxx.jar fr.trellorg.api.project.Main 
+Ou depuis un terminal :  
+Les commandes : (Remplacer xxx.jar par le nom du fichier)  
+    1. cd build/libs/  
+    2. java -classpath xxx.jar fr.trellorg.api.project.Main
