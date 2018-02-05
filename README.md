@@ -32,7 +32,7 @@ Les commandes : (Remplacer xxx.jar par le nom du fichier)
 
 ### Pré-Requis
 Installer JAVA 8 (Version 8)  
-Via le site : https://www.java.com/fr/download/  
+Via le site : <https://www.java.com/fr/download/>  
 
 Puis décompresser le projet
 
