@@ -10,23 +10,23 @@
 ### Pré-Requis
 Installer JAVA 8  
 Les commandes :  
-    1. sudo add-apt-repository ppa:webupd8team/java  
-    2. sudo apt-get update  
-    3. sudo apt-get install oracle-java8-installer  
+- sudo add-apt-repository ppa:webupd8team/java  
+- sudo apt-get update  
+- sudo apt-get install oracle-java8-installer  
  
 Puis décompresser le projet
     
 ### Compilation
 A partir du répertoire courant du projet :  
 Puis :  
-    1. chmod +x gradlew  
-    2. ./gradlew build  
+- chmod +x gradlew  
+- ./gradlew build  
     
 ### Lancer l'application
 A partir du répertoire courant du projet :  
 Les commandes : (Remplacer xxx.jar par le nom du fichier)  
-    1. cd build/libs/  
-    2. java -classpath xxx.jar fr.trellorg.api.project.Main
+- cd build/libs/  
+- java -classpath xxx.jar fr.trellorg.api.project.Main
     
 ## Pour Windows
 
@@ -42,7 +42,7 @@ Lancer le fichier "build.bat"
 
 Ou depuis un terminal :  
 Les commandes :  
-    1. gradlew.bat build
+- gradlew.bat build
 
 ###  Lancer l'application
 A partir du répertoire courant du projet :  
@@ -50,5 +50,5 @@ Lancer le fichier "run.bat"
 
 Ou depuis un terminal :  
 Les commandes : (Remplacer xxx.jar par le nom du fichier)  
-    1. cd build/libs/  
-    2. java -classpath xxx.jar fr.trellorg.api.project.Main
+- cd build/libs/  
+- java -classpath xxx.jar fr.trellorg.api.project.Main
