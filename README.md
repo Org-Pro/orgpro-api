@@ -53,4 +53,4 @@ Lancer le fichier "run.bat"
 Ou depuis un terminal :  
 Les commandes : (Remplacer xxx.jar par le nom du fichier)  
 - cd build/libs/  
-- java -classpath xxx.jar fr.trellorg.api.project.Main
+- java -classpath xxx.jar fr.trellorg.api.project.Main 
