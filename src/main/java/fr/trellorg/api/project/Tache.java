@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by sartr on 01/02/2018.
@@ -20,19 +21,24 @@ public class Tache {
     private OrgParserWriter ecriture;
     private SimpleDateFormat dateFormat;
 
+    private String id;
+
     public Tache(String title,int level) {
         ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
         this.tache.setLevel(level);
         this.tache.setState(State.TODO.toString());
+        id = UUID.randomUUID().toString();
+        this.ajoutProperty("ID", this.id);
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     }
 
     public boolean changeState(State state){
         if(tache.getState() == state.toString()){
             return false;
         }
-        if(tache.getState() == State.DONE.toString() && state.toString() == State.TODO.toString()){
+        if(tache.getState().equals(State.DONE.toString()) && state.toString().equals(State.TODO.toString())){
             return false;
         }
         String log = "- State \"" + state.toString() + "\" FROM \"" + tache.getState().toString() + "\" ";
@@ -105,6 +111,15 @@ public class Tache {
 
     public void ajoutProperty(String name, String value){
         tache.addProperty(name,value);
+    }
+
+    // TODO
+    public void getProperty(String name){
+
+    }
+
+    public String getId() {
+        return id;
     }
 
     public void supprimerProperty(String name){
