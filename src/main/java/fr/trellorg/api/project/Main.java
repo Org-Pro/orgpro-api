@@ -17,6 +17,6 @@ public class Main {
         tache.ajoutProperty("Liste Principal","riz,dinde,huile");
         tache.ajoutProperty("Liste Secondaire","coca,gateaux");
         System.out.println(tache);
-        tache.ecritureFichier("C://Users/sartr/OneDrive/Documents/Université/ProjetM1/liste.org",false);
+        tache.ecritureFichier("liste.org",false);
     }
 }

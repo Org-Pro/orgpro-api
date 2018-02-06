@@ -125,8 +125,8 @@ public class Tache {
         String ecrire = ecriture.whiteSpacedHead(tache,tache.getLevel(),true);
         try {
             FileWriter ffw=new FileWriter(path,append);
-            ffw.write(ecrire);  // écrire une ligne dans le fichier resultat.txt
-            ffw.close(); // fermer le fichier à la fin des traitements
+            ffw.write(ecrire);
+            ffw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
