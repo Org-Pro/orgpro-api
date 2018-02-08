@@ -1,5 +1,7 @@
 package fr.trellorg.api.project;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.VoidType;
+import fr.trellorg.api.orgzly.OrgProperties;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -98,5 +100,39 @@ public class TacheTest {
         tache.ajoutDeadline(deadline);
         assertEquals(tache.getDeadline(),deadlineDate);
     }
+
+    @Test
+    public void testAjoutScheduled() throws Exception {
+        String scheduled = "2018-02-08";
+        Date scheduledDate = dateFormat.parse(scheduled);
+        tache.ajoutScheduled(scheduled);
+        assertEquals(tache.getScheduled(),scheduledDate);
+    }
+
+    @Test
+    public void testAjoutClosed() throws Exception {
+        String closed = "2018-02-08";
+        Date closedDate = dateFormat.parse(closed);
+        tache.ajoutClosed(closed);
+        assertEquals(tache.getClosed(),closedDate);
+    }
+
+    @Test
+    public void testAjoutProperties() throws Exception {
+        String propertiesName = "NUMERO";
+        String propertiesValue = "4";
+        tache.ajoutProperty(propertiesName,propertiesValue);
+        assertEquals(tache.getProperties().get(propertiesName),propertiesValue);
+    }
+
+    @Test
+    public void testSupprimerProperties() throws Exception {
+        String propertiesName = "NUMERO";
+        String propertiesValue = "4";
+        tache.ajoutProperty(propertiesName,propertiesValue);
+        tache.supprimerProperty(propertiesName);
+        assertEquals(tache.getProperties().get(propertiesName),null);
+    }
+
 
 }

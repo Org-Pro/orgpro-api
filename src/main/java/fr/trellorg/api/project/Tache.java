@@ -50,6 +50,18 @@ public class Tache {
         return tache.getDeadline();
     }
 
+    public Date getScheduled(){
+        return tache.getScheduled();
+    }
+
+    public Date getClosed(){
+        return tache.getClosed();
+    }
+
+    public OrgProperties getProperties(){
+        return tache.getProperties();
+    }
+
     public boolean changeState(String state){
         if(tache.getState().equals(state)){
             return false;
