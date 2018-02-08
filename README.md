@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/Org-Pro/trellorg-api/badge.svg?branch=feature-ajouter-tache-correction)](https://coveralls.io/github/Org-Pro/trellorg-api?branch=feature-ajouter-tache-correction)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/CodeChillAlluna/code-chill/blob/master/LICENSE)
 
-<https://trellorg.github.io/trellorg-api/>
+<https://Org-Pro.github.io/trellorg-api/>
 
 # Guide d'installation
 
