@@ -34,6 +34,14 @@ public class Tache {
 
     }
 
+    public String getTitle(){
+        return tache.getTitle();
+    }
+
+    public int getLevel(){
+        return tache.getLevel();
+    }
+
     public boolean changeState(String state){
         if(tache.getState().equals(state)){
             return false;
