@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args){
         System.out.println("Trellorg");
         Tache tache = new Tache("Faire les courses",1);
-        tache.changeState(State.DONE);
+        tache.changeState("DONE");
         String tag = "COURSE";
         tache.ajoutTag(tag);
         tag = "URGENT";

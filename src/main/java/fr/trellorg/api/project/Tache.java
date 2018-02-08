@@ -27,23 +27,23 @@ public class Tache {
         ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
         this.tache.setLevel(level);
-        this.tache.setState(State.TODO.toString());
+        this.tache.setState("TODO");
         id = UUID.randomUUID().toString();
         this.ajoutProperty("ID", this.id);
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     }
 
-    public boolean changeState(State state){
-        if(tache.getState() == state.toString()){
+    public boolean changeState(String state){
+        if(tache.getState().equals(state)){
             return false;
         }
-        if(tache.getState().equals(State.DONE.toString()) && state.toString().equals(State.TODO.toString())){
+        if(tache.getState().equals("DONE") && state.equals("TODO")){
             return false;
         }
-        String log = "- State \"" + state.toString() + "\" FROM \"" + tache.getState().toString() + "\" ";
+        String log = "- State \"" + state + "\" FROM \"" + tache.getState() + "\" ";
         this.ajoutLogBook(log);
-        this.tache.setState(state.toString());
+        this.tache.setState(state);
 
         return true;
     }
@@ -64,7 +64,7 @@ public class Tache {
         List<String> tags = tache.getTags();
         int i = 0;
         for (String tagTemp: tags) {
-            if(tagTemp == tag){
+            if(tagTemp.equals(tag)){
                 tags.remove(i);
                 break;
             }
