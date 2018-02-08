@@ -42,6 +42,14 @@ public class Tache {
         return tache.getLevel();
     }
 
+    public List<String> getTags(){
+        return tache.getTags();
+    }
+
+    public Date getDeadline(){
+        return tache.getDeadline();
+    }
+
     public boolean changeState(String state){
         if(tache.getState().equals(state)){
             return false;
