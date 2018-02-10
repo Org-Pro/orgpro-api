@@ -133,6 +133,4 @@ public class TacheTest {
         tache.supprimerProperty(propertiesName);
         assertEquals(tache.getProperties().get(propertiesName),null);
     }
-
-
 }

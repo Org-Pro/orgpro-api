@@ -110,6 +110,10 @@ public class Tache {
     public boolean ajoutDeadline(String deadline){
         try {
             Date deadlineDate = dateFormat.parse(deadline);
+            String dateValide = dateFormat.format(deadlineDate);
+            if(dateValide.compareTo(deadline) != 0){
+                return false;
+            }
             tache.setDeadline(deadlineDate);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -120,6 +124,10 @@ public class Tache {
     public boolean ajoutScheduled(String scheduled){
         try {
             Date scheduledDate = dateFormat.parse(scheduled);
+            String dateValide = dateFormat.format(scheduledDate);
+            if(dateValide.compareTo(scheduled) != 0){
+                return false;
+            }
             tache.setScheduled(scheduledDate);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -130,6 +138,10 @@ public class Tache {
     public boolean ajoutClosed(String closed){
         try {
             Date closedDate = dateFormat.parse(closed);
+            String dateValide = dateFormat.format(closedDate);
+            if(dateValide.compareTo(closed) != 0){
+                return false;
+            }
             tache.setClosed(closedDate);
         } catch (ParseException e) {
             e.printStackTrace();
