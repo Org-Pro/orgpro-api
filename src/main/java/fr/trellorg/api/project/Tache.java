@@ -73,6 +73,10 @@ public class Tache {
         return tache.getProperties();
     }
 
+    public String getId() {
+        return id;
+    }
+
     public boolean changeState(String state){
         if(tache.getState().equals(state)){
             return false;
@@ -121,9 +125,13 @@ public class Tache {
     public boolean ajoutDeadline(String deadline){
         try {
             Date deadlineDate = dateFormat.parse(deadline);
+            String dateValide = dateFormat.format(deadlineDate);
+            if(dateValide.compareTo(deadline) != 0){
+                return false;
+            }
             tache.setDeadline(deadlineDate);
         } catch (ParseException e) {
-            e.printStackTrace();
+            return false;
         }
         return true;
     }
@@ -131,9 +139,13 @@ public class Tache {
     public boolean ajoutScheduled(String scheduled){
         try {
             Date scheduledDate = dateFormat.parse(scheduled);
+            String dateValide = dateFormat.format(scheduledDate);
+            if(dateValide.compareTo(scheduled) != 0){
+                return false;
+            }
             tache.setScheduled(scheduledDate);
         } catch (ParseException e) {
-            e.printStackTrace();
+            return false;
         }
         return true;
     }
@@ -141,9 +153,13 @@ public class Tache {
     public boolean ajoutClosed(String closed){
         try {
             Date closedDate = dateFormat.parse(closed);
+            String dateValide = dateFormat.format(closedDate);
+            if(dateValide.compareTo(closed) != 0){
+                return false;
+            }
             tache.setClosed(closedDate);
         } catch (ParseException e) {
-            e.printStackTrace();
+            return false;
         }
         return true;
     }
@@ -153,13 +169,9 @@ public class Tache {
     }
 
     // TODO
-    public void getProperty(String name){
+    /*public void getProperty(String name){
 
-    }
-
-    public String getId() {
-        return id;
-    }
+    }*/
 
     public void supprimerProperty(String name){
         OrgProperties properties = tache.getProperties();
@@ -174,16 +186,17 @@ public class Tache {
     }
 
 
-    public void ecritureFichier(String path, boolean append){
+    public boolean ecritureFichier(String path, boolean append){
         OrgParserWriter ecriture = new OrgParserWriter();
         String ecrire = ecriture.whiteSpacedHead(tache,tache.getLevel(),true);
         try {
-            FileWriter ffw=new FileWriter(path,append);
+            FileWriter ffw = new FileWriter(path,append);
             ffw.write(ecrire);
             ffw.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     @Override
