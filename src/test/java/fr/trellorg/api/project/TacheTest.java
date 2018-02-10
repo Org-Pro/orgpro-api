@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -75,6 +76,16 @@ public class TacheTest {
             }
         }
         assertEquals(test,true);
+    }
+
+    @Test
+    public void testAjoutTagNull() throws  Exception {
+        String addTag = "URGENT";
+        List<String> tags = new ArrayList<String>();
+        tags.add(addTag);
+        tache.ajoutTag(addTag);
+        tache.supprimerTag("");
+        assertEquals(tache.getTags(),tags);
     }
 
     @Test
