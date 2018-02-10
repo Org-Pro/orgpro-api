@@ -24,13 +24,24 @@ public class Tache {
     private String id;
 
     public Tache(String title,int level) {
-        ecriture = new OrgParserWriter();
+        this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
         this.tache.setLevel(level);
         this.tache.setState("TODO");
-        id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
         this.ajoutProperty("ID", this.id);
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    }
+
+    public Tache(String title,UUID id) {
+        this.ecriture = new OrgParserWriter();
+        this.tache = new OrgHead(title);
+        //this.tache.setLevel(level);
+        this.tache.setState("TODO");
+        this.id = UUID.randomUUID().toString();
+        this.ajoutProperty("ID", this.id);
+        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     }
 
