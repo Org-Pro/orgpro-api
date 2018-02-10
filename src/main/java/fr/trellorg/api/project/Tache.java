@@ -62,6 +62,10 @@ public class Tache {
         return tache.getProperties();
     }
 
+    public String getId() {
+        return id;
+    }
+
     public boolean changeState(String state){
         if(tache.getState().equals(state)){
             return false;
@@ -154,13 +158,9 @@ public class Tache {
     }
 
     // TODO
-    public void getProperty(String name){
+    /*public void getProperty(String name){
 
-    }
-
-    public String getId() {
-        return id;
-    }
+    }*/
 
     public void supprimerProperty(String name){
         OrgProperties properties = tache.getProperties();
@@ -175,16 +175,17 @@ public class Tache {
     }
 
 
-    public void ecritureFichier(String path, boolean append){
+    public boolean ecritureFichier(String path, boolean append){
         OrgParserWriter ecriture = new OrgParserWriter();
         String ecrire = ecriture.whiteSpacedHead(tache,tache.getLevel(),true);
         try {
-            FileWriter ffw=new FileWriter(path,append);
+            FileWriter ffw = new FileWriter(path,append);
             ffw.write(ecrire);
             ffw.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
     @Override

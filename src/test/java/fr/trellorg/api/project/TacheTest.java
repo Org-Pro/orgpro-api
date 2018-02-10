@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -179,5 +181,22 @@ public class TacheTest {
         tache.ajoutProperty(propertiesName,propertiesValue);
         tache.supprimerProperty(propertiesName);
         assertEquals(tache.getProperties().get(propertiesName),null);
+    }
+
+    @Test
+    public void testEcritureFichierTrue() throws Exception {
+        String path = "test.org";
+        tache.ecritureFichier(path,true);
+        File file = new File(path);
+        assertEquals(file.exists(),true);
+        file.delete();
+    }
+
+    @Test
+    public void testEcritureFichierFalse() throws Exception {
+        String path = "?/???.org";
+        tache.ecritureFichier(path,true);
+        File file = new File(path);
+        assertEquals(file.exists(),false);
     }
 }
