@@ -7,6 +7,8 @@ public class MainTest {
 
     @Test
     public void testMain() throws Exception {
-        String args[] = {};
+        String[] arg = null;
+        Main testMain = new Main();
+        testMain.main(arg);
     }
 }

@@ -235,11 +235,4 @@ public class TacheTest {
         assertEquals(idVide,false);
         assertEquals(idNull,false);
     }
-
-    @Test
-    public void testMain() throws Exception {
-        String[] arg = null;
-        Main testMain = new Main();
-        testMain.main(arg);
-    }
 }
