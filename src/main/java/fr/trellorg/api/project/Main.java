@@ -4,7 +4,7 @@ package fr.trellorg.api.project;
 public class Main {
 
     public static void main(String[] args){
-        System.out.println("Trellorg");
+        /*System.out.println("Trellorg");
         Tache tache = new Tache("Faire les courses",1);
         tache.changeState("DONE");
         String tag = "COURSE";
@@ -17,6 +17,6 @@ public class Main {
         tache.ajoutProperty("Liste Principal","riz,dinde,huile");
         tache.ajoutProperty("Liste Secondaire","coca,gateaux");
         System.out.println(tache);
-        tache.ecritureFichier("liste.org",false);
+        tache.ecritureFichier("liste.org",false);*/
     }
 }
