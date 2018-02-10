@@ -239,6 +239,7 @@ public class TacheTest {
     @Test
     public void testMain() throws Exception {
         String[] arg = null;
-        Main.main(arg);
+        Main testMain = new Main();
+        testMain.main(arg);
     }
 }
