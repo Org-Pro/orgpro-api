@@ -116,7 +116,7 @@ public class Tache {
             }
             tache.setDeadline(deadlineDate);
         } catch (ParseException e) {
-            e.printStackTrace();
+            return false;
         }
         return true;
     }
@@ -130,7 +130,7 @@ public class Tache {
             }
             tache.setScheduled(scheduledDate);
         } catch (ParseException e) {
-            e.printStackTrace();
+            return false;
         }
         return true;
     }
@@ -144,7 +144,7 @@ public class Tache {
             }
             tache.setClosed(closedDate);
         } catch (ParseException e) {
-            e.printStackTrace();
+            return false;
         }
         return true;
     }

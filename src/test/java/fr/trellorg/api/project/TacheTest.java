@@ -102,6 +102,18 @@ public class TacheTest {
     }
 
     @Test
+    public void testAjoutDeadlineWrongDate() throws Exception {
+        String deadline = "2018-13-08";
+        assertEquals(tache.ajoutDeadline(deadline),false);
+    }
+
+    @Test
+    public void testAjoutDeadlineWrongString() throws Exception {
+        String deadline = "Hello";
+        assertEquals(tache.ajoutDeadline(deadline),false);
+    }
+
+    @Test
     public void testAjoutScheduled() throws Exception {
         String scheduled = "2018-02-08";
         Date scheduledDate = dateFormat.parse(scheduled);
@@ -110,11 +122,35 @@ public class TacheTest {
     }
 
     @Test
+    public void testAjoutScheduledWrongDate() throws Exception {
+        String scheduled = "2018-13-08";
+        assertEquals(tache.ajoutScheduled(scheduled),false);
+    }
+
+    @Test
+    public void testAjoutScheduledWrongString() throws Exception {
+        String scheduled = "Hello";
+        assertEquals(tache.ajoutScheduled(scheduled),false);
+    }
+
+    @Test
     public void testAjoutClosed() throws Exception {
         String closed = "2018-02-08";
         Date closedDate = dateFormat.parse(closed);
         tache.ajoutClosed(closed);
         assertEquals(tache.getClosed(),closedDate);
+    }
+
+    @Test
+    public void testAjoutClosedWrongDate() throws Exception {
+        String closed = "2018-13-08";
+        assertEquals(tache.ajoutClosed(closed),false);
+    }
+
+    @Test
+    public void testAjoutClosedWrongString() throws Exception {
+        String closed = "Hello";
+        assertEquals(tache.ajoutClosed(closed),false);
     }
 
     @Test
