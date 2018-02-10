@@ -220,4 +220,19 @@ public class TacheTest {
         assertEquals(tache.toString(),out.toString());
         file.delete();
     }
+
+    @Test
+    public void testGetId() throws Exception {
+        String id = tache.getId();
+        boolean idNull = false;
+        boolean idVide = false;
+        if(id.equals("")){
+            idVide = true;
+        }
+        if(id == null){
+            idNull = true;
+        }
+        assertEquals(idVide,false);
+        assertEquals(idNull,false);
+    }
 }
