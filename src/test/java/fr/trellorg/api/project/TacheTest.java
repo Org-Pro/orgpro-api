@@ -6,7 +6,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.StringWriter;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -186,7 +189,7 @@ public class TacheTest {
     @Test
     public void testEcritureFichierTrue() throws Exception {
         String path = "test.org";
-        tache.ecritureFichier(path,true);
+        tache.ecritureFichier(path,false);
         File file = new File(path);
         assertEquals(file.exists(),true);
         file.delete();
@@ -195,8 +198,26 @@ public class TacheTest {
     @Test
     public void testEcritureFichierFalse() throws Exception {
         String path = "?/???.org";
-        tache.ecritureFichier(path,true);
+        tache.ecritureFichier(path,false);
         File file = new File(path);
         assertEquals(file.exists(),false);
+    }
+
+    @Test
+    public void testToString() throws Exception {
+        String path = "test.org";
+        tache.ecritureFichier(path,false);
+        File file = new File(path);
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+        StringWriter out = new StringWriter();
+        int b;
+        while ((b=in.read()) != -1) {
+            out.write(b);
+        }
+        out.flush();
+        out.close();
+        in.close();
+        assertEquals(tache.toString(),out.toString());
+        file.delete();
     }
 }
