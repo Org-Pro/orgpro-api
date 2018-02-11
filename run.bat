@@ -1,1 +1,1 @@
-start cmd /k java -classpath build/classes/java/main fr.trellorg.api.project.Main
+start cmd /k java -classpath build/classes/java/main fr.orgpro.api.project.Main
