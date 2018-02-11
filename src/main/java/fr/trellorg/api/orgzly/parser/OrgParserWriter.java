@@ -158,7 +158,7 @@ public class OrgParserWriter {
         if (head.hasClock()) {
             s.append("\n");
             appendIndent(s, level, isIndented);
-            s.append("CLOCK: ").append(head.getClock());
+            s.append("CLOCK: ").append(head.getClockString());
 
             hasUnderHead = true;
         }

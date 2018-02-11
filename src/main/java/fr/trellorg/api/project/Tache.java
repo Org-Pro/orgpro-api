@@ -2,6 +2,8 @@ package fr.trellorg.api.project;
 
 import fr.trellorg.api.orgzly.OrgHead;
 import fr.trellorg.api.orgzly.OrgProperties;
+import fr.trellorg.api.orgzly.datetime.OrgDateTime;
+import fr.trellorg.api.orgzly.datetime.OrgRange;
 import fr.trellorg.api.orgzly.parser.OrgParserWriter;
 
 import java.io.FileWriter;
@@ -22,6 +24,7 @@ public class Tache {
     private SimpleDateFormat dateFormat;
 
     private String id;
+    private Long valMinuteur = null;
 
     public Tache(String title,int level) {
         this.ecriture = new OrgParserWriter();
@@ -31,18 +34,58 @@ public class Tache {
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty("ID", this.id);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // minuteur = System.currentTimeMillis();
+        //System.out.println(minuteur);
 
     }
 
-    public Tache(String title,UUID id) {
+    public Tache(String title, Tache tache) {
         this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
-        //this.tache.setLevel(level);
+        this.tache.setLevel(tache.getLevel() + 1);
         this.tache.setState("TODO");
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty("ID", this.id);
+        this.ajoutProperty( "DEPENDENCE", tache.getId());
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    }
 
+    public void setDependance(Tache tache){
+        this.supprimerProperty("DEPENDENCE");
+        this.tache.setLevel(tache.getLevel() + 1);
+        this.ajoutProperty( "DEPENDENCE", tache.getId());
+    }
+
+    public void removeDependance(){
+        this.supprimerProperty("DEPENDENCE");
+        this.tache.setLevel(this.tache.getLevel() - 1);
+    }
+
+    /**
+     * Lance ou stop le minuteur
+     * @return True si le minuteur est actif
+     */
+    public boolean minuteur(){
+        if(valMinuteur == null){
+            valMinuteur = System.currentTimeMillis();
+            return true;
+        }else{
+            if(tache.getClock() == null){
+                tache.setClock(System.currentTimeMillis() - valMinuteur);
+            }else{
+                tache.setClock(tache.getClock() + (System.currentTimeMillis() - valMinuteur));
+            }
+            valMinuteur = null;
+            return false;
+        }
+    }
+
+    /**
+     * Remet à 0 la valeur du minuteur de la tache
+     */
+    public void resetMinuteur(){
+        tache.setClock(null);
+        valMinuteur = null;
     }
 
     public String getTitle(){
@@ -167,11 +210,6 @@ public class Tache {
     public void ajoutProperty(String name, String value){
         tache.addProperty(name,value);
     }
-
-    // TODO
-    /*public void getProperty(String name){
-
-    }*/
 
     public void supprimerProperty(String name){
         OrgProperties properties = tache.getProperties();

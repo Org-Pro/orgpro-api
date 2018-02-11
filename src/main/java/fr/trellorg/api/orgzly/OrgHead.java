@@ -2,9 +2,11 @@ package fr.trellorg.api.orgzly;
 
 import fr.trellorg.api.orgzly.datetime.OrgRange;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Heading with text below it.
@@ -27,7 +29,7 @@ public class OrgHead {
     private Date deadline;
     private Date closed;
 
-    private OrgRange clock; // TODO: Create OrgClock with elapsed time?
+    private Long clock = null; // TODO: Create OrgClock with elapsed time?
 
     private OrgProperties properties;
 
@@ -199,7 +201,7 @@ public class OrgHead {
      *
      * @return clock time or {@code null} if not set
      */
-    public OrgRange getClock() {
+    public Long getClock() {
         if (hasClock()) {
             return clock;
         }
@@ -207,11 +209,18 @@ public class OrgHead {
     }
 
     public boolean hasClock() {
-        return clock != null && clock.isSet();
+        return clock != null;
     }
 
-    public void setClock(OrgRange time) {
+    public void setClock(Long time) {
         clock = time;
+    }
+
+    public String getClockString(){
+        int heure = (int)(getClock() / 1000 / 60 / 60);
+        int minute = (int)(getClock() / 1000 / 60  - (heure * 60));
+        int seconde = (int)(getClock() / 1000 - (minute * 60) - (heure * 60 * 60));
+        return heure + ":" + minute + ":" + seconde;
     }
 
     /**

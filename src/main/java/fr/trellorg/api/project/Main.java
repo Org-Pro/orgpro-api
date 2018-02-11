@@ -16,7 +16,11 @@ public class Main {
         tache.ajoutClosed("2018-02-02");
         tache.ajoutProperty("Liste Principal","riz,dinde,huile");
         tache.ajoutProperty("Liste Secondaire","coca,gateaux");
+
+
         System.out.println(tache);
         tache.ecritureFichier("liste.org",false);*/
+
+
     }
 }
