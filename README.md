@@ -24,12 +24,6 @@ Puis :
 - chmod +x gradlew  
 - ./gradlew build  
     
-### Lancer l'application
-A partir du répertoire courant du projet :  
-Les commandes : (Remplacer xxx.jar par le nom du fichier)  
-- cd build/libs/  
-- java -classpath xxx.jar fr.trellorg.api.project.Main
-    
 ## Pour Windows
 
 ### Pré-Requis
@@ -46,11 +40,3 @@ Ou depuis un terminal :
 Les commandes :  
 - gradlew.bat build
 
-###  Lancer l'application
-A partir du répertoire courant du projet :  
-Lancer le fichier "run.bat"  
-
-Ou depuis un terminal :  
-Les commandes : (Remplacer xxx.jar par le nom du fichier)  
-- cd build/libs/  
-- java -classpath xxx.jar fr.trellorg.api.project.Main
