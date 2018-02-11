@@ -228,7 +228,7 @@ public class Tache {
 
     public void ajoutProperty(String name, String value, boolean constructor){
         String name2 = name.toUpperCase();
-        if(constructor == true){
+        if(constructor){
             tache.addProperty(name,value);
         }else{
             if(name2.equals("ID") || name2.equals("DEPENDENCE")){
