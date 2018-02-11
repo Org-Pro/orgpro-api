@@ -27,12 +27,15 @@ public class Tache {
     private Long valMinuteur = null;
 
     public Tache(String title,int level) {
+        if(level < 1){
+            level = 1;
+        }
         this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
         this.tache.setLevel(level);
         this.tache.setState("TODO");
         this.id = UUID.randomUUID().toString();
-        this.ajoutProperty("ID", this.id);
+        this.ajoutProperty("ID", this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         // minuteur = System.currentTimeMillis();
         //System.out.println(minuteur);
@@ -45,15 +48,15 @@ public class Tache {
         this.tache.setLevel(tache.getLevel() + 1);
         this.tache.setState("TODO");
         this.id = UUID.randomUUID().toString();
-        this.ajoutProperty("ID", this.id);
-        this.ajoutProperty( "DEPENDENCE", tache.getId());
+        this.ajoutProperty("ID", this.id ,true);
+        this.ajoutProperty( "DEPENDENCE", tache.getId(), true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     }
 
     public void setDependance(Tache tache){
         this.supprimerProperty("DEPENDENCE");
         this.tache.setLevel(tache.getLevel() + 1);
-        this.ajoutProperty( "DEPENDENCE", tache.getId());
+        this.ajoutProperty( "DEPENDENCE", tache.getId(), true);
     }
 
     public void removeDependance(){
@@ -88,6 +91,10 @@ public class Tache {
         valMinuteur = null;
     }
 
+    public Long getClock(){
+        return tache.getClock();
+    }
+
     public String getTitle(){
         return tache.getTitle();
     }
@@ -118,6 +125,18 @@ public class Tache {
 
     public String getId() {
         return id;
+    }
+
+    public void changeLevel(int level){
+        if(level < 1 || this.getProperties().get("DEPENDENCE")!= null){
+            return;
+        }else{
+            tache.setLevel(level);
+        }
+    }
+
+    public void changeTitle(String title){
+        tache.setTitle(title);
     }
 
     public boolean changeState(String state){
@@ -207,11 +226,24 @@ public class Tache {
         return true;
     }
 
-    public void ajoutProperty(String name, String value){
-        tache.addProperty(name,value);
+    public void ajoutProperty(String name, String value, boolean constructor){
+        String name2 = name.toUpperCase();
+        if(constructor == true){
+            tache.addProperty(name,value);
+        }else{
+            if(name2.equals("ID") || name2.equals("DEPENDENCE")){
+                return;
+            }else{
+                tache.addProperty(name,value);
+            }
+        }
+
     }
 
     public void supprimerProperty(String name){
+        if(name.equals("ID")){
+            return;
+        }
         OrgProperties properties = tache.getProperties();
         properties.remove(name);
         tache.setProperties(properties);

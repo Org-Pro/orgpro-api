@@ -47,10 +47,85 @@ public class TacheTest {
 
     @Test
     public void testTache() throws Exception {
-
         assertEquals(tache.getTitle(),title);
         assertEquals(tache.getLevel(),level);
     }
+
+    @Test
+    public void testTacheWrongLevel() throws Exception {
+        int level = 0;
+        Tache tache2 = new Tache(title,level);
+        assertEquals(tache2.getTitle(),title);
+        assertEquals(tache2.getLevel(),1);
+    }
+
+    @Test
+    public void testTacheId() throws Exception {
+        String title2 = "Réviser";
+        Tache tache2 = new Tache(title2,tache);
+        assertEquals(tache2.getTitle(),title2);
+        assertEquals(tache2.getLevel(),tache.getLevel()+1);
+        assertEquals(tache2.getProperties().get("DEPENDENCE"),tache.getId());
+    }
+
+    @Test
+    public void testSetDependance() throws Exception {
+        String title2 = "Réviser";
+        int level2 = 1;
+        Tache tache2 = new Tache(title2, level2);
+        tache2.setDependance(tache);
+        assertEquals(tache2.getLevel(),tache.getLevel()+1);
+        assertEquals(tache2.getProperties().get("DEPENDENCE"),tache.getId());
+    }
+
+    @Test
+    public void testRemoveDependance() throws Exception {
+        String title2 = "Réviser";
+        Tache tache2 = new Tache(title2, tache);
+        int level2 = tache2.getLevel();
+        tache2.removeDependance();
+        assertEquals(tache2.getProperties().get("DEPENDENCE"),null);
+        assertEquals(tache2.getLevel(),level2-1);
+    }
+
+    @Test
+    public void testMinuteur() throws Exception {
+        assertEquals(tache.minuteur(),true);
+        assertEquals(tache.minuteur(), false);
+        assertEquals(tache.minuteur(), true);
+        assertEquals(tache.minuteur(), false);
+    }
+
+    @Test
+    public void testResetMinuteur() throws Exception {
+        tache.minuteur();
+        tache.minuteur();
+        tache.resetMinuteur();
+        assertEquals(tache.getClock(),null);
+    }
+
+    @Test
+    public void testChangeLevelWrongLevel() throws Exception {
+        tache.changeLevel(0);
+        assertEquals(tache.getLevel(),level);
+    }
+
+    @Test
+    public void testChangeLevelDependence() throws Exception {
+        Tache tache2 = new Tache("Reviser", 1);
+        tache.setDependance(tache2);
+        tache.changeLevel(1);
+        assertEquals(tache.getLevel(),tache2.getLevel()+1);
+    }
+
+    @Test
+    public void testChangeLevel() throws Exception {
+        int level = 10;
+        tache.changeLevel(level);
+        assertEquals(tache.getLevel(),level);
+    }
+
+
 
     @Test
     public void testChangeState() throws Exception {
@@ -67,6 +142,13 @@ public class TacheTest {
     public void testChangeStateDoneTodo() throws  Exception {
         tache.changeState("DONE");
         assertEquals(tache.changeState("TODO"),false);
+    }
+
+    @Test
+    public void testChangeTitle() throws Exception {
+        String title2 = "Reviser exam";
+        tache.changeTitle(title2);
+        assertEquals(tache.getTitle(),title2);
     }
 
     @Test
@@ -173,17 +255,40 @@ public class TacheTest {
     public void testAjoutProperties() throws Exception {
         String propertiesName = "NUMERO";
         String propertiesValue = "4";
-        tache.ajoutProperty(propertiesName,propertiesValue);
+        tache.ajoutProperty(propertiesName,propertiesValue,false);
         assertEquals(tache.getProperties().get(propertiesName),propertiesValue);
+    }
+
+    @Test
+    public void testAjoutPropertiesTrue() throws Exception {
+        String propertiesName = "NUMERO";
+        String propertiesValue = "4";
+        tache.ajoutProperty(propertiesName,propertiesValue,true);
+        assertEquals(tache.getProperties().get(propertiesName),propertiesValue);
+    }
+
+    @Test
+    public void testAjoutPropertiesFalse() throws Exception {
+        String propertiesName = "ID";
+        String propertiesValue = "4";
+        tache.ajoutProperty(propertiesName,propertiesValue,false);
+        assertEquals(tache.getProperties().get(propertiesName),tache.getId());
     }
 
     @Test
     public void testSupprimerProperties() throws Exception {
         String propertiesName = "NUMERO";
         String propertiesValue = "4";
-        tache.ajoutProperty(propertiesName,propertiesValue);
+        tache.ajoutProperty(propertiesName,propertiesValue,false);
         tache.supprimerProperty(propertiesName);
         assertEquals(tache.getProperties().get(propertiesName),null);
+    }
+
+    @Test
+    public void testSupprimerPropertiesID() throws Exception {
+        String propertiesName = "ID";
+        tache.supprimerProperty(propertiesName);
+        assertEquals(tache.getProperties().get(propertiesName),tache.getId());
     }
 
     @Test
