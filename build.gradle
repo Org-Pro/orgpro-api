@@ -31,7 +31,7 @@ jacocoTestReport {
     }
     afterEvaluate {
         classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude:'fr/trellorg/api/orgzly/**')
+            fileTree(dir: it, exclude:'fr/orgpro/api/orgzly/**')
         })
     }
 }
