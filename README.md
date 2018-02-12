@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/Org-Pro/orgpro-api/badge.svg?branch=master)](https://coveralls.io/github/Org-Pro/orgpro-api?branch=master)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/CodeChillAlluna/code-chill/blob/master/LICENSE)
 
-<https://Org-Pro.github.io/trellorg-api/>
+<https://org-pro.github.io/orgpro-api/>
 
 # Guide d'installation
 
@@ -23,6 +23,10 @@ A partir du répertoire courant du projet :
 Puis :  
 - chmod +x gradlew  
 - ./gradlew build  
+
+### Récupération
+Vous pouvez récupérer la librairie JAVA pour l'importer dans votre projet via le chemin :  
+- A partir du répertoire courant du projet : /build/lib/
     
 ## Pour Windows
 
@@ -39,4 +43,8 @@ Lancer le fichier "build.bat"
 Ou depuis un terminal :  
 Les commandes :  
 - gradlew.bat build
+
+### Récupération
+Vous pouvez récupérer la librairie JAVA pour l'importer dans votre projet via le chemin :  
+- A partir du répertoire courant du projet : /build/lib/
 
