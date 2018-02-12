@@ -103,7 +103,7 @@ public class TacheTest {
 
     @Test
     public void testChangeLevelWrongLevel() throws Exception {
-        tache.changeLevel(0);
+        assertEquals(tache.changeLevel(0),false);
         assertEquals(tache.getLevel(),level);
     }
 
@@ -111,14 +111,14 @@ public class TacheTest {
     public void testChangeLevelDependence() throws Exception {
         Tache tache2 = new Tache("Reviser", 1);
         tache.setDependance(tache2);
-        tache.changeLevel(1);
+        assertEquals(tache.changeLevel(1),false);
         assertEquals(tache.getLevel(),tache2.getLevel()+1);
     }
 
     @Test
     public void testChangeLevel() throws Exception {
         int level = 10;
-        tache.changeLevel(level);
+        assertEquals(tache.changeLevel(level),true);
         assertEquals(tache.getLevel(),level);
     }
 
@@ -252,7 +252,7 @@ public class TacheTest {
     public void testAjoutProperties() throws Exception {
         String propertiesName = "NUMERO";
         String propertiesValue = "4";
-        tache.ajoutProperty(propertiesName,propertiesValue,false);
+        assertEquals(tache.ajoutProperty(propertiesName,propertiesValue,false),true);
         assertEquals(tache.getProperties().get(propertiesName),propertiesValue);
     }
 
@@ -260,7 +260,7 @@ public class TacheTest {
     public void testAjoutPropertiesTrue() throws Exception {
         String propertiesName = "NUMERO";
         String propertiesValue = "4";
-        tache.ajoutProperty(propertiesName,propertiesValue,true);
+        assertEquals(tache.ajoutProperty(propertiesName,propertiesValue,true),true);
         assertEquals(tache.getProperties().get(propertiesName),propertiesValue);
     }
 
@@ -268,7 +268,7 @@ public class TacheTest {
     public void testAjoutPropertiesFalse() throws Exception {
         String propertiesName = "ID";
         String propertiesValue = "4";
-        tache.ajoutProperty(propertiesName,propertiesValue,false);
+        assertEquals(tache.ajoutProperty(propertiesName,propertiesValue,false),false);
         assertEquals(tache.getProperties().get(propertiesName),tache.getId());
     }
 

@@ -127,12 +127,13 @@ public class Tache {
         return id;
     }
 
-    public void changeLevel(int level){
+    public boolean changeLevel(int level){
         if(level < 1 || this.getProperties().get("DEPENDENCE")!= null){
-            return;
+            return false;
         }else{
             tache.setLevel(level);
         }
+        return true;
     }
 
     public void changeTitle(String title){
@@ -226,18 +227,18 @@ public class Tache {
         return true;
     }
 
-    public void ajoutProperty(String name, String value, boolean constructor){
+    public boolean ajoutProperty(String name, String value, boolean constructor){
         String name2 = name.toUpperCase();
         if(constructor){
             tache.addProperty(name,value);
         }else{
             if(name2.equals("ID") || name2.equals("DEPENDENCE")){
-                return;
+                return false;
             }else{
                 tache.addProperty(name,value);
             }
         }
-
+        return true;
     }
 
     public void supprimerProperty(String name){
