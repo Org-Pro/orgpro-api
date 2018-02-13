@@ -43,9 +43,15 @@ public class TacheTest {
     }
 
     @Test
-    public void testTache() throws Exception {
+    public void testTacheLevel() throws Exception {
         assertEquals(tache.getTitle(),title);
         assertEquals(tache.getLevel(),level);
+    }
+
+    @Test
+    public void testTache() throws Exception {
+        tache = new Tache(title);
+        assertEquals(tache.getTitle(), title);
     }
 
     @Test

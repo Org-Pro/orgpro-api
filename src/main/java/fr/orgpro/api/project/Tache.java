@@ -26,6 +26,17 @@ public class Tache {
     private String id;
     private Long valMinuteur = null;
 
+
+    public Tache(String title) {
+        this.ecriture = new OrgParserWriter();
+        this.tache = new OrgHead(title);
+        this.tache.setLevel(1);
+        this.tache.setState("TODO");
+        this.id = UUID.randomUUID().toString();
+        this.ajoutProperty("ID", this.id, true);
+        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    }
+
     public Tache(String title,int level) {
         if(level < 1){
             level = 1;
@@ -37,9 +48,6 @@ public class Tache {
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty("ID", this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        // minuteur = System.currentTimeMillis();
-        //System.out.println(minuteur);
-
     }
 
     public Tache(String title, Tache tache) {
