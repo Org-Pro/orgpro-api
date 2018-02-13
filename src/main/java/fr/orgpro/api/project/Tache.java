@@ -72,6 +72,7 @@ public class Tache {
         this.tache.setLevel(this.tache.getLevel() - 1);
     }
 
+    // PAS TEST : LOG BOOK
     /**
      * Lance ou stop le minuteur
      * @return True si le minuteur est actif
@@ -81,10 +82,13 @@ public class Tache {
             valMinuteur = System.currentTimeMillis();
             return true;
         }else{
+            Long valEndMinuteur = System.currentTimeMillis();
+            String s = new OrgRange(new OrgDateTime(valMinuteur , true), new OrgDateTime(valEndMinuteur , true), valMinuteur, valEndMinuteur).toString();
+            this.ajoutLogBookClock(s);
             if(tache.getClock() == null){
-                tache.setClock(System.currentTimeMillis() - valMinuteur);
+                tache.setClock(valEndMinuteur - valMinuteur);
             }else{
-                tache.setClock(tache.getClock() + (System.currentTimeMillis() - valMinuteur));
+                tache.setClock(tache.getClock() + (valEndMinuteur - valMinuteur));
             }
             valMinuteur = null;
             return false;
@@ -101,6 +105,11 @@ public class Tache {
 
     public Long getClock(){
         return tache.getClock();
+    }
+
+    // PAS TEST
+    public String getClockString(){
+        return tache.getClockString();
     }
 
     public String getTitle(){
@@ -261,6 +270,11 @@ public class Tache {
     private void ajoutLogBook(String log){
         Date date = new Date();
         log += new SimpleDateFormat("<yyyy-MM-dd HH:mm>").format(date);
+        tache.addLog(log);
+    }
+
+    // PAS TEST
+    private void ajoutLogBookClock(String log){
         tache.addLog(log);
     }
 
