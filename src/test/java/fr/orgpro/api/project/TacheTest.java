@@ -109,7 +109,7 @@ public class TacheTest {
 
     @Test
     public void testChangeLevelWrongLevel() throws Exception {
-        assertEquals(tache.changeLevel(0),false);
+        assertEquals(tache.changeLevel(0), false);
         assertEquals(tache.getLevel(),level);
     }
 
@@ -299,16 +299,16 @@ public class TacheTest {
         String path = "test.org";
         tache.ecritureFichier(path,false);
         File file = new File(path);
-        assertEquals(file.exists(),true);
+        assertEquals(file.exists(), true);
         file.delete();
     }
 
     @Test
     public void testEcritureFichierFalse() throws Exception {
         String path = "?/???.org";
-        tache.ecritureFichier(path,false);
+        tache.ecritureFichier(path, false);
         File file = new File(path);
-        assertEquals(file.exists(),false);
+        assertEquals(file.exists(), false);
     }
 
     @Test
@@ -325,7 +325,7 @@ public class TacheTest {
         out.flush();
         out.close();
         in.close();
-        assertEquals(tache.toString(),out.toString());
+        assertEquals(tache.toString(), out.toString());
         file.delete();
     }
 
@@ -341,6 +341,11 @@ public class TacheTest {
             idNull = true;
         }
         assertEquals(idVide,false);
-        assertEquals(idNull,false);
+        assertEquals(idNull, false);
+    }
+
+    @Test
+    public void testGetClockString() throws Exception {
+        assertEquals(tache.getClockString(), "0:0:0");
     }
 }

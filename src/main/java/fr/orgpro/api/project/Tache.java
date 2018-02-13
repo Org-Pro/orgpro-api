@@ -72,7 +72,6 @@ public class Tache {
         this.tache.setLevel(this.tache.getLevel() - 1);
     }
 
-    // PAS TEST : LOG BOOK
     /**
      * Lance ou stop le minuteur
      * @return True si le minuteur est actif
@@ -107,7 +106,6 @@ public class Tache {
         return tache.getClock();
     }
 
-    // PAS TEST
     public String getClockString(){
         return tache.getClockString();
     }

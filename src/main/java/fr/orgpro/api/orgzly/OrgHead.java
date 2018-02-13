@@ -217,10 +217,14 @@ public class OrgHead {
     }
 
     public String getClockString(){
-        int heure = (int)(getClock() / 1000 / 60 / 60);
-        int minute = (int)(getClock() / 1000 / 60  - (heure * 60));
-        int seconde = (int)(getClock() / 1000 - (minute * 60) - (heure * 60 * 60));
-        return heure + ":" + minute + ":" + seconde;
+        if(hasClock()) {
+            int heure = (int) (getClock() / 1000 / 60 / 60);
+            int minute = (int) (getClock() / 1000 / 60 - (heure * 60));
+            int seconde = (int) (getClock() / 1000 - (minute * 60) - (heure * 60 * 60));
+            return heure + ":" + minute + ":" + seconde;
+        }else{
+            return "0:0:0";
+        }
     }
 
     /**
