@@ -4,10 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.StringWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -347,5 +344,43 @@ public class TacheTest {
     @Test
     public void testGetClockString() throws Exception {
         assertEquals(tache.getClockString(), "0:0:0");
+    }
+
+    @Test
+    public void testLectureFichier() throws Exception {
+        Tache tache = new Tache("Faire les courses",3);
+        Tache tache1 = new Tache("Test");
+        Tache tache2 = new Tache("");
+        String path = "test.org";
+
+        tache.changeState("DONE");
+        tache.ajoutTag("COURSE");
+        tache.ajoutTag("URGENT");
+        tache.ajoutDeadline("2018-03-03");
+        tache.ajoutScheduled("2018-01-31");
+        tache.ajoutClosed("2018-02-02");
+        tache.ajoutProperty("Liste Principal", "riz, : dinde, : huile", false);
+        tache.ajoutProperty("Liste Secondaire", "coca,gateaux", false);
+        tache.minuteur();
+        tache.minuteur();
+
+        tache.ecritureFichier(path,false);
+        tache1.ecritureFichier(path,true);
+        tache2.ecritureFichier(path,true);
+
+        List<Tache> list = new ArrayList<Tache>();
+        Tache.lectureFichier(path, list);
+
+        StringBuilder sBase = new StringBuilder();
+        sBase.append(tache.toString());
+        sBase.append(tache1.toString());
+        sBase.append(tache2.toString());
+
+        StringBuilder sList = new StringBuilder();
+        for (Tache ele : list){
+            sList.append(ele.toString());
+        }
+
+        assertEquals(sBase.toString(), sList.toString());
     }
 }

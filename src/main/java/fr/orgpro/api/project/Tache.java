@@ -319,11 +319,6 @@ public class Tache {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return ecriture.whiteSpacedHead(tache,tache.getLevel(),true);
-    }
-
     public static void lectureFichier(String path, List<Tache> list){
 
         // https://stackoverflow.com/questions/2231369/scanner-vs-bufferedreader
@@ -355,11 +350,11 @@ public class Tache {
                             tache.changeLevel(temp[0].trim().length());
 
                             temp = temp[2].split(":");
-                            tache.changeTitle(temp[0]);
+                            tache.changeTitle(temp[0].trim());
                             for (int i = 1; i < temp.length; i++){
                                 tache.ajoutTag(temp[i]);
                             }
-                        }else if(line.contains(CLOCK) && tache != null){
+                        }else if(line.trim().startsWith(CLOCK) && tache != null){
                             temp = line.split(":");
                             try {
                                 long heure = Long.parseLong(temp[1].trim());
@@ -386,18 +381,18 @@ public class Tache {
                                     }
                                 }
                             }
-                        }else if(line.contains(PROPERTIES) && tache != null){
+                        }else if(line.trim().startsWith(PROPERTIES) && tache != null){
                             line = br.readLine().trim();
                             while(!line.equals(END)){
                                 temp = line.split(":", 3);
                                 if(temp[1].equals(ID)){
-                                    tache.setId(temp[2]);
+                                    tache.setId(temp[2].trim());
                                 }else{
-                                    tache.ajoutProperty(temp[1], temp[2], false);
+                                    tache.ajoutProperty(temp[1].trim(), temp[2].trim(), false);
                                 }
                                 line = br.readLine().trim();
                             }
-                        }else if(line.contains(LOGBOOK) && tache != null){
+                        }else if(line.trim().startsWith(LOGBOOK) && tache != null){
                             line = br.readLine().trim();
                             while(!line.equals(END)){
                                 tache.ajoutLogBookString(line);
@@ -414,11 +409,8 @@ public class Tache {
         }
     }
 
-    /*private static void affiche(String[] s){
-        System.out.println(s.length + " ");
-        for (String ele : s){
-            System.out.println(ele.trim() + "");
-        }
-        System.out.println();
-    }*/
+    @Override
+    public String toString() {
+        return ecriture.whiteSpacedHead(tache,tache.getLevel(),true);
+    }
 }
