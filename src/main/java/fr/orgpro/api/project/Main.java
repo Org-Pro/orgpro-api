@@ -1,25 +1,13 @@
 package fr.orgpro.api.project;
 
-
-import fr.orgpro.api.orgzly.datetime.OrgDateTime;
-import fr.orgpro.api.orgzly.datetime.OrgRange;
-import sun.misc.IOUtils;
-
-import java.io.*;
-import java.nio.CharBuffer;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
 
 
 
     public static void main(String[] args){
 
-        System.out.println("Org-Pro");
-        Tache tache = new Tache("Faire les courses",1);
+        /*System.out.println("Org-Pro");
+        Tache tache = new Tache("Faire les courses",3);
         Tache t = new Tache("Test");
         tache.changeState("DONE");
         String tag = "COURSE";
@@ -42,9 +30,11 @@ public class Main {
         t.ecritureFichier("liste.org",true);
         t1.ecritureFichier("liste.org",true);
         List<Tache> list = new ArrayList<Tache>();
-        Tache.lectureFichier(list);
+        Tache.lectureFichier("liste.org", list);
 
-
+        for (Tache ele : list){
+            System.out.println(ele.toString());
+        }*/
     }
 
 

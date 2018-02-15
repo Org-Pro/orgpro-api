@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +21,15 @@ import java.util.UUID;
  * Created by sartr on 01/02/2018.
  */
 public class Tache {
+    private static final String ID = "ID";
+    private static final String CLOSED = "CLOSED:";
+    private static final String DEADLINE = "DEADLINE:";
+    private static final String SCHEDULED = "SCHEDULED:";
+    private static final String CLOCK = "CLOCK:";
+    private static final String PROPERTIES = ":PROPERTIES:";
+    private static final String END = ":END:";
+    private static final String LOGBOOK = ":LOGBOOK:";
+
     private OrgHead tache;
 
     private OrgParserWriter ecriture;
@@ -28,6 +38,11 @@ public class Tache {
     private String id;
     private Long valMinuteur = null;
 
+    private Tache(){
+        this.ecriture = new OrgParserWriter();
+        this.tache = new OrgHead();
+        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    }
 
     public Tache(String title) {
         this.ecriture = new OrgParserWriter();
@@ -50,6 +65,7 @@ public class Tache {
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty("ID", this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        this.setClock((long) 100000000);
     }
 
     public Tache(String title, Tache tache) {
@@ -74,6 +90,19 @@ public class Tache {
         this.tache.setLevel(this.tache.getLevel() - 1);
     }
 
+    private void setId(String id) {
+        this.id = id;
+        this.ajoutProperty("ID", this.id, true);
+    }
+
+    private void setState(String state){
+        tache.setState(state);
+    }
+
+    private void setClock(Long time){
+        tache.setClock(time);
+    }
+
     /**
      * Lance ou stop le minuteur
      * @return True si le minuteur est actif
@@ -85,7 +114,7 @@ public class Tache {
         }else{
             Long valEndMinuteur = System.currentTimeMillis();
             String s = new OrgRange(new OrgDateTime(valMinuteur , true), new OrgDateTime(valEndMinuteur , true), valMinuteur, valEndMinuteur).toString();
-            this.ajoutLogBookClock(s);
+            this.ajoutLogBookString(s);
             if(tache.getClock() == null){
                 tache.setClock(valEndMinuteur - valMinuteur);
             }else{
@@ -273,11 +302,6 @@ public class Tache {
         tache.addLog(log);
     }
 
-    // PAS TEST
-    private void ajoutLogBookClock(String log){
-        tache.addLog(log);
-    }
-    // PAS TEST
     private void ajoutLogBookString(String log){
         tache.addLog(log);
     }
@@ -300,30 +324,20 @@ public class Tache {
         return ecriture.whiteSpacedHead(tache,tache.getLevel(),true);
     }
 
-
-    private static final String ID = "ID";
-    private static final String CLOSED = "CLOSED:";
-    private static final String DEADLINE = "DEADLINE:";
-    private static final String SCHEDULED = "SCHEDULED:";
-    private static final String CLOCK = "CLOCK:";
-    private static final String PROPERTIES = ":PROPERTIES:";
-    private static final String END = ":END:";
-    private static final String LOGBOOK = ":LOGBOOK:";
-
-    public static void lectureFichier(List<Tache> list){
+    public static void lectureFichier(String path, List<Tache> list){
 
         // https://stackoverflow.com/questions/2231369/scanner-vs-bufferedreader
         // https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java
 
-        //StringBuilder sb = new StringBuilder();
-        try(BufferedReader br = new BufferedReader(new FileReader("liste.org"))) {
+        if(list == null){
+            list = new ArrayList<Tache>();
+        }
+
+        try(BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line = br.readLine();
             String[] temp;
             Tache tache = null;
             while (line != null) {
-                /*sb.append(line);
-                sb.append(System.lineSeparator());*/
-
                 switch (line.trim()){
                     case "":{
                         if(tache != null){
@@ -334,22 +348,27 @@ public class Tache {
                     }
                     default:{
                         if(line.startsWith("*")){
-                            //temp = line.split(" ");
-                            //int level = temp[0].length();
-
-                            //affiche(temp);
-                            tache = new Tache("ok");
-
+                            tache = new Tache();
 
                             temp = line.split("( )+", 3);
-                            tache.changeState(temp[1]);
+                            tache.setState(temp[1]);
+                            tache.changeLevel(temp[0].trim().length());
 
                             temp = temp[2].split(":");
                             tache.changeTitle(temp[0]);
                             for (int i = 1; i < temp.length; i++){
                                 tache.ajoutTag(temp[i]);
                             }
-                            //affiche(temp);
+                        }else if(line.contains(CLOCK) && tache != null){
+                            temp = line.split(":");
+                            try {
+                                long heure = Long.parseLong(temp[1].trim());
+                                long minute = Long.parseLong(temp[2].trim());
+                                long seconde = Long.parseLong(temp[3].trim());
+                                tache.setClock((heure * 3600000) + (minute * 60000) + (seconde * 1000 ));
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
                         }else if((line.contains(CLOSED) || line.contains(DEADLINE) || line.contains(SCHEDULED)) && tache != null){
                             temp = line.split(">");
                             for (String ele : temp){
@@ -372,7 +391,7 @@ public class Tache {
                             while(!line.equals(END)){
                                 temp = line.split(":", 3);
                                 if(temp[1].equals(ID)){
-
+                                    tache.setId(temp[2]);
                                 }else{
                                     tache.ajoutProperty(temp[1], temp[2], false);
                                 }
@@ -390,21 +409,16 @@ public class Tache {
                 }
                 line = br.readLine();
             }
-            for (Tache t : list){
-                System.out.println(t.toString());
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //System.out.println(sb.toString());
     }
 
-    private static void affiche(String[] s){
+    /*private static void affiche(String[] s){
         System.out.println(s.length + " ");
         for (String ele : s){
             System.out.println(ele.trim() + "");
         }
         System.out.println();
-    }
+    }*/
 }
