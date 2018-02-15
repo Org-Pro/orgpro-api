@@ -6,6 +6,8 @@ import fr.orgpro.api.orgzly.datetime.OrgDateTime;
 import fr.orgpro.api.orgzly.datetime.OrgRange;
 import fr.orgpro.api.orgzly.parser.OrgParserWriter;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
@@ -275,7 +277,10 @@ public class Tache {
     private void ajoutLogBookClock(String log){
         tache.addLog(log);
     }
-
+    // PAS TEST
+    private void ajoutLogBookString(String log){
+        tache.addLog(log);
+    }
 
     public boolean ecritureFichier(String path, boolean append){
         OrgParserWriter ecriture = new OrgParserWriter();
@@ -293,5 +298,113 @@ public class Tache {
     @Override
     public String toString() {
         return ecriture.whiteSpacedHead(tache,tache.getLevel(),true);
+    }
+
+
+    private static final String ID = "ID";
+    private static final String CLOSED = "CLOSED:";
+    private static final String DEADLINE = "DEADLINE:";
+    private static final String SCHEDULED = "SCHEDULED:";
+    private static final String CLOCK = "CLOCK:";
+    private static final String PROPERTIES = ":PROPERTIES:";
+    private static final String END = ":END:";
+    private static final String LOGBOOK = ":LOGBOOK:";
+
+    public static void lectureFichier(List<Tache> list){
+
+        // https://stackoverflow.com/questions/2231369/scanner-vs-bufferedreader
+        // https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java
+
+        //StringBuilder sb = new StringBuilder();
+        try(BufferedReader br = new BufferedReader(new FileReader("liste.org"))) {
+            String line = br.readLine();
+            String[] temp;
+            Tache tache = null;
+            while (line != null) {
+                /*sb.append(line);
+                sb.append(System.lineSeparator());*/
+
+                switch (line.trim()){
+                    case "":{
+                        if(tache != null){
+                            list.add(tache);
+                            tache = null;
+                        }
+                        break;
+                    }
+                    default:{
+                        if(line.startsWith("*")){
+                            //temp = line.split(" ");
+                            //int level = temp[0].length();
+
+                            //affiche(temp);
+                            tache = new Tache("ok");
+
+
+                            temp = line.split("( )+", 3);
+                            tache.changeState(temp[1]);
+
+                            temp = temp[2].split(":");
+                            tache.changeTitle(temp[0]);
+                            for (int i = 1; i < temp.length; i++){
+                                tache.ajoutTag(temp[i]);
+                            }
+                            //affiche(temp);
+                        }else if((line.contains(CLOSED) || line.contains(DEADLINE) || line.contains(SCHEDULED)) && tache != null){
+                            temp = line.split(">");
+                            for (String ele : temp){
+                                String[] s = ele.split("<");
+                                switch (s[0].trim()){
+                                    case CLOSED:{
+                                        tache.ajoutClosed(s[1].trim());
+                                        break;
+                                    }
+                                    case DEADLINE:{
+                                        tache.ajoutDeadline(s[1].trim());
+                                    }
+                                    case SCHEDULED:{
+                                        tache.ajoutScheduled(s[1].trim());
+                                    }
+                                }
+                            }
+                        }else if(line.contains(PROPERTIES) && tache != null){
+                            line = br.readLine().trim();
+                            while(!line.equals(END)){
+                                temp = line.split(":", 3);
+                                if(temp[1].equals(ID)){
+
+                                }else{
+                                    tache.ajoutProperty(temp[1], temp[2], false);
+                                }
+                                line = br.readLine().trim();
+                            }
+                        }else if(line.contains(LOGBOOK) && tache != null){
+                            line = br.readLine().trim();
+                            while(!line.equals(END)){
+                                tache.ajoutLogBookString(line);
+                                line = br.readLine().trim();
+                            }
+                        }
+                        break;
+                    }
+                }
+                line = br.readLine();
+            }
+            for (Tache t : list){
+                System.out.println(t.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //System.out.println(sb.toString());
+    }
+
+    private static void affiche(String[] s){
+        System.out.println(s.length + " ");
+        for (String ele : s){
+            System.out.println(ele.trim() + "");
+        }
+        System.out.println();
     }
 }

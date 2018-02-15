@@ -3,13 +3,24 @@ package fr.orgpro.api.project;
 
 import fr.orgpro.api.orgzly.datetime.OrgDateTime;
 import fr.orgpro.api.orgzly.datetime.OrgRange;
+import sun.misc.IOUtils;
+
+import java.io.*;
+import java.nio.CharBuffer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
+
+
     public static void main(String[] args){
 
-        /*System.out.println("Org-Pro");
+        System.out.println("Org-Pro");
         Tache tache = new Tache("Faire les courses",1);
+        Tache t = new Tache("Test");
         tache.changeState("DONE");
         String tag = "COURSE";
         tache.ajoutTag(tag);
@@ -18,27 +29,23 @@ public class Main {
         tache.ajoutDeadline("2018-03-03");
         tache.ajoutScheduled("2018-01-31");
         tache.ajoutClosed("2018-02-02");
-        tache.ajoutProperty("Liste Principal", "riz,dinde,huile", false);
+        tache.ajoutProperty("Liste Principal", "riz, : dinde, : huile", false);
         tache.ajoutProperty("Liste Secondaire", "coca,gateaux", false);
 
-        tache.minuteur();
-        try {
-            Thread.sleep(60000 * 2);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        tache.minuteur();
-        tache.minuteur();
-        try {
-            Thread.sleep(60000 * 3);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        tache.minuteur();
 
-        System.out.println(tache);
-        tache.ecritureFichier("liste.org",false);*/
+       // System.out.println(tache);
+        //System.out.println(t);
+        tache.minuteur();
+        tache.minuteur();
+        Tache t1 = new Tache("");
+        tache.ecritureFichier("liste.org",false);
+        t.ecritureFichier("liste.org",true);
+        t1.ecritureFichier("liste.org",true);
+        List<Tache> list = new ArrayList<Tache>();
+        Tache.lectureFichier(list);
 
 
     }
+
+
 }
