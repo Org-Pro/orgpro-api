@@ -348,33 +348,33 @@ public class TacheTest {
 
     @Test
     public void testLectureFichier() throws Exception {
-        Tache tache = new Tache("Faire les courses",3);
-        Tache tache1 = new Tache("Test");
-        Tache tache2 = new Tache("");
+        Tache tache1 = new Tache("Faire les courses",3);
+        Tache tache2 = new Tache("Test");
+        Tache tache3 = new Tache("");
         String path = "test.org";
 
-        tache.changeState("DONE");
-        tache.ajoutTag("COURSE");
-        tache.ajoutTag("URGENT");
-        tache.ajoutDeadline("2018-03-03");
-        tache.ajoutScheduled("2018-01-31");
-        tache.ajoutClosed("2018-02-02");
-        tache.ajoutProperty("Liste Principal", "riz, : dinde, : huile", false);
-        tache.ajoutProperty("Liste Secondaire", "coca,gateaux", false);
-        tache.minuteur();
-        tache.minuteur();
+        tache1.changeState("DONE");
+        tache1.ajoutTag("COURSE");
+        tache1.ajoutTag("URGENT");
+        tache1.ajoutDeadline("2018-03-03");
+        tache1.ajoutScheduled("2018-01-31");
+        tache1.ajoutClosed("2018-02-02");
+        tache1.ajoutProperty("Liste Principal", "riz, : dinde, : huile", false);
+        tache1.ajoutProperty("Liste Secondaire", "coca,gateaux", false);
+        tache1.minuteur();
+        tache1.minuteur();
 
-        tache.ecritureFichier(path,false);
-        tache1.ecritureFichier(path,true);
+        tache1.ecritureFichier(path,false);
         tache2.ecritureFichier(path,true);
+        tache3.ecritureFichier(path,true);
 
         List<Tache> list = new ArrayList<Tache>();
         Tache.lectureFichier(path, list);
 
         StringBuilder sBase = new StringBuilder();
-        sBase.append(tache.toString());
         sBase.append(tache1.toString());
         sBase.append(tache2.toString());
+        sBase.append(tache3.toString());
 
         StringBuilder sList = new StringBuilder();
         for (Tache ele : list){

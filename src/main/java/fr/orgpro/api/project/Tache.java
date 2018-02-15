@@ -65,7 +65,6 @@ public class Tache {
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty("ID", this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        this.setClock((long) 100000000);
     }
 
     public Tache(String title, Tache tache) {
