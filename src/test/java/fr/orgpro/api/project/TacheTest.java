@@ -351,6 +351,7 @@ public class TacheTest {
         Tache tache1 = new Tache("Faire les courses",3);
         Tache tache2 = new Tache("Test");
         Tache tache3 = new Tache("");
+        Tache tache4 = new Tache("Test4");
         String path = "test.org";
 
         tache1.changeState(State.DONE);
@@ -364,9 +365,14 @@ public class TacheTest {
         tache1.minuteur();
         tache1.minuteur();
 
+        tache2.changeState(State.ONGOING);
+
+        tache3.changeState(State.CANCELLED);
+
         tache1.ecritureFichier(path,false);
         tache2.ecritureFichier(path,true);
         tache3.ecritureFichier(path,true);
+        tache4.ecritureFichier(path,true);
 
         List<Tache> list = Tache.lectureFichier(path);
 
@@ -374,6 +380,7 @@ public class TacheTest {
         sBase.append(tache1.toString());
         sBase.append(tache2.toString());
         sBase.append(tache3.toString());
+        sBase.append(tache4.toString());
 
         StringBuilder sList = new StringBuilder();
         for (Tache ele : list){
