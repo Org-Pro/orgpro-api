@@ -318,14 +318,8 @@ public class Tache {
         return true;
     }
 
-    public static void lectureFichier(String path, List<Tache> list){
-
-        // https://stackoverflow.com/questions/2231369/scanner-vs-bufferedreader
-        // https://stackoverflow.com/questions/4716503/reading-a-plain-text-file-in-java
-
-        if(list == null){
-            list = new ArrayList<Tache>();
-        }
+    public static List<Tache> lectureFichier(String path){
+        List<Tache> list = new ArrayList<Tache>();
 
         try(BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line = br.readLine();
@@ -355,14 +349,10 @@ public class Tache {
                             }
                         }else if(line.trim().startsWith(CLOCK) && tache != null){
                             temp = line.split(":");
-                            try {
-                                long heure = Long.parseLong(temp[1].trim());
-                                long minute = Long.parseLong(temp[2].trim());
-                                long seconde = Long.parseLong(temp[3].trim());
-                                tache.setClock((heure * 3600000) + (minute * 60000) + (seconde * 1000 ));
-                            } catch (NumberFormatException e) {
-                                e.printStackTrace();
-                            }
+                            long heure = Long.parseLong(temp[1].trim());
+                            long minute = Long.parseLong(temp[2].trim());
+                            long seconde = Long.parseLong(temp[3].trim());
+                            tache.setClock((heure * 3600000) + (minute * 60000) + (seconde * 1000 ));
                         }else if((line.contains(CLOSED) || line.contains(DEADLINE) || line.contains(SCHEDULED)) && tache != null){
                             temp = line.split(">");
                             for (String ele : temp){
@@ -404,8 +394,9 @@ public class Tache {
                 line = br.readLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            return null;
         }
+        return list;
     }
 
     @Override

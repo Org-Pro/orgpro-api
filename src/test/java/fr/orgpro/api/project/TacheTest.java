@@ -368,8 +368,7 @@ public class TacheTest {
         tache2.ecritureFichier(path,true);
         tache3.ecritureFichier(path,true);
 
-        List<Tache> list = new ArrayList<Tache>();
-        Tache.lectureFichier(path, list);
+        List<Tache> list = Tache.lectureFichier(path);
 
         StringBuilder sBase = new StringBuilder();
         sBase.append(tache1.toString());
@@ -382,5 +381,8 @@ public class TacheTest {
         }
 
         assertEquals(sBase.toString(), sList.toString());
+        path = "http://org";
+        assertEquals(Tache.lectureFichier(path), null);
+
     }
 }
