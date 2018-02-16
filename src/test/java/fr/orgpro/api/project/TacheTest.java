@@ -129,19 +129,19 @@ public class TacheTest {
 
     @Test
     public void testChangeState() throws Exception {
-        assertEquals(tache.changeState("DONE"),true);
+        assertEquals(tache.changeState(State.DONE),true);
     }
 
     @Test
     public void testChangeStateEquals() throws Exception {
-        tache.changeState("DONE");
-        assertEquals(tache.changeState("DONE"),false);
+        tache.changeState(State.DONE);
+        assertEquals(tache.changeState(State.DONE),false);
     }
 
     @Test
     public void testChangeStateDoneTodo() throws  Exception {
-        tache.changeState("DONE");
-        assertEquals(tache.changeState("TODO"),false);
+        tache.changeState(State.DONE);
+        assertEquals(tache.changeState(State.TODO),false);
     }
 
     @Test
@@ -353,7 +353,7 @@ public class TacheTest {
         Tache tache3 = new Tache("");
         String path = "test.org";
 
-        tache1.changeState("DONE");
+        tache1.changeState(State.DONE);
         tache1.ajoutTag("COURSE");
         tache1.ajoutTag("URGENT");
         tache1.ajoutDeadline("2018-03-03");

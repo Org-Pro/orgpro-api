@@ -4,6 +4,7 @@ import fr.orgpro.api.orgzly.OrgFile;
 import fr.orgpro.api.orgzly.OrgHead;
 import fr.orgpro.api.orgzly.OrgPatterns;
 import fr.orgpro.api.orgzly.OrgStringUtils;
+import fr.orgpro.api.project.State;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -256,7 +257,18 @@ class OrgSaxyParser extends OrgParser {
                 /* String after keyword must be either empty or start with space. */
                 if (stateMatcher.group(2).length() == 0 || stateMatcher.group(2).startsWith(" ")) {
                     /* Update state and title. */
-                    head.setState(stateMatcher.group(1));
+                    if(stateMatcher.group(1).equals(State.TODO.toString())){
+                        head.setState(State.TODO);
+                    }
+                    if(stateMatcher.group(1).equals(State.DONE.toString())){
+                        head.setState(State.DONE);
+                    }
+                    if(stateMatcher.group(1).equals(State.ONGOING.toString())){
+                        head.setState(State.ONGOING);
+                    }
+                    if(stateMatcher.group(1).equals(State.CANCELLED.toString())){
+                        head.setState(State.CANCELLED);
+                    }
                     title = stateMatcher.group(2).trim();
                 }
             }

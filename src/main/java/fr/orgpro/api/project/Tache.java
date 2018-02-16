@@ -48,7 +48,7 @@ public class Tache {
         this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
         this.tache.setLevel(1);
-        this.tache.setState("TODO");
+        this.tache.setState(State.TODO);
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty("ID", this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -61,7 +61,7 @@ public class Tache {
         this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
         this.tache.setLevel(level);
-        this.tache.setState("TODO");
+        this.tache.setState(State.TODO);
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty("ID", this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -71,7 +71,7 @@ public class Tache {
         this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
         this.tache.setLevel(tache.getLevel() + 1);
-        this.tache.setState("TODO");
+        this.tache.setState(State.TODO);
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty("ID", this.id ,true);
         this.ajoutProperty( "DEPENDENCE", tache.getId(), true);
@@ -94,7 +94,7 @@ public class Tache {
         this.ajoutProperty("ID", this.id, true);
     }
 
-    private void setState(String state){
+    private void setState(State state){
         tache.setState(state);
     }
 
@@ -185,14 +185,14 @@ public class Tache {
         tache.setTitle(title);
     }
 
-    public boolean changeState(String state){
+    public boolean changeState(State state){
         if(tache.getState().equals(state)){
             return false;
         }
         if(tache.getState().equals("DONE") && state.equals("TODO")){
             return false;
         }
-        String log = "- State \"" + state + "\" FROM \"" + tache.getState() + "\" ";
+        String log = "- State \"" + state.toString() + "\" FROM \"" + tache.getState().toString() + "\" ";
         this.ajoutLogBook(log);
         this.tache.setState(state);
 
@@ -339,7 +339,18 @@ public class Tache {
                             tache = new Tache();
 
                             temp = line.split("( )+", 3);
-                            tache.setState(temp[1]);
+                            if(temp[1].equals(State.TODO.toString())){
+                                tache.setState(State.TODO);
+                            }
+                            if(temp[1].equals(State.DONE.toString())){
+                                tache.setState(State.DONE);
+                            }
+                            if(temp[1].equals(State.ONGOING.toString())){
+                                tache.setState(State.ONGOING);
+                            }
+                            if(temp[1].equals(State.CANCELLED.toString())){
+                                tache.setState(State.CANCELLED);
+                            }
                             tache.changeLevel(temp[0].trim().length());
 
                             temp = temp[2].split(":");

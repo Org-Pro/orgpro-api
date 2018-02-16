@@ -9,10 +9,11 @@ public class Main {
 
     public static void main(String[] args){
 
-        /*System.out.println("Org-Pro");
-        Tache tache = new Tache("Faire les courses",3);
+        System.out.println("Org-Pro");
+        Tache tache = new Tache("Faire les courses");
         Tache t = new Tache("Test");
-        tache.changeState("DONE");
+        tache.changeState(State.ONGOING);
+        tache.changeState(State.DONE);
         String tag = "COURSE";
         tache.ajoutTag(tag);
         tag = "URGENT";
@@ -32,12 +33,12 @@ public class Main {
         tache.ecritureFichier("liste.org",false);
         t.ecritureFichier("liste.org",true);
         t1.ecritureFichier("liste.org",true);
-        List<Tache> list = new ArrayList<Tache>();
-        Tache.lectureFichier("liste.org", list);
+        List<Tache> list;
+        list = Tache.lectureFichier("liste.org");
 
         for (Tache ele : list){
             System.out.println(ele.toString());
-        }*/
+        }
     }
 
 
