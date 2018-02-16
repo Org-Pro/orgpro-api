@@ -189,7 +189,7 @@ public class Tache {
         if(tache.getState().equals(state)){
             return false;
         }
-        if(tache.getState().equals("DONE") && state.equals("TODO")){
+        if(tache.getState().toString().equals("DONE") && state.toString().equals("TODO")){
             return false;
         }
         String log = "- State \"" + state.toString() + "\" FROM \"" + tache.getState().toString() + "\" ";
