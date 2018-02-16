@@ -310,14 +310,14 @@ public class TacheTest {
         String propertiesName = "NUMERO";
         String propertiesValue = "4";
         tache.ajoutProperty(propertiesName,propertiesValue,false);
-        tache.supprimerProperty(propertiesName);
+        tache.supprimerProperty(propertiesName, false);
         assertEquals(tache.getProperties().get(propertiesName),null);
     }
 
     @Test
     public void testSupprimerPropertiesID() throws Exception {
         String propertiesName = "ID";
-        tache.supprimerProperty(propertiesName);
+        tache.supprimerProperty(propertiesName,false);
         assertEquals(tache.getProperties().get(propertiesName),tache.getId());
     }
 

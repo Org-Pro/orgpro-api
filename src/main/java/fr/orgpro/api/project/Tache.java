@@ -79,13 +79,13 @@ public class Tache {
     }
 
     public void setDependance(Tache tache){
-        this.supprimerProperty("DEPENDENCE");
+        this.supprimerProperty("DEPENDENCE", true);
         this.tache.setLevel(tache.getLevel() + 1);
         this.ajoutProperty( "DEPENDENCE", tache.getId(), true);
     }
 
     public void removeDependance(){
-        this.supprimerProperty("DEPENDENCE");
+        this.supprimerProperty("DEPENDENCE", true);
         this.tache.setLevel(this.tache.getLevel() - 1);
     }
 
@@ -302,8 +302,8 @@ public class Tache {
         return true;
     }
 
-    public void supprimerProperty(String name){
-        if(name.equals("ID")){
+    public void supprimerProperty(String name, boolean interne){
+        if(!interne && (name.equals("ID") || name.equals("DEPENDENCE"))){
             return;
         }
         OrgProperties properties = tache.getProperties();
