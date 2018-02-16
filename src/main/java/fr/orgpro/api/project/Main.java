@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args){
 
-        System.out.println("Org-Pro");
+        /*System.out.println("Org-Pro");
         Tache tache = new Tache("Faire les courses");
         Tache t = new Tache("Test");
         tache.changeState(State.ONGOING);
@@ -38,7 +38,7 @@ public class Main {
 
         for (Tache ele : list){
             System.out.println(ele.toString());
-        }
+        }*/
     }
 
 
