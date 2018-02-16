@@ -145,6 +145,36 @@ public class TacheTest {
     }
 
     @Test
+    public void testChangeStateDoneOngoing() throws  Exception {
+        tache.changeState(State.DONE);
+        assertEquals(tache.changeState(State.ONGOING),false);
+    }
+
+    @Test
+    public void testChangeStateOngoingTodo() throws  Exception {
+        tache.changeState(State.ONGOING);
+        assertEquals(tache.changeState(State.TODO),false);
+    }
+
+    @Test
+    public void testChangeStateCancelledDone() throws  Exception {
+        tache.changeState(State.CANCELLED);
+        assertEquals(tache.changeState(State.DONE),false);
+    }
+
+    @Test
+    public void testChangeStateCancelledOngoing() throws  Exception {
+        tache.changeState(State.CANCELLED);
+        assertEquals(tache.changeState(State.ONGOING),false);
+    }
+
+    @Test
+    public void testChangeStateCancelledTodo() throws  Exception {
+        tache.changeState(State.CANCELLED);
+        assertEquals(tache.changeState(State.TODO),false);
+    }
+
+    @Test
     public void testChangeTitle() throws Exception {
         String title2 = "Reviser exam";
         tache.changeTitle(title2);

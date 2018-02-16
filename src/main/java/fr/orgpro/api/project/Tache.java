@@ -189,9 +189,25 @@ public class Tache {
         if(tache.getState().equals(state)){
             return false;
         }
-        if(tache.getState().toString().equals("DONE") && state.toString().equals("TODO")){
+        if(tache.getState().toString().equals(State.ONGOING.toString()) && state.toString().equals(State.TODO.toString())){
             return false;
         }
+        if(tache.getState().toString().equals(State.DONE.toString()) && state.toString().equals(State.TODO.toString())){
+            return false;
+        }
+        if(tache.getState().toString().equals(State.DONE.toString()) && state.toString().equals(State.ONGOING.toString())){
+            return false;
+        }
+        if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.TODO.toString())){
+            return false;
+        }
+        if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.ONGOING.toString())){
+            return false;
+        }
+        if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.DONE.toString())){
+            return false;
+        }
+
         String log = "- State \"" + state.toString() + "\" FROM \"" + tache.getState().toString() + "\" ";
         this.ajoutLogBook(log);
         this.tache.setState(state);
