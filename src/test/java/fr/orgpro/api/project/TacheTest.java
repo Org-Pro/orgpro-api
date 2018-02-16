@@ -379,8 +379,9 @@ public class TacheTest {
         for (Tache ele : list){
             sList.append(ele.toString());
         }
-
         assertEquals(sBase.toString(), sList.toString());
+        File file = new File(path);
+        file.delete();
         path = "http://org";
         assertEquals(Tache.lectureFichier(path), null);
 
