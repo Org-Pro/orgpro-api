@@ -464,4 +464,25 @@ public class TacheTest {
         assertEquals(Tache.supprimerTache(taches,-1),false);
     }
 
+    @Test
+    public void testSetDependanceListe() throws Exception {
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        Tache t3 = new Tache("t3");
+        Tache t4 = new Tache("t4");
+        List<Tache> taches = new ArrayList<Tache>();
+        taches.add(t1);
+        taches.add(t2);
+        taches.add(t3);
+        taches.add(t4);
+        assertEquals(Tache.setDependanceListe(taches, -1, 0), false);
+        assertEquals(Tache.setDependanceListe(taches, 0, -1), false);
+        assertEquals(Tache.setDependanceListe(taches, 0, 0), false);
+        assertEquals(Tache.setDependanceListe(taches, 10, 0), false);
+        assertEquals(Tache.setDependanceListe(taches, 0, 10), false);
+        assertEquals(Tache.setDependanceListe(taches, 2, 3), true);
+        assertEquals(Tache.setDependanceListe(taches, 1, 0), true);
+        assertEquals(Tache.setDependanceListe(taches, 0, 3), false);
+    }
+
 }

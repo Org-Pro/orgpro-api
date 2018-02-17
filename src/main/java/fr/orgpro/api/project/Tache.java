@@ -336,7 +336,6 @@ public class Tache {
             return false;
         }
         if(list.size() > numTache + 1){
-            System.out.println(list.get(numTache + 1).getLevel() + " > " + list.get(numTache).getLevel());
             if (list.get(numTache + 1).getLevel() > list.get(numTache).getLevel()){
                 return false;
             }
