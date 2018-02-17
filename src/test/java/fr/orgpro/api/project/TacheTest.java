@@ -443,7 +443,7 @@ public class TacheTest {
         assertEquals(taches.contains(t1),true);
         assertEquals(taches.contains(t2),false);
         assertEquals(taches.contains(t3),true);
-        assertEquals(taches.contains(t4),true);
+        assertEquals(taches.contains(t4),false);
     }
 
     @Test
