@@ -39,11 +39,25 @@ public class Main {
         System.out.println(list.size());
 
         for (Tache ele : list){
-            System.out.print(ele.toString());
+
+            System.out.println(ele.toString());
         }
-        System.out.println(Tache.setDependanceListe(list, 0, 2));
-        for (Tache ele : list){
-            System.out.print(ele.toString());
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        Tache t3 = new Tache("t3");
+        Tache t4 = new Tache("t4");
+
+        t2.setDependance(t1);
+        t3.setDependance(t1);
+        t4.setDependance(t3);
+        List<Tache> taches = new ArrayList<Tache>();
+        taches.add(t1);
+        taches.add(t2);
+        taches.add(t3);
+        taches.add(t4);
+        Tache.supprimerTache(taches,1);
+        for (Tache ele : taches){
+            System.out.println(ele.toString());
         }*/
 
     }
