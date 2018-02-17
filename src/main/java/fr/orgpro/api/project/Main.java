@@ -9,9 +9,9 @@ public class Main {
 
     public static void main(String[] args){
 
-        /*System.out.println("Org-Pro");
-        Tache tache = new Tache("Faire les courses");
-        Tache t = new Tache("Test");
+        /*ystem.out.println("Org-Pro");
+        Tache tache = new Tache("Faire les courses : 0");
+        Tache t = new Tache("Test : 1");
         tache.changeState(State.ONGOING);
         tache.changeState(State.DONE);
         String tag = "COURSE";
@@ -29,16 +29,23 @@ public class Main {
         //System.out.println(t);
         tache.minuteur();
         tache.minuteur();
-        Tache t1 = new Tache("");
+        Tache t1 = new Tache("2");
+        t1.setDependance(tache);
         tache.ecritureFichier("liste.org",false);
         t.ecritureFichier("liste.org",true);
         t1.ecritureFichier("liste.org",true);
         List<Tache> list;
         list = Tache.lectureFichier("liste.org");
+        System.out.println(list.size());
 
         for (Tache ele : list){
-            System.out.println(ele.toString());
+            System.out.print(ele.toString());
+        }
+        System.out.println(Tache.setDependanceListe(list, 0, 2));
+        for (Tache ele : list){
+            System.out.print(ele.toString());
         }*/
+
     }
 
 

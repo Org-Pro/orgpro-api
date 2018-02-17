@@ -12,10 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by sartr on 01/02/2018.
@@ -334,6 +331,28 @@ public class Tache {
         return true;
     }
 
+    public static boolean setDependanceListe(List<Tache> list, int numTache, int numTacheDep){
+        if(numTache < 0 || list.size() - 1 < numTache || numTacheDep < 0 || list.size() - 1 < numTacheDep || numTache == numTacheDep){
+            return false;
+        }
+        if(list.size() > numTache + 1){
+            System.out.println(list.get(numTache + 1).getLevel() + " > " + list.get(numTache).getLevel());
+            if (list.get(numTache + 1).getLevel() > list.get(numTache).getLevel()){
+                return false;
+            }
+        }
+        list.get(numTache).setDependance(list.get(numTacheDep));
+        Tache tache = list.get(numTache);
+        list.remove(numTache);
+        if(numTache < numTacheDep){
+            list.add(numTacheDep, tache);
+        }else {
+            list.add(numTacheDep + 1, tache);
+        }
+
+        return true;
+    }
+
     public static List<Tache> lectureFichier(String path){
         List<Tache> list = new ArrayList<Tache>();
 
@@ -380,7 +399,7 @@ public class Tache {
                             long minute = Long.parseLong(temp[2].trim());
                             long seconde = Long.parseLong(temp[3].trim());
                             tache.setClock((heure * 3600000) + (minute * 60000) + (seconde * 1000 ));
-                        }else if((line.contains(CLOSED) || line.contains(DEADLINE) || line.contains(SCHEDULED)) && tache != null){
+                        }else if((line.trim().startsWith(CLOSED) || line.trim().startsWith(DEADLINE) || line.trim().startsWith(SCHEDULED)) && tache != null){
                             temp = line.split(">");
                             for (String ele : temp){
                                 String[] s = ele.split("<");
