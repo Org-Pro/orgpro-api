@@ -433,12 +433,12 @@ public class TacheTest {
 
         t2.setDependance(t1);
         t3.setDependance(t1);
-        t4.setDependance(t3);
+        t4.setDependance(t2);
         List<Tache> taches = new ArrayList<Tache>();
         taches.add(t1);
         taches.add(t2);
-        taches.add(t3);
         taches.add(t4);
+        taches.add(t3);
         Tache.supprimerTache(taches,1);
         assertEquals(taches.contains(t1),true);
         assertEquals(taches.contains(t2),false);
@@ -459,9 +459,8 @@ public class TacheTest {
         List<Tache> taches = new ArrayList<Tache>();
         taches.add(t1);
         taches.add(t2);
-        taches.add(t4);
         taches.add(t3);
-        assertEquals(Tache.supprimerTache(taches,-1),false);
+        taches.add(t4);
         assertEquals(Tache.supprimerTache(taches,-1),false);
     }
 
