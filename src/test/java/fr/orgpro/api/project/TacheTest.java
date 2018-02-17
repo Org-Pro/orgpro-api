@@ -459,8 +459,8 @@ public class TacheTest {
         List<Tache> taches = new ArrayList<Tache>();
         taches.add(t1);
         taches.add(t2);
-        taches.add(t3);
         taches.add(t4);
+        taches.add(t3);
         assertEquals(Tache.supprimerTache(taches,-1),false);
         assertEquals(Tache.supprimerTache(taches,-1),false);
     }
