@@ -426,6 +426,30 @@ public class Tache {
         return list;
     }
 
+    public static boolean supprimerTache (List<Tache> taches, int numTache) {
+        if(numTache < 0 || taches == null){
+            return false;
+        }
+        List<Tache> tacheSup = new ArrayList<Tache>();
+        int level = taches.get(numTache).getLevel();
+        tacheSup.add(taches.get(numTache));
+        int i;
+        for(i=numTache+1; i < taches.size(); i++){
+            if(taches.get(i).getLevel() <= level){
+                break;
+            }else{
+                tacheSup.add(taches.get(i));
+            }
+        }
+        if(tacheSup.isEmpty()){
+            return false;
+        }
+        for(Tache tSup : tacheSup){
+            taches.remove(tSup);
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         return ecriture.whiteSpacedHead(tache,tache.getLevel(),true);

@@ -423,4 +423,46 @@ public class TacheTest {
         assertEquals(Tache.lectureFichier(path), null);
 
     }
+
+    @Test
+    public void testSupprimerTache() throws Exception {
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        Tache t3 = new Tache("t3");
+        Tache t4 = new Tache("t4");
+
+        t2.setDependance(t1);
+        t3.setDependance(t1);
+        t4.setDependance(t3);
+        List<Tache> taches = new ArrayList<Tache>();
+        taches.add(t1);
+        taches.add(t2);
+        taches.add(t3);
+        taches.add(t4);
+        Tache.supprimerTache(taches,1);
+        assertEquals(taches.contains(t1),true);
+        assertEquals(taches.contains(t2),false);
+        assertEquals(taches.contains(t3),true);
+        assertEquals(taches.contains(t4),true);
+    }
+
+    @Test
+    public void testSupprimerTacheFalse() throws Exception {
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        Tache t3 = new Tache("t3");
+        Tache t4 = new Tache("t4");
+
+        t2.setDependance(t1);
+        t3.setDependance(t1);
+        t4.setDependance(t3);
+        List<Tache> taches = new ArrayList<Tache>();
+        taches.add(t1);
+        taches.add(t2);
+        taches.add(t3);
+        taches.add(t4);
+        assertEquals(Tache.supprimerTache(taches,-1),false);
+        assertEquals(Tache.supprimerTache(taches,-1),false);
+    }
+
 }
