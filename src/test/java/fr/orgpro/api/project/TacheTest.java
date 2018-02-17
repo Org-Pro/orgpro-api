@@ -455,7 +455,7 @@ public class TacheTest {
 
         t2.setDependance(t1);
         t3.setDependance(t1);
-        t4.setDependance(t3);
+        t4.setDependance(t2);
         List<Tache> taches = new ArrayList<Tache>();
         taches.add(t1);
         taches.add(t2);
