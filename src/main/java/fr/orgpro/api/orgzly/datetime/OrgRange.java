@@ -14,6 +14,8 @@ import java.util.regex.Matcher;
 public class OrgRange {
     private OrgDateTime startTime;
     private OrgDateTime endTime;
+    private Long tempsDeb;
+    private Long tempsFin;
 
     public static OrgRange parseOrNull(String str) {
         if (OrgStringUtils.isEmpty(str)) {
@@ -91,6 +93,18 @@ public class OrgRange {
         this.endTime = endTime;
     }
 
+    public OrgRange(OrgDateTime fromTime, OrgDateTime endTime, Long tempsDeb, Long tempsFin) {
+        if (fromTime == null) {
+            throw new IllegalArgumentException("OrgRange cannot be created from null OrgDateTime");
+        }
+
+        this.startTime = fromTime;
+        this.endTime = endTime;
+        this.tempsDeb = tempsDeb;
+        this.tempsFin = tempsFin;
+    }
+
+
     public OrgDateTime getStartTime() {
         return startTime;
     }
@@ -108,12 +122,22 @@ public class OrgRange {
 
     public String toString() {
         StringBuilder s = new StringBuilder();
-
+        s.append("- ");
         s.append(startTime);
 
         if (endTime != null) {
             s.append("--");
             s.append(endTime);
+
+            if(tempsDeb != null && tempsFin !=null){
+                Long temps = tempsFin - tempsDeb;
+                int heure = (int)(temps / 1000 / 60 / 60);
+                int minute = (int)(temps / 1000 / 60  - (heure * 60));
+                s.append(" ");
+                s.append(heure);
+                s.append(":");
+                s.append(minute);
+            }
         }
 
         return s.toString();

@@ -6,18 +6,27 @@ import fr.orgpro.api.orgzly.datetime.OrgDateTime;
 import fr.orgpro.api.orgzly.datetime.OrgRange;
 import fr.orgpro.api.orgzly.parser.OrgParserWriter;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by sartr on 01/02/2018.
  */
 public class Tache {
+    private static final String ID = "ID";
+    private static final String CLOSED = "CLOSED:";
+    private static final String DEADLINE = "DEADLINE:";
+    private static final String SCHEDULED = "SCHEDULED:";
+    private static final String CLOCK = "CLOCK:";
+    private static final String PROPERTIES = ":PROPERTIES:";
+    private static final String END = ":END:";
+    private static final String LOGBOOK = ":LOGBOOK:";
+
     private OrgHead tache;
 
     private OrgParserWriter ecriture;
@@ -26,12 +35,17 @@ public class Tache {
     private String id;
     private Long valMinuteur = null;
 
+    private Tache(){
+        this.ecriture = new OrgParserWriter();
+        this.tache = new OrgHead();
+        this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    }
 
     public Tache(String title) {
         this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
         this.tache.setLevel(1);
-        this.tache.setState("TODO");
+        this.tache.setState(State.TODO);
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty("ID", this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -44,7 +58,7 @@ public class Tache {
         this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
         this.tache.setLevel(level);
-        this.tache.setState("TODO");
+        this.tache.setState(State.TODO);
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty("ID", this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -54,7 +68,7 @@ public class Tache {
         this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
         this.tache.setLevel(tache.getLevel() + 1);
-        this.tache.setState("TODO");
+        this.tache.setState(State.TODO);
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty("ID", this.id ,true);
         this.ajoutProperty( "DEPENDENCE", tache.getId(), true);
@@ -62,14 +76,27 @@ public class Tache {
     }
 
     public void setDependance(Tache tache){
-        this.supprimerProperty("DEPENDENCE");
+        this.supprimerProperty("DEPENDENCE", true);
         this.tache.setLevel(tache.getLevel() + 1);
         this.ajoutProperty( "DEPENDENCE", tache.getId(), true);
     }
 
     public void removeDependance(){
-        this.supprimerProperty("DEPENDENCE");
+        this.supprimerProperty("DEPENDENCE", true);
         this.tache.setLevel(this.tache.getLevel() - 1);
+    }
+
+    private void setId(String id) {
+        this.id = id;
+        this.ajoutProperty("ID", this.id, true);
+    }
+
+    private void setState(State state){
+        tache.setState(state);
+    }
+
+    private void setClock(Long time){
+        tache.setClock(time);
     }
 
     /**
@@ -81,10 +108,13 @@ public class Tache {
             valMinuteur = System.currentTimeMillis();
             return true;
         }else{
+            Long valEndMinuteur = System.currentTimeMillis();
+            String s = new OrgRange(new OrgDateTime(valMinuteur , true), new OrgDateTime(valEndMinuteur , true), valMinuteur, valEndMinuteur).toString();
+            this.ajoutLogBookString(s);
             if(tache.getClock() == null){
-                tache.setClock(System.currentTimeMillis() - valMinuteur);
+                tache.setClock(valEndMinuteur - valMinuteur);
             }else{
-                tache.setClock(tache.getClock() + (System.currentTimeMillis() - valMinuteur));
+                tache.setClock(tache.getClock() + (valEndMinuteur - valMinuteur));
             }
             valMinuteur = null;
             return false;
@@ -101,6 +131,10 @@ public class Tache {
 
     public Long getClock(){
         return tache.getClock();
+    }
+
+    public String getClockString(){
+        return tache.getClockString();
     }
 
     public String getTitle(){
@@ -148,14 +182,30 @@ public class Tache {
         tache.setTitle(title);
     }
 
-    public boolean changeState(String state){
+    public boolean changeState(State state){
         if(tache.getState().equals(state)){
             return false;
         }
-        if(tache.getState().equals("DONE") && state.equals("TODO")){
+        if(tache.getState().toString().equals(State.ONGOING.toString()) && state.toString().equals(State.TODO.toString())){
             return false;
         }
-        String log = "- State \"" + state + "\" FROM \"" + tache.getState() + "\" ";
+        if(tache.getState().toString().equals(State.DONE.toString()) && state.toString().equals(State.TODO.toString())){
+            return false;
+        }
+        if(tache.getState().toString().equals(State.DONE.toString()) && state.toString().equals(State.ONGOING.toString())){
+            return false;
+        }
+        if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.TODO.toString())){
+            return false;
+        }
+        if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.ONGOING.toString())){
+            return false;
+        }
+        if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.DONE.toString())){
+            return false;
+        }
+
+        String log = "- State \"" + state.toString() + "\" FROM \"" + tache.getState().toString() + "\" ";
         this.ajoutLogBook(log);
         this.tache.setState(state);
 
@@ -249,8 +299,8 @@ public class Tache {
         return true;
     }
 
-    public void supprimerProperty(String name){
-        if(name.equals("ID")){
+    public void supprimerProperty(String name, boolean interne){
+        if(!interne && (name.equals("ID") || name.equals("DEPENDENCE"))){
             return;
         }
         OrgProperties properties = tache.getProperties();
@@ -264,6 +314,9 @@ public class Tache {
         tache.addLog(log);
     }
 
+    private void ajoutLogBookString(String log){
+        tache.addLog(log);
+    }
 
     public boolean ecritureFichier(String path, boolean append){
         OrgParserWriter ecriture = new OrgParserWriter();
@@ -274,6 +327,140 @@ public class Tache {
             ffw.close();
         } catch (IOException e) {
             return false;
+        }
+        return true;
+    }
+
+    public static boolean setDependanceListe(List<Tache> list, int numTache, int numTacheDep){
+        if(numTache < 0 || list.size() - 1 < numTache || numTacheDep < 0 || list.size() - 1 < numTacheDep || numTache == numTacheDep){
+            return false;
+        }
+        if(list.size() > numTache + 1){
+            if (list.get(numTache + 1).getLevel() > list.get(numTache).getLevel()){
+                return false;
+            }
+        }
+        list.get(numTache).setDependance(list.get(numTacheDep));
+        Tache tache = list.get(numTache);
+        list.remove(numTache);
+        if(numTache < numTacheDep){
+            list.add(numTacheDep, tache);
+        }else {
+            list.add(numTacheDep + 1, tache);
+        }
+
+        return true;
+    }
+
+    public static List<Tache> lectureFichier(String path){
+        List<Tache> list = new ArrayList<Tache>();
+
+        try(BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line = br.readLine();
+            String[] temp;
+            Tache tache = null;
+            while (line != null) {
+                switch (line.trim()){
+                    case "":{
+                        if(tache != null){
+                            list.add(tache);
+                            tache = null;
+                        }
+                        break;
+                    }
+                    default:{
+                        if(line.startsWith("*")){
+                            tache = new Tache();
+
+                            temp = line.split("( )+", 3);
+                            if(temp[1].equals(State.TODO.toString())){
+                                tache.setState(State.TODO);
+                            }
+                            if(temp[1].equals(State.DONE.toString())){
+                                tache.setState(State.DONE);
+                            }
+                            if(temp[1].equals(State.ONGOING.toString())){
+                                tache.setState(State.ONGOING);
+                            }
+                            if(temp[1].equals(State.CANCELLED.toString())){
+                                tache.setState(State.CANCELLED);
+                            }
+                            tache.changeLevel(temp[0].trim().length());
+
+                            temp = temp[2].split(":");
+                            tache.changeTitle(temp[0].trim());
+                            for (int i = 1; i < temp.length; i++){
+                                tache.ajoutTag(temp[i]);
+                            }
+                        }else if(line.trim().startsWith(CLOCK) && tache != null){
+                            temp = line.split(":");
+                            long heure = Long.parseLong(temp[1].trim());
+                            long minute = Long.parseLong(temp[2].trim());
+                            long seconde = Long.parseLong(temp[3].trim());
+                            tache.setClock((heure * 3600000) + (minute * 60000) + (seconde * 1000 ));
+                        }else if((line.trim().startsWith(CLOSED) || line.trim().startsWith(DEADLINE) || line.trim().startsWith(SCHEDULED)) && tache != null){
+                            temp = line.split(">");
+                            for (String ele : temp){
+                                String[] s = ele.split("<");
+                                switch (s[0].trim()){
+                                    case CLOSED:{
+                                        tache.ajoutClosed(s[1].trim());
+                                        break;
+                                    }
+                                    case DEADLINE:{
+                                        tache.ajoutDeadline(s[1].trim());
+                                    }
+                                    case SCHEDULED:{
+                                        tache.ajoutScheduled(s[1].trim());
+                                    }
+                                }
+                            }
+                        }else if(line.trim().startsWith(PROPERTIES) && tache != null){
+                            line = br.readLine().trim();
+                            while(!line.equals(END)){
+                                temp = line.split(":", 3);
+                                if(temp[1].equals(ID)){
+                                    tache.setId(temp[2].trim());
+                                }else{
+                                    tache.ajoutProperty(temp[1].trim(), temp[2].trim(), false);
+                                }
+                                line = br.readLine().trim();
+                            }
+                        }else if(line.trim().startsWith(LOGBOOK) && tache != null){
+                            line = br.readLine().trim();
+                            while(!line.equals(END)){
+                                tache.ajoutLogBookString(line);
+                                line = br.readLine().trim();
+                            }
+                        }
+                        break;
+                    }
+                }
+                line = br.readLine();
+            }
+        } catch (IOException e) {
+            return null;
+        }
+        return list;
+    }
+
+    public static boolean supprimerTache (List<Tache> taches, int numTache) {
+        if(numTache < 0 || numTache >= taches.size() || taches == null){
+            return false;
+        }
+        List<Tache> tacheSup = new ArrayList<Tache>();
+        int level = taches.get(numTache).getLevel();
+        tacheSup.add(taches.get(numTache));
+        int i;
+        for(i=numTache+1; i < taches.size(); i++){
+            if(taches.get(i).getLevel() <= level){
+                break;
+            }else{
+                tacheSup.add(taches.get(i));
+            }
+        }
+        for(Tache tSup : tacheSup){
+            taches.remove(tSup);
         }
         return true;
     }

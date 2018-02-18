@@ -1,6 +1,7 @@
 package fr.orgpro.api.orgzly;
 
 import fr.orgpro.api.orgzly.datetime.OrgRange;
+import fr.orgpro.api.project.State;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class OrgHead {
 
     private List<String> tags;
 
-    private String state;
+    private State state;
 
     private String priority;
 
@@ -217,10 +218,14 @@ public class OrgHead {
     }
 
     public String getClockString(){
-        int heure = (int)(getClock() / 1000 / 60 / 60);
-        int minute = (int)(getClock() / 1000 / 60  - (heure * 60));
-        int seconde = (int)(getClock() / 1000 - (minute * 60) - (heure * 60 * 60));
-        return heure + ":" + minute + ":" + seconde;
+        if(hasClock()) {
+            int heure = (int) (getClock() / 1000 / 60 / 60);
+            int minute = (int) (getClock() / 1000 / 60 - (heure * 60));
+            int seconde = (int) (getClock() / 1000 - (minute * 60) - (heure * 60 * 60));
+            return heure + ":" + minute + ":" + seconde;
+        }else{
+            return "0:0:0";
+        }
     }
 
     /**
@@ -241,11 +246,11 @@ public class OrgHead {
      *
      * @return state
      */
-    public String getState() {
+    public State getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(State state) {
         this.state = state;
     }
 

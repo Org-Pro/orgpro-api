@@ -69,7 +69,7 @@ public class OrgParserWriter {
 
         /* State keyword. */
         if (head.getState() != null) {
-            s.append(head.getState()).append(" ");
+            s.append(head.getState().toString()).append(" ");
         }
 
         /* Priority. */

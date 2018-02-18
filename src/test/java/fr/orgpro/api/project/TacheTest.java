@@ -4,10 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.StringWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -109,7 +106,7 @@ public class TacheTest {
 
     @Test
     public void testChangeLevelWrongLevel() throws Exception {
-        assertEquals(tache.changeLevel(0),false);
+        assertEquals(tache.changeLevel(0), false);
         assertEquals(tache.getLevel(),level);
     }
 
@@ -132,19 +129,49 @@ public class TacheTest {
 
     @Test
     public void testChangeState() throws Exception {
-        assertEquals(tache.changeState("DONE"),true);
+        assertEquals(tache.changeState(State.DONE),true);
     }
 
     @Test
     public void testChangeStateEquals() throws Exception {
-        tache.changeState("DONE");
-        assertEquals(tache.changeState("DONE"),false);
+        tache.changeState(State.DONE);
+        assertEquals(tache.changeState(State.DONE),false);
     }
 
     @Test
     public void testChangeStateDoneTodo() throws  Exception {
-        tache.changeState("DONE");
-        assertEquals(tache.changeState("TODO"),false);
+        tache.changeState(State.DONE);
+        assertEquals(tache.changeState(State.TODO),false);
+    }
+
+    @Test
+    public void testChangeStateDoneOngoing() throws  Exception {
+        tache.changeState(State.DONE);
+        assertEquals(tache.changeState(State.ONGOING),false);
+    }
+
+    @Test
+    public void testChangeStateOngoingTodo() throws  Exception {
+        tache.changeState(State.ONGOING);
+        assertEquals(tache.changeState(State.TODO),false);
+    }
+
+    @Test
+    public void testChangeStateCancelledDone() throws  Exception {
+        tache.changeState(State.CANCELLED);
+        assertEquals(tache.changeState(State.DONE),false);
+    }
+
+    @Test
+    public void testChangeStateCancelledOngoing() throws  Exception {
+        tache.changeState(State.CANCELLED);
+        assertEquals(tache.changeState(State.ONGOING),false);
+    }
+
+    @Test
+    public void testChangeStateCancelledTodo() throws  Exception {
+        tache.changeState(State.CANCELLED);
+        assertEquals(tache.changeState(State.TODO),false);
     }
 
     @Test
@@ -283,14 +310,14 @@ public class TacheTest {
         String propertiesName = "NUMERO";
         String propertiesValue = "4";
         tache.ajoutProperty(propertiesName,propertiesValue,false);
-        tache.supprimerProperty(propertiesName);
+        tache.supprimerProperty(propertiesName, false);
         assertEquals(tache.getProperties().get(propertiesName),null);
     }
 
     @Test
     public void testSupprimerPropertiesID() throws Exception {
         String propertiesName = "ID";
-        tache.supprimerProperty(propertiesName);
+        tache.supprimerProperty(propertiesName,false);
         assertEquals(tache.getProperties().get(propertiesName),tache.getId());
     }
 
@@ -299,16 +326,16 @@ public class TacheTest {
         String path = "test.org";
         tache.ecritureFichier(path,false);
         File file = new File(path);
-        assertEquals(file.exists(),true);
+        assertEquals(file.exists(), true);
         file.delete();
     }
 
     @Test
     public void testEcritureFichierFalse() throws Exception {
         String path = "?/???.org";
-        tache.ecritureFichier(path,false);
+        tache.ecritureFichier(path, false);
         File file = new File(path);
-        assertEquals(file.exists(),false);
+        assertEquals(file.exists(), false);
     }
 
     @Test
@@ -325,7 +352,7 @@ public class TacheTest {
         out.flush();
         out.close();
         in.close();
-        assertEquals(tache.toString(),out.toString());
+        assertEquals(tache.toString(), out.toString());
         file.delete();
     }
 
@@ -341,6 +368,121 @@ public class TacheTest {
             idNull = true;
         }
         assertEquals(idVide,false);
-        assertEquals(idNull,false);
+        assertEquals(idNull, false);
     }
+
+    @Test
+    public void testGetClockString() throws Exception {
+        assertEquals(tache.getClockString(), "0:0:0");
+    }
+
+    @Test
+    public void testLectureFichier() throws Exception {
+        Tache tache1 = new Tache("Faire les courses",3);
+        Tache tache2 = new Tache("Test");
+        Tache tache3 = new Tache("");
+        Tache tache4 = new Tache("Test4");
+        String path = "test.org";
+
+        tache1.changeState(State.DONE);
+        tache1.ajoutTag("COURSE");
+        tache1.ajoutTag("URGENT");
+        tache1.ajoutDeadline("2018-03-03");
+        tache1.ajoutScheduled("2018-01-31");
+        tache1.ajoutClosed("2018-02-02");
+        tache1.ajoutProperty("Liste Principal", "riz, : dinde, : huile", false);
+        tache1.ajoutProperty("Liste Secondaire", "coca,gateaux", false);
+        tache1.minuteur();
+        tache1.minuteur();
+
+        tache2.changeState(State.ONGOING);
+
+        tache3.changeState(State.CANCELLED);
+
+        tache1.ecritureFichier(path,false);
+        tache2.ecritureFichier(path,true);
+        tache3.ecritureFichier(path,true);
+        tache4.ecritureFichier(path,true);
+
+        List<Tache> list = Tache.lectureFichier(path);
+
+        StringBuilder sBase = new StringBuilder();
+        sBase.append(tache1.toString());
+        sBase.append(tache2.toString());
+        sBase.append(tache3.toString());
+        sBase.append(tache4.toString());
+
+        StringBuilder sList = new StringBuilder();
+        for (Tache ele : list){
+            sList.append(ele.toString());
+        }
+        assertEquals(sBase.toString(), sList.toString());
+        File file = new File(path);
+        file.delete();
+        path = "http://org";
+        assertEquals(Tache.lectureFichier(path), null);
+
+    }
+
+    @Test
+    public void testSupprimerTache() throws Exception {
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        Tache t3 = new Tache("t3");
+        Tache t4 = new Tache("t4");
+
+        t2.setDependance(t1);
+        t3.setDependance(t1);
+        t4.setDependance(t2);
+        List<Tache> taches = new ArrayList<Tache>();
+        taches.add(t1);
+        taches.add(t2);
+        taches.add(t4);
+        taches.add(t3);
+        Tache.supprimerTache(taches,1);
+        assertEquals(taches.contains(t1),true);
+        assertEquals(taches.contains(t2),false);
+        assertEquals(taches.contains(t3),true);
+        assertEquals(taches.contains(t4),false);
+    }
+
+    @Test
+    public void testSupprimerTacheFalse() throws Exception {
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        Tache t3 = new Tache("t3");
+        Tache t4 = new Tache("t4");
+
+        t2.setDependance(t1);
+        t3.setDependance(t1);
+        t4.setDependance(t2);
+        List<Tache> taches = new ArrayList<Tache>();
+        taches.add(t1);
+        taches.add(t2);
+        taches.add(t3);
+        taches.add(t4);
+        assertEquals(Tache.supprimerTache(taches,-1),false);
+    }
+
+    @Test
+    public void testSetDependanceListe() throws Exception {
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        Tache t3 = new Tache("t3");
+        Tache t4 = new Tache("t4");
+        List<Tache> taches = new ArrayList<Tache>();
+        taches.add(t1);
+        taches.add(t2);
+        taches.add(t3);
+        taches.add(t4);
+        assertEquals(Tache.setDependanceListe(taches, -1, 0), false);
+        assertEquals(Tache.setDependanceListe(taches, 0, -1), false);
+        assertEquals(Tache.setDependanceListe(taches, 0, 0), false);
+        assertEquals(Tache.setDependanceListe(taches, 10, 0), false);
+        assertEquals(Tache.setDependanceListe(taches, 0, 10), false);
+        assertEquals(Tache.setDependanceListe(taches, 2, 3), true);
+        assertEquals(Tache.setDependanceListe(taches, 1, 0), true);
+        assertEquals(Tache.setDependanceListe(taches, 0, 3), false);
+    }
+
 }
