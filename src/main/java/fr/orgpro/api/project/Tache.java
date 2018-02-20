@@ -299,13 +299,14 @@ public class Tache {
         return true;
     }
 
-    public void supprimerProperty(String name, boolean interne){
+    public boolean supprimerProperty(String name, boolean interne){
         if(!interne && (name.equals("ID") || name.equals("DEPENDENCE"))){
-            return;
+            return false;
         }
         OrgProperties properties = tache.getProperties();
         properties.remove(name);
         tache.setProperties(properties);
+        return true;
     }
 
     private void ajoutLogBook(String log){
