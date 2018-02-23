@@ -300,7 +300,7 @@ public class Tache {
     }
 
     public boolean supprimerProperty(String name, boolean interne){
-        if(!interne && (name.equals("ID") || name.equals("DEPENDENCE"))){
+        if(!interne && (name.toUpperCase().equals("ID") || name.toUpperCase().equals("DEPENDENCE"))){
             return false;
         }
         OrgProperties properties = tache.getProperties();
