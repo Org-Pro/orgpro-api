@@ -222,14 +222,16 @@ public class Tache {
     public void supprimerTag(String tag){
         List<String> tags = tache.getTags();
         int i = 0;
-        for (String tagTemp: tags) {
-            if(tagTemp.equals(tag)){
-                tags.remove(i);
+
+        Iterator<String> it = tags.iterator();
+        while (it.hasNext()) {
+            String ele = it.next();
+            if(ele.equals(tag)){
+                it.remove();
                 break;
             }
-            i++;
         }
-        i = 0;
+
         String[] tagsTemp = new String[tags.size()];
         for (String tagTemp: tags) {
             tagsTemp[i]=tagTemp;
