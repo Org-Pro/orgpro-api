@@ -82,10 +82,9 @@ public class TacheTest {
     public void testRemoveDependance() throws Exception {
         String title2 = "Réviser";
         Tache tache2 = new Tache(title2, tache);
-        int level2 = tache2.getLevel();
         tache2.removeDependance();
         assertEquals(tache2.getProperties().get("DEPENDENCE"),null);
-        assertEquals(tache2.getLevel(),level2-1);
+        assertEquals(tache2.getLevel(), 1);
     }
 
     @Test
