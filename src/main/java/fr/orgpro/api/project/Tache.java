@@ -83,7 +83,7 @@ public class Tache {
 
     public void removeDependance(){
         this.supprimerProperty("DEPENDENCE", true);
-        this.tache.setLevel(this.tache.getLevel() - 1);
+        this.tache.setLevel(1);
     }
 
     private void setId(String id) {
@@ -457,6 +457,23 @@ public class Tache {
         for(Tache tSup : tacheSup){
             taches.remove(tSup);
         }
+        return true;
+    }
+    
+    public static boolean deleteDependanceListe(List<Tache> list, int numTache){
+        if(numTache < 0 || list.size() - 1 < numTache){
+            return false;
+        }
+        if(list.size() > numTache + 1){
+            if (list.get(numTache + 1).getLevel() > list.get(numTache).getLevel()){
+                return false;
+            }
+        }
+        
+        list.get(numTache).removeDependance();
+        Tache tache = list.get(numTache);
+        list.remove(numTache);
+        list.add(tache);
         return true;
     }
 
