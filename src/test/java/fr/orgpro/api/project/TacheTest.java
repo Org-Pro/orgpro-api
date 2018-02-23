@@ -484,4 +484,38 @@ public class TacheTest {
         assertEquals(Tache.setDependanceListe(taches, 0, 3), false);
     }
 
+    @Test
+    public void testDeleteDependanceListe() throws Exception {
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        Tache t3 = new Tache("t3");
+        Tache t4 = new Tache("t4");
+        List<Tache> taches = new ArrayList<Tache>();
+        taches.add(t1);
+        taches.add(t2);
+        taches.add(t3);
+        taches.add(t4);
+        assertEquals(Tache.deleteDependanceListe(taches, -1), false);
+        assertEquals(Tache.deleteDependanceListe(taches, 10), false);
+
+        Tache.setDependanceListe(taches, 3,1);
+
+        assertEquals(Tache.deleteDependanceListe(taches, 1), false);
+        Tache temp = taches.get(2);
+        assertEquals(Tache.deleteDependanceListe(taches, 2), true);
+        // Pas d'items en plus
+        assertEquals(taches.size(), 4);
+        // Le dernier item est bien le bon
+        assertEquals(taches.get(taches.size()- 1).getId(), temp.getId());
+        // Le level de l'item vaut 1
+        assertEquals(taches.get(taches.size() - 1).getLevel(), 1);
+        int i = 0;
+        // L'item n'est pas dupliqué
+        for (Tache ele : taches){
+            if (ele.getId().equals(temp.getId()))
+                i++;
+        }
+        assertEquals(i, 1);
+    }
+
 }
