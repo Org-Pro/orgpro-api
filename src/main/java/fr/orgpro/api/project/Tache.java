@@ -188,20 +188,15 @@ public class Tache {
         }
         if(tache.getState().toString().equals(State.ONGOING.toString()) && state.toString().equals(State.TODO.toString())){
             return false;
-        }
-        if(tache.getState().toString().equals(State.DONE.toString()) && state.toString().equals(State.TODO.toString())){
+        }else if(tache.getState().toString().equals(State.DONE.toString()) && state.toString().equals(State.TODO.toString())){
             return false;
-        }
-        if(tache.getState().toString().equals(State.DONE.toString()) && state.toString().equals(State.ONGOING.toString())){
+        }else if(tache.getState().toString().equals(State.DONE.toString()) && state.toString().equals(State.ONGOING.toString())){
             return false;
-        }
-        if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.TODO.toString())){
+        }else if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.TODO.toString())){
             return false;
-        }
-        if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.ONGOING.toString())){
+        }else if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.ONGOING.toString())){
             return false;
-        }
-        if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.DONE.toString())){
+        }else if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.DONE.toString())){
             return false;
         }
 
@@ -376,14 +371,11 @@ public class Tache {
                             temp = line.split("( )+", 3);
                             if(temp[1].equals(State.TODO.toString())){
                                 tache.setState(State.TODO);
-                            }
-                            if(temp[1].equals(State.DONE.toString())){
+                            }else if(temp[1].equals(State.DONE.toString())){
                                 tache.setState(State.DONE);
-                            }
-                            if(temp[1].equals(State.ONGOING.toString())){
+                            }else if(temp[1].equals(State.ONGOING.toString())){
                                 tache.setState(State.ONGOING);
-                            }
-                            if(temp[1].equals(State.CANCELLED.toString())){
+                            }else if(temp[1].equals(State.CANCELLED.toString())){
                                 tache.setState(State.CANCELLED);
                             }
                             tache.changeLevel(temp[0].trim().length());
