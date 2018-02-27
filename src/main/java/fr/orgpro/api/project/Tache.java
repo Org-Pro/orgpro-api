@@ -129,6 +129,10 @@ public class Tache {
         valMinuteur = null;
     }
 
+    public State getState() {
+        return tache.getState();
+    }
+
     public Long getClock(){
         return tache.getClock();
     }
@@ -204,6 +208,19 @@ public class Tache {
         this.ajoutLogBook(log);
         this.tache.setState(state);
 
+        return true;
+    }
+
+    public boolean nextState() {
+        if(tache.getState().toString().equals(State.TODO.toString())){
+            this.setState(State.ONGOING);
+        }
+        else if(tache.getState().toString().equals(State.ONGOING.toString())){
+            this.setState(State.DONE);
+        }
+        else if(tache.getState().toString().equals(State.DONE.toString()) || tache.getState().toString().equals(State.CANCELLED.toString())){
+            return false;
+        }
         return true;
     }
 

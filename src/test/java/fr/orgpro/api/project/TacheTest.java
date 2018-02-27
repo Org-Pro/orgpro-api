@@ -518,4 +518,18 @@ public class TacheTest {
         assertEquals(i, 1);
     }
 
+    @Test
+    public void testNextStateFalse() throws Exception {
+        tache.changeState(State.DONE);
+        assertEquals(tache.nextState(),false);
+    }
+
+    @Test
+    public void testNextState() throws Exception {
+        assertEquals(tache.nextState(),true);
+        assertEquals(tache.getState(),State.ONGOING);
+        assertEquals(tache.nextState(),true);
+        assertEquals(tache.getState(),State.DONE);
+    }
+
 }
