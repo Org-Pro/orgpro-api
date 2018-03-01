@@ -83,7 +83,7 @@ public class Tache {
 
     public void removeDependance(){
         this.supprimerProperty("DEPENDENCE", true);
-        this.tache.setLevel(this.tache.getLevel() - 1);
+        this.tache.setLevel(1);
     }
 
     private void setId(String id) {
@@ -127,6 +127,10 @@ public class Tache {
     public void resetMinuteur(){
         tache.setClock(null);
         valMinuteur = null;
+    }
+
+    public State getState() {
+        return tache.getState();
     }
 
     public Long getClock(){
@@ -188,20 +192,15 @@ public class Tache {
         }
         if(tache.getState().toString().equals(State.ONGOING.toString()) && state.toString().equals(State.TODO.toString())){
             return false;
-        }
-        if(tache.getState().toString().equals(State.DONE.toString()) && state.toString().equals(State.TODO.toString())){
+        }else if(tache.getState().toString().equals(State.DONE.toString()) && state.toString().equals(State.TODO.toString())){
             return false;
-        }
-        if(tache.getState().toString().equals(State.DONE.toString()) && state.toString().equals(State.ONGOING.toString())){
+        }else if(tache.getState().toString().equals(State.DONE.toString()) && state.toString().equals(State.ONGOING.toString())){
             return false;
-        }
-        if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.TODO.toString())){
+        }else if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.TODO.toString())){
             return false;
-        }
-        if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.ONGOING.toString())){
+        }else if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.ONGOING.toString())){
             return false;
-        }
-        if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.DONE.toString())){
+        }else if(tache.getState().toString().equals(State.CANCELLED.toString()) && state.toString().equals(State.DONE.toString())){
             return false;
         }
 
@@ -209,6 +208,19 @@ public class Tache {
         this.ajoutLogBook(log);
         this.tache.setState(state);
 
+        return true;
+    }
+
+    public boolean nextState() {
+        if(tache.getState().toString().equals(State.TODO.toString())){
+            this.setState(State.ONGOING);
+        }
+        else if(tache.getState().toString().equals(State.ONGOING.toString())){
+            this.setState(State.DONE);
+        }
+        else if(tache.getState().toString().equals(State.DONE.toString()) || tache.getState().toString().equals(State.CANCELLED.toString())){
+            return false;
+        }
         return true;
     }
 
@@ -227,14 +239,16 @@ public class Tache {
     public void supprimerTag(String tag){
         List<String> tags = tache.getTags();
         int i = 0;
-        for (String tagTemp: tags) {
-            if(tagTemp.equals(tag)){
-                tags.remove(i);
+
+        Iterator<String> it = tags.iterator();
+        while (it.hasNext()) {
+            String ele = it.next();
+            if(ele.equals(tag)){
+                it.remove();
                 break;
             }
-            i++;
         }
-        i = 0;
+
         String[] tagsTemp = new String[tags.size()];
         for (String tagTemp: tags) {
             tagsTemp[i]=tagTemp;
@@ -299,13 +313,14 @@ public class Tache {
         return true;
     }
 
-    public void supprimerProperty(String name, boolean interne){
-        if(!interne && (name.equals("ID") || name.equals("DEPENDENCE"))){
-            return;
+    public boolean supprimerProperty(String name, boolean interne){
+        if(!interne && (name.toUpperCase().equals("ID") || name.toUpperCase().equals("DEPENDENCE"))){
+            return false;
         }
         OrgProperties properties = tache.getProperties();
         properties.remove(name);
         tache.setProperties(properties);
+        return true;
     }
 
     private void ajoutLogBook(String log){
@@ -375,14 +390,11 @@ public class Tache {
                             temp = line.split("( )+", 3);
                             if(temp[1].equals(State.TODO.toString())){
                                 tache.setState(State.TODO);
-                            }
-                            if(temp[1].equals(State.DONE.toString())){
+                            }else if(temp[1].equals(State.DONE.toString())){
                                 tache.setState(State.DONE);
-                            }
-                            if(temp[1].equals(State.ONGOING.toString())){
+                            }else if(temp[1].equals(State.ONGOING.toString())){
                                 tache.setState(State.ONGOING);
-                            }
-                            if(temp[1].equals(State.CANCELLED.toString())){
+                            }else if(temp[1].equals(State.CANCELLED.toString())){
                                 tache.setState(State.CANCELLED);
                             }
                             tache.changeLevel(temp[0].trim().length());
@@ -462,6 +474,23 @@ public class Tache {
         for(Tache tSup : tacheSup){
             taches.remove(tSup);
         }
+        return true;
+    }
+    
+    public static boolean deleteDependanceListe(List<Tache> list, int numTache){
+        if(numTache < 0 || list.size() - 1 < numTache){
+            return false;
+        }
+        if(list.size() > numTache + 1){
+            if (list.get(numTache + 1).getLevel() > list.get(numTache).getLevel()){
+                return false;
+            }
+        }
+        
+        list.get(numTache).removeDependance();
+        Tache tache = list.get(numTache);
+        list.remove(numTache);
+        list.add(tache);
         return true;
     }
 

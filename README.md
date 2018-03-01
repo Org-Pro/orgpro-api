@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/Org-Pro/orgpro-api.svg?branch=master)](https://travis-ci.org/Org-Pro/orgpro-api)
+[![Build Status](https://travis-ci.org/Org-Pro/orgpro-api.svg?branch=correction-methode-tache)](https://travis-ci.org/Org-Pro/orgpro-api)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9648a5e072954637af782a8451d4d3cc)](https://www.codacy.com/app/Trellorg/orgpro-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Org-Pro/orgpro-api&amp;utm_campaign=Badge_Grade)
-[![Coverage Status](https://coveralls.io/repos/github/Org-Pro/orgpro-api/badge.png?branch=master)](https://coveralls.io/github/Org-Pro/orgpro-api?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/Org-Pro/orgpro-api/badge.svg?branch=correction-methode-tache)](https://coveralls.io/github/Org-Pro/orgpro-api?branch=correction-methode-tache)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/CodeChillAlluna/code-chill/blob/master/LICENSE)
 
 <https://org-pro.github.io/orgpro-api/>
