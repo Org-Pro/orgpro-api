@@ -421,9 +421,11 @@ public class Tache {
                                     }
                                     case DEADLINE:{
                                         tache.ajoutDeadline(s[1].trim());
+                                        break;
                                     }
                                     case SCHEDULED:{
                                         tache.ajoutScheduled(s[1].trim());
+                                        break;
                                     }
                                 }
                             }
