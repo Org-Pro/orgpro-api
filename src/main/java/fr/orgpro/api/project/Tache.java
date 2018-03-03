@@ -459,6 +459,10 @@ public class Tache {
     }
 
     public static boolean supprimerTache (List<Tache> taches, int numTache) {
+        if(numTache == 0 && taches.size() == 1){
+            taches.remove(numTache);
+            return true;
+        }
         if(numTache < 0 || numTache >= taches.size() || taches == null){
             return false;
         }
