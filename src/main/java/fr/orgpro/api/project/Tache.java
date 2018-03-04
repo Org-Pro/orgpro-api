@@ -421,9 +421,11 @@ public class Tache {
                                     }
                                     case DEADLINE:{
                                         tache.ajoutDeadline(s[1].trim());
+                                        break;
                                     }
                                     case SCHEDULED:{
                                         tache.ajoutScheduled(s[1].trim());
+                                        break;
                                     }
                                 }
                             }
@@ -463,12 +465,14 @@ public class Tache {
         List<Tache> tacheSup = new ArrayList<Tache>();
         int level = taches.get(numTache).getLevel();
         tacheSup.add(taches.get(numTache));
-        int i;
-        for(i=numTache+1; i < taches.size(); i++){
-            if(taches.get(i).getLevel() <= level){
-                break;
-            }else{
-                tacheSup.add(taches.get(i));
+        if(taches.size() > numTache + 1) {
+            int i;
+            for (i = numTache + 1; i < taches.size(); i++) {
+                if (taches.get(i).getLevel() <= level) {
+                    break;
+                } else {
+                    tacheSup.add(taches.get(i));
+                }
             }
         }
         for(Tache tSup : tacheSup){

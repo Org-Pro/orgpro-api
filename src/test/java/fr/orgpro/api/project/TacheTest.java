@@ -446,6 +446,15 @@ public class TacheTest {
     }
 
     @Test
+    public void testSupprimerTacheIf() throws Exception {
+        Tache t1 = new Tache("t1");
+        List<Tache> taches = new ArrayList<Tache>();
+        taches.add(t1);
+        Tache.supprimerTache(taches,0);
+        assertEquals(taches.contains(t1),false);
+    }
+
+    @Test
     public void testSupprimerTacheFalse() throws Exception {
         Tache t1 = new Tache("t1");
         Tache t2 = new Tache("t2");
