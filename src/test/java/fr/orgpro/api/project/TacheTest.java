@@ -541,4 +541,19 @@ public class TacheTest {
         assertEquals(tache.getState(),State.DONE);
     }
 
+    @Test
+    public void testAjoutCollaborateur() throws Exception {
+        assertEquals(tache.ajoutCollaborateur("bob:"), false);
+        assertEquals(tache.ajoutCollaborateur("bob"), true);
+        assertEquals(tache.ajoutCollaborateur("jean"), true);
+    }
+
+    @Test
+    public void testSupprimerCollaborateur() throws Exception {
+        assertEquals(tache.supprimerCollaborateur("bob:"), false);
+        assertEquals(tache.supprimerCollaborateur("bob"), true);
+        tache.ajoutCollaborateur("bob");
+        assertEquals(tache.supprimerCollaborateur("bob"), true);
+    }
+
 }

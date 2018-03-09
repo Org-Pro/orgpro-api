@@ -29,8 +29,10 @@ public class Tache {
     private static final String PROP_CLOCK = "CLOCK";
     private static final String PROP_ID = "ID";
     private static final String PROP_DEPENDENCE = "DEPENDENCE";
+    private static final String PROP_COLLABORATOR = "COLLABORATOR";
 
     private OrgHead tache;
+    private List<String> lstCollaborateur;
 
     private OrgParserWriter ecriture;
     private SimpleDateFormat dateFormat;
@@ -76,6 +78,48 @@ public class Tache {
         this.ajoutProperty(PROP_ID, this.id ,true);
         this.ajoutProperty( PROP_DEPENDENCE, tache.getId(), true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    }
+
+    public boolean ajoutCollaborateur(String val){
+        if (val.contains(":")){
+            return false;
+        }
+        if(lstCollaborateur == null){
+            lstCollaborateur = new ArrayList<String>();
+        }
+        lstCollaborateur.add(val.trim());
+        ecritureCollaborateur();
+        return true;
+    }
+
+    public boolean supprimerCollaborateur(String val){
+        if (val.contains(":")){
+            return false;
+        }
+        if(lstCollaborateur == null){
+            return true;
+        }
+        lstCollaborateur.remove(val.trim());
+        ecritureCollaborateur();
+        return true;
+    }
+
+    private void ecritureCollaborateur(){
+        if (lstCollaborateur == null || lstCollaborateur.isEmpty()){
+            this.supprimerProperty(PROP_COLLABORATOR, true);
+        }else{
+            boolean premier = true;
+            StringBuilder rst = new StringBuilder();
+            for (String ele : lstCollaborateur){
+                if (premier){
+                    rst.append(ele.trim());
+                    premier = false;
+                }else{
+                    rst.append(":").append(ele.trim());
+                }
+            }
+            this.ajoutProperty(PROP_COLLABORATOR, rst.toString(), true);
+        }
     }
 
     public void setDependance(Tache tache){
