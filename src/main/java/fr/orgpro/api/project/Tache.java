@@ -139,14 +139,6 @@ public class Tache {
         return rst;
     }
 
-    /**
-     * Remet à 0 la valeur du minuteur de la tache
-     */
-    public void resetMinuteur(){
-        tache.setClock(null);
-        valMinuteur = null;
-    }
-
     public State getState() {
         return tache.getState();
     }

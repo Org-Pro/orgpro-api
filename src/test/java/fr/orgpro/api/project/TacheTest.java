@@ -104,14 +104,6 @@ public class TacheTest {
     }
 
     @Test
-    public void testResetMinuteur() throws Exception {
-        tache.minuteur();
-        tache.minuteur();
-        tache.resetMinuteur();
-        assertEquals(tache.getClock(),null);
-    }
-
-    @Test
     public void testChangeLevelWrongLevel() throws Exception {
         assertEquals(tache.changeLevel(0), false);
         assertEquals(tache.getLevel(),level);
