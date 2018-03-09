@@ -18,7 +18,6 @@ import java.util.*;
  * Created by sartr on 01/02/2018.
  */
 public class Tache {
-    private static final String ID = "ID";
     private static final String CLOSED = "CLOSED:";
     private static final String DEADLINE = "DEADLINE:";
     private static final String SCHEDULED = "SCHEDULED:";
@@ -26,6 +25,10 @@ public class Tache {
     private static final String PROPERTIES = ":PROPERTIES:";
     private static final String END = ":END:";
     private static final String LOGBOOK = ":LOGBOOK:";
+
+    private static final String PROP_CLOCK = "CLOCK";
+    private static final String PROP_ID = "ID";
+    private static final String PROP_DEPENDENCE = "DEPENDENCE";
 
     private OrgHead tache;
 
@@ -47,7 +50,7 @@ public class Tache {
         this.tache.setLevel(1);
         this.tache.setState(State.TODO);
         this.id = UUID.randomUUID().toString();
-        this.ajoutProperty("ID", this.id, true);
+        this.ajoutProperty(PROP_ID, this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     }
 
@@ -60,7 +63,7 @@ public class Tache {
         this.tache.setLevel(level);
         this.tache.setState(State.TODO);
         this.id = UUID.randomUUID().toString();
-        this.ajoutProperty("ID", this.id, true);
+        this.ajoutProperty(PROP_ID, this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     }
 
@@ -70,25 +73,25 @@ public class Tache {
         this.tache.setLevel(tache.getLevel() + 1);
         this.tache.setState(State.TODO);
         this.id = UUID.randomUUID().toString();
-        this.ajoutProperty("ID", this.id ,true);
-        this.ajoutProperty( "DEPENDENCE", tache.getId(), true);
+        this.ajoutProperty(PROP_ID, this.id ,true);
+        this.ajoutProperty( PROP_DEPENDENCE, tache.getId(), true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     }
 
     public void setDependance(Tache tache){
-        this.supprimerProperty("DEPENDENCE", true);
+        this.supprimerProperty(PROP_DEPENDENCE, true);
         this.tache.setLevel(tache.getLevel() + 1);
-        this.ajoutProperty( "DEPENDENCE", tache.getId(), true);
+        this.ajoutProperty( PROP_DEPENDENCE, tache.getId(), true);
     }
 
     public void removeDependance(){
-        this.supprimerProperty("DEPENDENCE", true);
+        this.supprimerProperty(PROP_DEPENDENCE, true);
         this.tache.setLevel(1);
     }
 
     private void setId(String id) {
         this.id = id;
-        this.ajoutProperty("ID", this.id, true);
+        this.ajoutProperty(PROP_ID, this.id, true);
     }
 
     private void setState(State state){
@@ -119,6 +122,21 @@ public class Tache {
             valMinuteur = null;
             return false;
         }
+    }
+
+    public boolean minuteurParPropriete(){
+        boolean rst;
+        String val = this.getProperties().get(PROP_CLOCK);
+        if(val == null){
+            valMinuteur = null;
+            rst = minuteur();
+            this.ajoutProperty(PROP_CLOCK, valMinuteur.toString(), true);
+        }else{
+            valMinuteur = Long.parseLong(val);
+            rst = minuteur();
+            this.supprimerProperty(PROP_CLOCK, true);
+        }
+        return rst;
     }
 
     /**
@@ -174,7 +192,7 @@ public class Tache {
     }
 
     public boolean changeLevel(int level){
-        if(level < 1 || this.getProperties().get("DEPENDENCE")!= null){
+        if(level < 1 || this.getProperties().get(PROP_DEPENDENCE)!= null){
             return false;
         }else{
             tache.setLevel(level);
@@ -304,7 +322,7 @@ public class Tache {
         if(constructor){
             tache.addProperty(name,value);
         }else{
-            if(name2.equals("ID") || name2.equals("DEPENDENCE")){
+            if(name2.equals(PROP_ID) || name2.equals(PROP_DEPENDENCE)){
                 return false;
             }else{
                 tache.addProperty(name,value);
@@ -314,7 +332,7 @@ public class Tache {
     }
 
     public boolean supprimerProperty(String name, boolean interne){
-        if(!interne && (name.toUpperCase().equals("ID") || name.toUpperCase().equals("DEPENDENCE"))){
+        if(!interne && (name.toUpperCase().equals(PROP_ID) || name.toUpperCase().equals(PROP_DEPENDENCE))){
             return false;
         }
         OrgProperties properties = tache.getProperties();
@@ -433,8 +451,10 @@ public class Tache {
                             line = br.readLine().trim();
                             while(!line.equals(END)){
                                 temp = line.split(":", 3);
-                                if(temp[1].equals(ID)){
+                                if(temp[1].equals(PROP_ID)){
                                     tache.setId(temp[2].trim());
+                                }else if(temp[1].equals(PROP_DEPENDENCE)) {
+                                    tache.ajoutProperty(temp[1].trim(), temp[2].trim(), true);
                                 }else{
                                     tache.ajoutProperty(temp[1].trim(), temp[2].trim(), false);
                                 }

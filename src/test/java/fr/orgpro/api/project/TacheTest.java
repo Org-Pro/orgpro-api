@@ -96,6 +96,14 @@ public class TacheTest {
     }
 
     @Test
+    public void testMinuteurParPropriete() throws Exception {
+        assertEquals(tache.minuteurParPropriete(),true);
+        assertEquals(tache.minuteurParPropriete(), false);
+        assertEquals(tache.minuteurParPropriete(), true);
+        assertEquals(tache.minuteurParPropriete(), false);
+    }
+
+    @Test
     public void testResetMinuteur() throws Exception {
         tache.minuteur();
         tache.minuteur();
