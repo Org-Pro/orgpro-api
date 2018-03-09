@@ -358,7 +358,8 @@ public class Tache {
         if(constructor){
             tache.addProperty(name,value);
         }else{
-            if(name2.equals(PROP_ID) || name2.equals(PROP_DEPENDENCE)){
+            if(name2.equals(PROP_ID) || name2.equals(PROP_DEPENDENCE)
+                    || name2.equals(PROP_CLOCK) || name2.equals(PROP_COLLABORATOR)){
                 return false;
             }else{
                 tache.addProperty(name,value);
@@ -368,7 +369,8 @@ public class Tache {
     }
 
     public boolean supprimerProperty(String name, boolean interne){
-        if(!interne && (name.toUpperCase().equals(PROP_ID) || name.toUpperCase().equals(PROP_DEPENDENCE))){
+        if(!interne && (name.toUpperCase().equals(PROP_ID) || name.toUpperCase().equals(PROP_DEPENDENCE)
+                || name.toUpperCase().equals(PROP_CLOCK) || name.toUpperCase().equals(PROP_COLLABORATOR))){
             return false;
         }
         OrgProperties properties = tache.getProperties();
@@ -489,8 +491,13 @@ public class Tache {
                                 temp = line.split(":", 3);
                                 if(temp[1].equals(PROP_ID)){
                                     tache.setId(temp[2].trim());
-                                }else if(temp[1].equals(PROP_DEPENDENCE)) {
+                                }else if(temp[1].equals(PROP_DEPENDENCE) || temp[1].equals(PROP_CLOCK)) {
                                     tache.ajoutProperty(temp[1].trim(), temp[2].trim(), true);
+                                }else if(temp[1].equals(PROP_COLLABORATOR)){
+                                    tache.ajoutProperty(PROP_COLLABORATOR, temp[2].trim(), true);
+                                    tache.lstCollaborateur = new ArrayList<String>();
+                                    temp = temp[2].trim().split(":");
+                                    tache.lstCollaborateur.addAll(Arrays.asList(temp));
                                 }else{
                                     tache.ajoutProperty(temp[1].trim(), temp[2].trim(), false);
                                 }
