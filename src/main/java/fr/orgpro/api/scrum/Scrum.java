@@ -25,8 +25,10 @@ public class Scrum {
     public static List<Tache> listerTacheScheduled(List<Tache> liste){
         List<Tache> taches = new ArrayList<Tache>();
         for(Tache tache : liste){
-            if(tache.getScheduled().before(new Date()) && tache.getState() == State.TODO){
-                taches.add(tache);
+            if(tache.getScheduled() != null) {
+                if (tache.getScheduled().before(new Date()) && tache.getState() == State.TODO) {
+                    taches.add(tache);
+                }
             }
         }
         return taches;
