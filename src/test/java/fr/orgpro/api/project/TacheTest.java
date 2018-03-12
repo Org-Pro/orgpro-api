@@ -404,6 +404,7 @@ public class TacheTest {
         tache1.setDependance(tache2);
         tache1.minuteur();
         tache1.minuteur();
+        tache1.ajoutCollaborateur("bob");
 
         tache1.ecritureFichier(path,false);
         tache2.ecritureFichier(path,true);
