@@ -376,6 +376,11 @@ public class TacheTest {
     }
 
     @Test
+    public void testGetClock() throws Exception {
+        assertEquals(tache.getClock(), null);
+    }
+
+    @Test
     public void testLectureFichier() throws Exception {
         Tache tache1 = new Tache("Faire les courses",3);
         Tache tache2 = new Tache("Test");
@@ -395,8 +400,10 @@ public class TacheTest {
         tache1.minuteur();
 
         tache2.changeState(State.ONGOING);
-
         tache3.changeState(State.CANCELLED);
+        tache1.setDependance(tache2);
+        tache1.minuteur();
+        tache1.minuteur();
 
         tache1.ecritureFichier(path,false);
         tache2.ecritureFichier(path,true);
