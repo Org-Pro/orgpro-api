@@ -96,11 +96,11 @@ public class TacheTest {
     }
 
     @Test
-    public void testResetMinuteur() throws Exception {
-        tache.minuteur();
-        tache.minuteur();
-        tache.resetMinuteur();
-        assertEquals(tache.getClock(),null);
+    public void testMinuteurParPropriete() throws Exception {
+        assertEquals(tache.minuteurParPropriete(),true);
+        assertEquals(tache.minuteurParPropriete(), false);
+        assertEquals(tache.minuteurParPropriete(), true);
+        assertEquals(tache.minuteurParPropriete(), false);
     }
 
     @Test
@@ -376,6 +376,11 @@ public class TacheTest {
     }
 
     @Test
+    public void testGetClock() throws Exception {
+        assertEquals(tache.getClock(), null);
+    }
+
+    @Test
     public void testLectureFichier() throws Exception {
         Tache tache1 = new Tache("Faire les courses",3);
         Tache tache2 = new Tache("Test");
@@ -395,8 +400,11 @@ public class TacheTest {
         tache1.minuteur();
 
         tache2.changeState(State.ONGOING);
-
         tache3.changeState(State.CANCELLED);
+        tache1.setDependance(tache2);
+        tache1.minuteur();
+        tache1.minuteur();
+        tache1.ajoutCollaborateur("bob");
 
         tache1.ecritureFichier(path,false);
         tache2.ecritureFichier(path,true);
@@ -539,6 +547,21 @@ public class TacheTest {
         assertEquals(tache.getState(),State.ONGOING);
         assertEquals(tache.nextState(),true);
         assertEquals(tache.getState(),State.DONE);
+    }
+
+    @Test
+    public void testAjoutCollaborateur() throws Exception {
+        assertEquals(tache.ajoutCollaborateur("bob:"), false);
+        assertEquals(tache.ajoutCollaborateur("bob"), true);
+        assertEquals(tache.ajoutCollaborateur("jean"), true);
+    }
+
+    @Test
+    public void testSupprimerCollaborateur() throws Exception {
+        assertEquals(tache.supprimerCollaborateur("bob:"), false);
+        assertEquals(tache.supprimerCollaborateur("bob"), true);
+        tache.ajoutCollaborateur("bob");
+        assertEquals(tache.supprimerCollaborateur("bob"), true);
     }
 
 }
