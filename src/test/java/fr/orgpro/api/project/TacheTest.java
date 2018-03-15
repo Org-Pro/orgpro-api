@@ -428,7 +428,6 @@ public class TacheTest {
         file.delete();
         path = "http://org";
         assertEquals(Tache.lectureFichier(path), null);
-
     }
 
     @Test

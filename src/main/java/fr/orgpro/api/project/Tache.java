@@ -33,6 +33,7 @@ public class Tache {
 
     private OrgHead tache;
     private List<String> lstCollaborateur;
+    public static LinkedHashMap<String, String> lstHeader = null;
 
     private OrgParserWriter ecriture;
     private SimpleDateFormat dateFormat;
@@ -391,7 +392,16 @@ public class Tache {
 
     public boolean ecritureFichier(String path, boolean append){
         OrgParserWriter ecriture = new OrgParserWriter();
-        String ecrire = ecriture.whiteSpacedHead(tache,tache.getLevel(),true);
+        String ecrire = "";
+        if(!append && lstHeader != null && !lstHeader.isEmpty()){
+            StringBuilder s = new StringBuilder();
+            lstHeader.forEach((k, v) -> {
+                s.append("#+").append(k).append(": ").append(v).append("\n");
+            });
+            s.append("\n");
+            ecrire += s.toString();
+        }
+        ecrire += ecriture.whiteSpacedHead(tache,tache.getLevel(),true);
         try {
             FileWriter ffw = new FileWriter(path,append);
             ffw.write(ecrire);
@@ -399,6 +409,39 @@ public class Tache {
         } catch (IOException e) {
             return false;
         }
+        return true;
+    }
+
+    public static boolean ajoutHeader(String clef, String valeur){
+        if(lstHeader == null){
+            lstHeader = new LinkedHashMap<String, String>();
+        }
+        if(lstHeader.get(clef.trim()) != null || clef.trim().equals("") || valeur.equals("")){
+            return false;
+        }
+        lstHeader.put(clef.trim(), valeur.trim());
+        return true;
+    }
+
+    public static boolean modifierHeader(String clef, String valeur){
+        if(lstHeader == null || clef.trim().equals("") || valeur.equals("")){
+            return false;
+        }
+        if(lstHeader.get(clef.trim()) == null){
+            return false;
+        }
+        lstHeader.replace(clef.trim(), valeur.trim());
+        return true;
+    }
+
+    public static boolean supprimerHeader(String clef){
+        if(lstHeader == null || clef.trim().equals("")){
+            return false;
+        }
+        if(lstHeader.get(clef.trim()) == null){
+            return false;
+        }
+        lstHeader.remove(clef.trim());
         return true;
     }
 
@@ -424,6 +467,7 @@ public class Tache {
     }
 
     public static List<Tache> lectureFichier(String path){
+        lstHeader = null;
         List<Tache> list = new ArrayList<Tache>();
 
         try(BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -509,6 +553,13 @@ public class Tache {
                                 tache.ajoutLogBookString(line);
                                 line = br.readLine().trim();
                             }
+                        }else if(line.trim().startsWith("#+")){
+                            if(lstHeader == null){
+                                lstHeader = new LinkedHashMap<String, String>();
+                            }
+                            temp = line.split(":", 2);
+                            temp[0] = temp[0].substring(2);
+                            lstHeader.put(temp[0].trim(), temp[1].trim());
                         }
                         break;
                     }
