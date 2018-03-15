@@ -66,6 +66,7 @@ public class TacheTest {
     @Test
     public void testGetHeader() throws Exception {
         assertEquals(Tache.getHeader("test"), null);
+        assertEquals(Tache.getHeader(""), null);
         Tache.ajoutHeader("test", "1");
         assertEquals(Tache.getHeader("test"), "1");
         Tache.supprimerHeader("test");
