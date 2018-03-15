@@ -59,6 +59,7 @@ public class TacheTest {
     public void testSupprimerHeader() throws Exception {
         assertEquals(Tache.supprimerHeader("test"), false);
         Tache.ajoutHeader("test", "1");
+        assertEquals(Tache.supprimerHeader(""), false);
         assertEquals(Tache.supprimerHeader("test"), true);
     }
 
