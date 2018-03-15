@@ -40,6 +40,37 @@ public class TacheTest {
     }
 
     @Test
+    public void testAjoutHeader() throws Exception {
+        assertEquals(Tache.ajoutHeader("", "aze"), false);
+        assertEquals(Tache.ajoutHeader("test", "aze"), true);
+        Tache.supprimerHeader("test");
+    }
+
+    @Test
+    public void testModifierHeader() throws Exception {
+        Tache.ajoutHeader("test", "1");
+        assertEquals(Tache.modifierHeader("", "aze"), false);
+        assertEquals(Tache.modifierHeader("dadadz", "aze"), false);
+        assertEquals(Tache.modifierHeader("test", "test"), true);
+        Tache.supprimerHeader("test");
+    }
+
+    @Test
+    public void testSupprimerHeader() throws Exception {
+        assertEquals(Tache.supprimerHeader("test"), false);
+        Tache.ajoutHeader("test", "1");
+        assertEquals(Tache.supprimerHeader("test"), true);
+    }
+
+    @Test
+    public void testGetHeader() throws Exception {
+        assertEquals(Tache.getHeader("test"), null);
+        Tache.ajoutHeader("test", "1");
+        assertEquals(Tache.getHeader("test"), "1");
+        Tache.supprimerHeader("test");
+    }
+
+    @Test
     public void testTacheLevel() throws Exception {
         assertEquals(tache.getTitle(),title);
         assertEquals(tache.getLevel(),level);
@@ -123,8 +154,6 @@ public class TacheTest {
         assertEquals(tache.changeLevel(level),true);
         assertEquals(tache.getLevel(),level);
     }
-
-
 
     @Test
     public void testChangeState() throws Exception {
@@ -325,7 +354,9 @@ public class TacheTest {
         String path = "test.org";
         tache.ecritureFichier(path,false);
         File file = new File(path);
+        Tache.ajoutHeader("test", "valeur");
         assertEquals(file.exists(), true);
+        Tache.supprimerHeader("test");
         file.delete();
     }
 
@@ -382,6 +413,7 @@ public class TacheTest {
 
     @Test
     public void testLectureFichier() throws Exception {
+        Tache.ajoutHeader("test", "valeur");
         Tache tache1 = new Tache("Faire les courses",3);
         Tache tache2 = new Tache("Test");
         Tache tache3 = new Tache("");
@@ -424,6 +456,8 @@ public class TacheTest {
             sList.append(ele.toString());
         }
         assertEquals(sBase.toString(), sList.toString());
+        assertEquals(Tache.getHeader("test"), "valeur");
+        Tache.supprimerHeader("test");
         File file = new File(path);
         file.delete();
         path = "http://org";

@@ -33,7 +33,7 @@ public class Tache {
 
     private OrgHead tache;
     private List<String> lstCollaborateur;
-    public static LinkedHashMap<String, String> lstHeader = null;
+    private static LinkedHashMap<String, String> lstHeader = null;
 
     private OrgParserWriter ecriture;
     private SimpleDateFormat dateFormat;
@@ -421,6 +421,13 @@ public class Tache {
         }
         lstHeader.put(clef.trim(), valeur.trim());
         return true;
+    }
+
+    public static String getHeader(String clef){
+        if(lstHeader == null || clef.trim().equals("")){
+            return null;
+        }
+        return lstHeader.get(clef.trim());
     }
 
     public static boolean modifierHeader(String clef, String valeur){
