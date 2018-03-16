@@ -30,6 +30,9 @@ public class Tache {
     private static final String PROP_ID = "ID";
     private static final String PROP_DEPENDENCE = "DEPENDENCE";
     private static final String PROP_COLLABORATOR = "COLLABORATOR";
+    private static final String PROP_COST = "COST";
+
+    private static final String HEADER_COST = "COST";
 
     private OrgHead tache;
     private List<String> lstCollaborateur;
@@ -39,12 +42,14 @@ public class Tache {
     private SimpleDateFormat dateFormat;
 
     private String id;
+    private double cout;
     private Long valMinuteur = null;
 
     private Tache(){
         this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead();
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        this.cout = 0;
     }
 
     public Tache(String title) {
@@ -55,6 +60,7 @@ public class Tache {
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty(PROP_ID, this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        this.cout = 0;
     }
 
     public Tache(String title,int level) {
@@ -68,6 +74,7 @@ public class Tache {
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty(PROP_ID, this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        this.cout = 0;
     }
 
     public Tache(String title, Tache tache) {
@@ -79,6 +86,7 @@ public class Tache {
         this.ajoutProperty(PROP_ID, this.id ,true);
         this.ajoutProperty( PROP_DEPENDENCE, tache.getId(), true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        this.cout = 0;
     }
 
     public boolean ajoutCollaborateur(String val){
@@ -360,7 +368,8 @@ public class Tache {
             tache.addProperty(name,value);
         }else{
             if(name2.equals(PROP_ID) || name2.equals(PROP_DEPENDENCE)
-                    || name2.equals(PROP_CLOCK) || name2.equals(PROP_COLLABORATOR)){
+                    || name2.equals(PROP_CLOCK) || name2.equals(PROP_COLLABORATOR)
+                    || name2.equals(PROP_COST)){
                 return false;
             }else{
                 tache.addProperty(name,value);
@@ -371,7 +380,8 @@ public class Tache {
 
     public boolean supprimerProperty(String name, boolean interne){
         if(!interne && (name.toUpperCase().equals(PROP_ID) || name.toUpperCase().equals(PROP_DEPENDENCE)
-                || name.toUpperCase().equals(PROP_CLOCK) || name.toUpperCase().equals(PROP_COLLABORATOR))){
+                || name.toUpperCase().equals(PROP_CLOCK) || name.toUpperCase().equals(PROP_COLLABORATOR)
+                || name.toUpperCase().equals(PROP_COST))){
             return false;
         }
         OrgProperties properties = tache.getProperties();
@@ -416,7 +426,8 @@ public class Tache {
         if(lstHeader == null){
             lstHeader = new LinkedHashMap<String, String>();
         }
-        if(lstHeader.get(clef.trim()) != null || clef.trim().equals("") || valeur.equals("")){
+        if(clef.trim().toUpperCase().equals(HEADER_COST) ||
+                lstHeader.get(clef.trim()) != null || clef.trim().equals("") || valeur.equals("")){
             return false;
         }
         lstHeader.put(clef.trim(), valeur.trim());
@@ -431,7 +442,8 @@ public class Tache {
     }
 
     public static boolean modifierHeader(String clef, String valeur){
-        if(lstHeader == null || clef.trim().equals("") || valeur.equals("")){
+        if(clef.trim().toUpperCase().equals(HEADER_COST)
+                ||lstHeader == null || clef.trim().equals("") || valeur.equals("")){
             return false;
         }
         if(lstHeader.get(clef.trim()) == null){
@@ -442,7 +454,8 @@ public class Tache {
     }
 
     public static boolean supprimerHeader(String clef){
-        if(lstHeader == null || clef.trim().equals("")){
+        if(clef.trim().toUpperCase().equals(HEADER_COST)
+                || lstHeader == null || clef.trim().equals("")){
             return false;
         }
         if(lstHeader.get(clef.trim()) == null){
@@ -549,6 +562,9 @@ public class Tache {
                                     tache.lstCollaborateur = new ArrayList<String>();
                                     temp = temp[2].trim().split(":");
                                     tache.lstCollaborateur.addAll(Arrays.asList(temp));
+                                }else if(temp[1].equals(PROP_COST)){
+                                    tache.cout = Double.parseDouble(temp[2].trim());
+                                    tache.ajoutProperty(temp[1].trim(), temp[2].trim(), true);
                                 }else{
                                     tache.ajoutProperty(temp[1].trim(), temp[2].trim(), false);
                                 }
