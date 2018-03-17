@@ -32,7 +32,7 @@ public class Tache {
     private static final String PROP_COLLABORATOR = "COLLABORATOR";
     private static final String PROP_COST = "COST";
 
-    private static final String HEADER_COST = "COST";
+    public static final String HEADER_COST = "COST";
 
     private OrgHead tache;
     private List<String> lstCollaborateur;

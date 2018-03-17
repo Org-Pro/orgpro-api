@@ -33,4 +33,18 @@ public class Scrum {
         }
         return taches;
     }
+
+    public static Double compareCout(List<Tache> liste){
+        if(liste.size() <= 0){
+            return null;
+        }
+        double coutIteration =  Double.parseDouble(liste.get(0).getHeader(Tache.HEADER_COST));
+        double coutTache = 0;
+        for(Tache tache : liste){
+            if(tache.getLevel() == 1 && tache.getState() == State.ONGOING){
+                coutTache += tache.getCout();
+            }
+        }
+        return coutIteration-coutTache;
+    }
 }

@@ -85,4 +85,10 @@ public class ScrumTest {
 
         assertEquals(taches,list);
     }
+
+    @Test
+    public void testCompareCout() throws Exception {
+        List<Tache> taches = new ArrayList<Tache>();
+        assertEquals(Scrum.compareCout(taches),null);
+    }
 }
