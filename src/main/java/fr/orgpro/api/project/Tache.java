@@ -192,6 +192,10 @@ public class Tache {
         return rst;
     }
 
+    public double getCout() {
+        return cout;
+    }
+
     public State getState() {
         return tache.getState();
     }
