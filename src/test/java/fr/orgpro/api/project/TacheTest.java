@@ -73,6 +73,11 @@ public class TacheTest {
     }
 
     @Test
+    public void testGetCost() throws Exception {
+        assertEquals(tache.getCout(),0,0);
+    }
+
+    @Test
     public void testTacheLevel() throws Exception {
         assertEquals(tache.getTitle(),title);
         assertEquals(tache.getLevel(),level);
