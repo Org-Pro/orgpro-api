@@ -142,6 +142,14 @@ public class Tache {
         this.tache.setLevel(1);
     }
 
+    public boolean ajoutCout(double cout){
+        if(cout < 0){
+            return false;
+        }
+        this.cout = cout;
+        return true;
+    }
+
     private void setId(String id) {
         this.id = id;
         this.ajoutProperty(PROP_ID, this.id, true);
@@ -636,20 +644,6 @@ public class Tache {
         Tache tache = list.get(numTache);
         list.remove(numTache);
         list.add(tache);
-        return true;
-    }
-
-    public static boolean setCoutListe(List<Tache> list, int numTache, int cout){
-        if(numTache < 0 || list.size() - 1 < numTache || cout < 0){
-            return false;
-        }
-        int level = list.get(numTache).getLevel();
-        if(list.size() > numTache + 1) {
-            if(list.get(numTache + 1).getLevel() > level){
-                return false;
-            }
-        }
-        list.get(numTache).cout = cout;
         return true;
     }
 

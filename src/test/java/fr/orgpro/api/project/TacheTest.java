@@ -73,11 +73,6 @@ public class TacheTest {
     }
 
     @Test
-    public void testGetCost() throws Exception {
-        assertEquals(tache.getCout(),0,0);
-    }
-
-    @Test
     public void testTacheLevel() throws Exception {
         assertEquals(tache.getTitle(),title);
         assertEquals(tache.getLevel(),level);
@@ -605,17 +600,15 @@ public class TacheTest {
     }
 
     @Test
-    public void testSetCoutListe() throws Exception {
-        Tache t1 = new Tache("t1");
-        Tache t2 = new Tache("t2");
-        t2.setDependance(t1);
-        List<Tache> taches = new ArrayList<Tache>();
-        taches.add(t1);
-        taches.add(t2);
+    public void testSetCout() throws Exception {
+        double coutF = -1;
+        double coutT = 1;
 
-        assertEquals(Tache.setCoutListe(taches,-1,0), false);
-        assertEquals(Tache.setCoutListe(taches,0,1), false);
-        assertEquals(Tache.setCoutListe(taches,1,1), true);
+        assertEquals(tache.ajoutCout(coutF), false);
+        assertEquals(tache.getCout(),0,0);
+
+        assertEquals(tache.ajoutCout(coutT), true);
+        assertEquals(tache.getCout(),coutT,0);
     }
 
 }
