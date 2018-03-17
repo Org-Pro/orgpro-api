@@ -639,6 +639,20 @@ public class Tache {
         return true;
     }
 
+    public static boolean setCoutListe(List<Tache> list, int numTache, int cout){
+        if(numTache < 0 || list.size() - 1 < numTache || cout < 0){
+            return false;
+        }
+        int level = list.get(numTache).getLevel();
+        if(list.size() > numTache + 1) {
+            if(list.get(numTache + 1).getLevel() > level){
+                return false;
+            }
+        }
+        list.get(numTache).cout = cout;
+        return true;
+    }
+
     @Override
     public String toString() {
         return ecriture.whiteSpacedHead(tache,tache.getLevel(),true);

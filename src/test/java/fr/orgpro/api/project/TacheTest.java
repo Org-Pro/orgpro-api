@@ -604,4 +604,18 @@ public class TacheTest {
         assertEquals(tache.supprimerCollaborateur("bob"), true);
     }
 
+    @Test
+    public void testSetCoutListe() throws Exception {
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        t2.setDependance(t1);
+        List<Tache> taches = new ArrayList<Tache>();
+        taches.add(t1);
+        taches.add(t2);
+
+        assertEquals(Tache.setCoutListe(taches,-1,0), false);
+        assertEquals(Tache.setCoutListe(taches,0,1), false);
+        assertEquals(Tache.setCoutListe(taches,1,1), true);
+    }
+
 }
