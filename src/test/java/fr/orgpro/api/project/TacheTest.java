@@ -605,8 +605,8 @@ public class TacheTest {
 
     @Test
     public void testSetCout() throws Exception {
-        double coutF = -1;
-        double coutT = 1;
+        int coutF = -1;
+        int coutT = 1;
 
         assertEquals(tache.ajoutCout(coutF), false);
         assertEquals(tache.getCout(),0,0);
