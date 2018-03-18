@@ -90,5 +90,19 @@ public class ScrumTest {
     public void testCompareCout() throws Exception {
         List<Tache> taches = new ArrayList<Tache>();
         assertEquals(Scrum.compareCout(taches),null);
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        Tache t3 = new Tache("t3");
+        Tache.ajoutHeader(Tache.HEADER_COST,"3",true);
+        t1.ajoutCout(1);
+        t2.ajoutCout(1);
+        t3.ajoutCout(1);
+        t2.changeState(State.ONGOING);
+        t3.changeState(State.ONGOING);
+        taches.add(t1);
+        taches.add(t2);
+        taches.add(t3);
+        assertEquals(Scrum.compareCout(taches),1,0);
+
     }
 }
