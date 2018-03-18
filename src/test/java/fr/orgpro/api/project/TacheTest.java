@@ -376,8 +376,9 @@ public class TacheTest {
     @Test
     public void testToString() throws Exception {
         String path = "test.org";
-        tache.ecritureFichier(path,false);
         File file = new File(path);
+        file.delete();
+        tache.ecritureFichier(path,false);
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
         StringWriter out = new StringWriter();
         int b;
@@ -604,8 +605,8 @@ public class TacheTest {
 
     @Test
     public void testSetCout() throws Exception {
-        double coutF = -1;
-        double coutT = 1;
+        int coutF = -1;
+        int coutT = 1;
 
         assertEquals(tache.ajoutCout(coutF), false);
         assertEquals(tache.getCout(),0,0);

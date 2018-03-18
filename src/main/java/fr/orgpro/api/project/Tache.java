@@ -45,14 +45,14 @@ public class Tache {
     private SimpleDateFormat dateFormat;
 
     private String id;
-    private double cout;
+    //private double cout;
     private Long valMinuteur = null;
 
     private Tache(){
         this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead();
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        this.cout = 0;
+        //this.ajoutProperty(PROP_COST,"0",true);
     }
 
     public Tache(String title) {
@@ -60,10 +60,11 @@ public class Tache {
         this.tache = new OrgHead(title);
         this.tache.setLevel(1);
         this.tache.setState(State.TODO);
+        this.ajoutProperty(PROP_COST,"0",true);
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty(PROP_ID, this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        this.cout = 0;
+
     }
 
     public Tache(String title,int level) {
@@ -74,10 +75,11 @@ public class Tache {
         this.tache = new OrgHead(title);
         this.tache.setLevel(level);
         this.tache.setState(State.TODO);
+        this.ajoutProperty(PROP_COST,"0",true);
         this.id = UUID.randomUUID().toString();
         this.ajoutProperty(PROP_ID, this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        this.cout = 0;
+
     }
 
     public Tache(String title, Tache tache) {
@@ -86,10 +88,12 @@ public class Tache {
         this.tache.setLevel(tache.getLevel() + 1);
         this.tache.setState(State.TODO);
         this.id = UUID.randomUUID().toString();
+        this.ajoutProperty(PROP_COST,"0",true);
         this.ajoutProperty(PROP_ID, this.id ,true);
+
         this.ajoutProperty( PROP_DEPENDENCE, tache.getId(), true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        this.cout = 0;
+
     }
 
     public static boolean ajoutCollaborateurHeader(String col){
@@ -339,11 +343,13 @@ public class Tache {
         this.tache.setLevel(1);
     }
 
-    public boolean ajoutCout(double cout){
+    public boolean ajoutCout(int cout){
         if(cout < 0){
             return false;
         }
-        this.cout = cout;
+        //this.cout = cout;
+        this.supprimerProperty(PROP_COST,true);
+        this.ajoutProperty(PROP_COST, String.valueOf(cout),true);
         return true;
     }
 
@@ -397,8 +403,8 @@ public class Tache {
         return rst;
     }
 
-    public double getCout() {
-        return cout;
+    public int getCout() {
+        return Integer.parseInt(getProperties().get(PROP_COST));
     }
 
     public State getState() {
@@ -784,7 +790,7 @@ public class Tache {
                                     temp = temp[2].trim().split(":");
                                     tache.lstCollaborateur.addAll(Arrays.asList(temp));
                                 }else if(temp[1].equals(PROP_COST)){
-                                    tache.cout = Double.parseDouble(temp[2].trim());
+                                    //tache.cout = Double.parseDouble(temp[2].trim());
                                     tache.ajoutProperty(temp[1].trim(), temp[2].trim(), true);
                                 }else{
                                     tache.ajoutProperty(temp[1].trim(), temp[2].trim(), false);
