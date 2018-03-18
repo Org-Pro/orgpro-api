@@ -436,6 +436,7 @@ public class TacheTest {
         tache1.ajoutProperty("Liste Secondaire", "coca,gateaux", false);
         tache1.minuteur();
         tache1.minuteur();
+        tache1.ajoutCout(1);
 
         tache2.changeState(State.ONGOING);
         tache3.changeState(State.CANCELLED);
