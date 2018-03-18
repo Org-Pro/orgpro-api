@@ -1,6 +1,5 @@
 package fr.orgpro.api.project;
 
-import com.sun.deploy.util.ArrayUtil;
 import fr.orgpro.api.orgzly.OrgHead;
 import fr.orgpro.api.orgzly.OrgProperties;
 import fr.orgpro.api.orgzly.datetime.OrgDateTime;
@@ -11,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
