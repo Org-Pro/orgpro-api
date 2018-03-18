@@ -103,6 +103,6 @@ public class ScrumTest {
         taches.add(t2);
         taches.add(t3);
         assertEquals(Scrum.compareCout(taches),1,0);
-
+        Tache.supprimerHeader(Tache.HEADER_COST,true);
     }
 }
