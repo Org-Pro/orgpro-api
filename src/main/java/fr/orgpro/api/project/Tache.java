@@ -1,5 +1,6 @@
 package fr.orgpro.api.project;
 
+import com.sun.deploy.util.ArrayUtil;
 import fr.orgpro.api.orgzly.OrgHead;
 import fr.orgpro.api.orgzly.OrgProperties;
 import fr.orgpro.api.orgzly.datetime.OrgDateTime;
@@ -10,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -33,6 +35,7 @@ public class Tache {
     private static final String PROP_COST = "COST";
 
     public static final String HEADER_COST = "COST";
+    public static final String HEADER_COLLABORATEUR = "COLLABORATOR";
 
     private OrgHead tache;
     private List<String> lstCollaborateur;
@@ -89,29 +92,223 @@ public class Tache {
         this.cout = 0;
     }
 
+    public static boolean ajoutCollaborateurHeader(String col){
+        col = col.toLowerCase().trim();
+        if (col.equals("") || col.contains(":")){
+            return false;
+        }
+        if(lstHeader == null){
+            lstHeader = new LinkedHashMap<String, String>();
+            lstHeader.put(HEADER_COLLABORATEUR, col);
+            return true;
+        }
+        String temp = getHeader(HEADER_COLLABORATEUR);
+        if(temp != null){
+            String[] listCol = temp.split(":");
+            for(String ele : listCol){
+                if(ele.equals(col)){
+                    return false;
+                }
+            }
+            lstHeader.replace(HEADER_COLLABORATEUR, temp + ":" + col);
+            return true;
+        }else{
+            lstHeader.put(HEADER_COLLABORATEUR, col);
+            return true;
+        }
+    }
+
+    public static boolean modifierCollaborateurHeader(List<Tache> list, String oldCol, String newCol){
+        oldCol = oldCol.toLowerCase().trim();
+        newCol = newCol.toLowerCase().trim();
+        if (oldCol.equals("") || oldCol.contains(":") || newCol.equals("") || newCol.contains(":")){
+            return false;
+        }
+        if(lstHeader == null || lstHeader.isEmpty()){
+            return false;
+        }
+        String temp = getHeader(HEADER_COLLABORATEUR);
+        boolean existe = false;
+        if(temp != null){
+            String[] listCol = temp.split(":");
+
+            for(String ele : listCol){
+                if(ele.equals(newCol)){
+                    return false;
+                }
+            }
+
+            for(int i = 0; i < listCol.length; i++){
+                if(listCol[i].equals(oldCol)){
+                    listCol[i] = newCol;
+                    existe = true;
+                    break;
+                }
+            }
+            if(!existe){
+                return false;
+            }
+
+            boolean premier = true;
+            StringBuilder rst = new StringBuilder();
+            for (String ele : listCol){
+                if (premier){
+                    rst.append(ele.trim());
+                    premier = false;
+                }else{
+                    rst.append(":").append(ele.trim());
+                }
+            }
+            lstHeader.replace(HEADER_COLLABORATEUR, rst.toString());
+
+            for (Tache tache : list){
+                if(tache.lstCollaborateur != null) {
+                    for(int i = 0; i < tache.lstCollaborateur.size(); i++){
+                        if(tache.lstCollaborateur.get(i).equals(oldCol)){
+                            tache.lstCollaborateur.set(i, newCol);
+                            tache.ecritureCollaborateur();
+                            break;
+                        }
+                    }
+                }
+            }
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public static boolean supprimerCollaborateurHeader(List<Tache> list, String col){
+        col = col.toLowerCase().trim();
+        if (col.equals("") || col.contains(":")){
+            return false;
+        }
+        if(lstHeader == null || lstHeader.isEmpty()){
+            return false;
+        }
+        String temp = getHeader(HEADER_COLLABORATEUR);
+        boolean existe = false;
+        if(temp != null){
+            String[] listCol = temp.split(":");
+            List<String> newListCol = new ArrayList<String>();
+            for (String ele : listCol) {
+                if (ele.equals(col)) {
+                    existe = true;
+                    break;
+                } else {
+                    newListCol.add(ele);
+                }
+            }
+
+            if(!existe){
+                return false;
+            }
+
+            boolean premier = true;
+            StringBuilder rst = new StringBuilder();
+            for (String ele : newListCol){
+                if (premier){
+                    rst.append(ele.trim());
+                    premier = false;
+                }else{
+                    rst.append(":").append(ele.trim());
+                }
+            }
+            lstHeader.replace(HEADER_COLLABORATEUR, rst.toString());
+
+            for (Tache tache : list){
+                if(tache.lstCollaborateur != null) {
+                    for(int i = 0; i < tache.lstCollaborateur.size(); i++){
+                        if(tache.lstCollaborateur.get(i).equals(col)){
+                            tache.lstCollaborateur.remove(i);
+                            tache.ecritureCollaborateur();
+                            break;
+                        }
+                    }
+                }
+            }
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private List<String> getListCollaborateurHeader(){
+        List<String> list = new ArrayList<String>();
+        String colHeader = getHeader(HEADER_COLLABORATEUR);
+        if (colHeader == null){
+            return null;
+        }else {
+            String[] tab = colHeader.split(":");
+            Collections.addAll(list, tab);
+            return list;
+        }
+    }
+
     public boolean ajoutCollaborateur(String val){
-        if (val.contains(":")){
+        val = val.toLowerCase().trim();
+        if (val.contains(":") || val.isEmpty()){
             return false;
         }
         if(lstCollaborateur == null){
             lstCollaborateur = new ArrayList<String>();
         }
-        lstCollaborateur.add(val.trim());
+        for (String ele : lstCollaborateur){
+            if(ele.equals(val)){
+                return false;
+            }
+        }
+        boolean existe = false;
+        List<String> listColHeader = getListCollaborateurHeader();
+        if (listColHeader == null || listColHeader.isEmpty()){
+            return false;
+        }
+        for(String col : listColHeader){
+            if(col.equals(val)){
+                existe = true;
+            }
+        }
+        if (!existe){
+            return false;
+        }
+        lstCollaborateur.add(val);
         ecritureCollaborateur();
         return true;
     }
 
     public boolean supprimerCollaborateur(String val){
-        if (val.contains(":")){
+        val = val.toLowerCase().trim();
+        if (val.contains(":")|| val.isEmpty()){
             return false;
         }
-        if(lstCollaborateur == null){
-            return true;
+        if(lstCollaborateur == null ||lstCollaborateur.isEmpty()){
+            return false;
         }
-        lstCollaborateur.remove(val.trim());
-        ecritureCollaborateur();
-        return true;
+        Iterator<String> iterator = lstCollaborateur.iterator();
+        while(iterator.hasNext()){
+            String tmp = iterator.next();
+            if(tmp.equals(val)){
+                iterator.remove();
+                ecritureCollaborateur();
+                return true;
+            }
+        }
+        return false;
     }
+
+    /*private String valeurCollaborateurHeader(){
+        boolean premier = true;
+        StringBuilder rst = new StringBuilder();
+        for (String ele : lstCollaborateur){
+            if (premier){
+                rst.append(ele.trim());
+                premier = false;
+            }else{
+                rst.append(":").append(ele.trim());
+            }
+        }
+
+    }*/
 
     private void ecritureCollaborateur(){
         if (lstCollaborateur == null || lstCollaborateur.isEmpty()){

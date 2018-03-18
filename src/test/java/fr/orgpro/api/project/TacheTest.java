@@ -587,7 +587,7 @@ public class TacheTest {
         assertEquals(tache.getState(),State.DONE);
     }
 
-    @Test
+    /*@Test
     public void testAjoutCollaborateur() throws Exception {
         assertEquals(tache.ajoutCollaborateur("bob:"), false);
         assertEquals(tache.ajoutCollaborateur("bob"), true);
@@ -600,7 +600,7 @@ public class TacheTest {
         assertEquals(tache.supprimerCollaborateur("bob"), true);
         tache.ajoutCollaborateur("bob");
         assertEquals(tache.supprimerCollaborateur("bob"), true);
-    }
+    }*/
 
     @Test
     public void testSetCout() throws Exception {
