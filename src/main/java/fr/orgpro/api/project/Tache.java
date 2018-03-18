@@ -434,12 +434,16 @@ public class Tache {
         return true;
     }
 
-    public static boolean ajoutHeader(String clef, String valeur){
+    public static boolean ajoutHeader(String clef, String valeur, boolean constructor){
         if(lstHeader == null){
             lstHeader = new LinkedHashMap<String, String>();
         }
-        if(clef.trim().toUpperCase().equals(HEADER_COST) ||
-                lstHeader.get(clef.trim()) != null || clef.trim().equals("") || valeur.equals("")){
+        if(!constructor){
+            if(clef.trim().toUpperCase().equals(HEADER_COST)){
+                return false;
+            }
+        }
+        if(lstHeader.get(clef.trim()) != null || clef.trim().equals("") || valeur.equals("")){
             return false;
         }
         lstHeader.put(clef.trim(), valeur.trim());
@@ -453,9 +457,13 @@ public class Tache {
         return lstHeader.get(clef.trim());
     }
 
-    public static boolean modifierHeader(String clef, String valeur){
-        if(clef.trim().toUpperCase().equals(HEADER_COST)
-                ||lstHeader == null || clef.trim().equals("") || valeur.equals("")){
+    public static boolean modifierHeader(String clef, String valeur, boolean constructor){
+        if(!constructor){
+            if(clef.trim().toUpperCase().equals(HEADER_COST)){
+                return false;
+            }
+        }
+        if(lstHeader == null || clef.trim().equals("") || valeur.equals("")){
             return false;
         }
         if(lstHeader.get(clef.trim()) == null){
@@ -465,9 +473,13 @@ public class Tache {
         return true;
     }
 
-    public static boolean supprimerHeader(String clef){
-        if(clef.trim().toUpperCase().equals(HEADER_COST)
-                || lstHeader == null || clef.trim().equals("")){
+    public static boolean supprimerHeader(String clef, boolean constructor){
+        if(!constructor){
+            if(clef.trim().toUpperCase().equals(HEADER_COST)){
+                return false;
+            }
+        }
+        if(lstHeader == null || clef.trim().equals("")){
             return false;
         }
         if(lstHeader.get(clef.trim()) == null){

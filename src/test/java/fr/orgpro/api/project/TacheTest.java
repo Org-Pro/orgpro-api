@@ -41,35 +41,38 @@ public class TacheTest {
 
     @Test
     public void testAjoutHeader() throws Exception {
-        assertEquals(Tache.ajoutHeader("", "aze"), false);
-        assertEquals(Tache.ajoutHeader("test", "aze"), true);
-        Tache.supprimerHeader("test");
+        assertEquals(Tache.ajoutHeader("", "aze", false), false);
+        assertEquals(Tache.ajoutHeader("test", "aze", false), true);
+        assertEquals(Tache.ajoutHeader(Tache.HEADER_COST, "aze", false), false);
+        Tache.supprimerHeader("test", false);
     }
 
     @Test
     public void testModifierHeader() throws Exception {
-        Tache.ajoutHeader("test", "1");
-        assertEquals(Tache.modifierHeader("", "aze"), false);
-        assertEquals(Tache.modifierHeader("dadadz", "aze"), false);
-        assertEquals(Tache.modifierHeader("test", "test"), true);
-        Tache.supprimerHeader("test");
+        Tache.ajoutHeader("test", "1", false);
+        assertEquals(Tache.modifierHeader("", "aze", false), false);
+        assertEquals(Tache.modifierHeader("dadadz", "aze", false), false);
+        assertEquals(Tache.modifierHeader("test", "test", false), true);
+        assertEquals(Tache.modifierHeader(Tache.HEADER_COST, "aze", false), false);
+        Tache.supprimerHeader("test", false);
     }
 
     @Test
     public void testSupprimerHeader() throws Exception {
-        assertEquals(Tache.supprimerHeader("test"), false);
-        Tache.ajoutHeader("test", "1");
-        assertEquals(Tache.supprimerHeader(""), false);
-        assertEquals(Tache.supprimerHeader("test"), true);
+        assertEquals(Tache.supprimerHeader("test", false), false);
+        Tache.ajoutHeader("test", "1", false);
+        assertEquals(Tache.supprimerHeader("", false), false);
+        assertEquals(Tache.supprimerHeader("test", false), true);
+        assertEquals(Tache.supprimerHeader(Tache.HEADER_COST, false), false);
     }
 
     @Test
     public void testGetHeader() throws Exception {
         assertEquals(Tache.getHeader("test"), null);
         assertEquals(Tache.getHeader(""), null);
-        Tache.ajoutHeader("test", "1");
+        Tache.ajoutHeader("test", "1", false);
         assertEquals(Tache.getHeader("test"), "1");
-        Tache.supprimerHeader("test");
+        Tache.supprimerHeader("test", false);
     }
 
     @Test
@@ -356,9 +359,9 @@ public class TacheTest {
         String path = "test.org";
         tache.ecritureFichier(path,false);
         File file = new File(path);
-        Tache.ajoutHeader("test", "valeur");
+        Tache.ajoutHeader("test", "valeur", false);
         assertEquals(file.exists(), true);
-        Tache.supprimerHeader("test");
+        Tache.supprimerHeader("test", false);
         file.delete();
     }
 
@@ -415,7 +418,7 @@ public class TacheTest {
 
     @Test
     public void testLectureFichier() throws Exception {
-        Tache.ajoutHeader("test", "valeur");
+        Tache.ajoutHeader("test", "valeur", false);
         Tache tache1 = new Tache("Faire les courses",3);
         Tache tache2 = new Tache("Test");
         Tache tache3 = new Tache("");
@@ -459,7 +462,7 @@ public class TacheTest {
         }
         assertEquals(sBase.toString(), sList.toString());
         assertEquals(Tache.getHeader("test"), "valeur");
-        Tache.supprimerHeader("test");
+        Tache.supprimerHeader("test", false);
         File file = new File(path);
         file.delete();
         path = "http://org";
