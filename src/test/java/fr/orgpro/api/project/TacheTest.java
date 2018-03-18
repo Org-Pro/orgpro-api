@@ -376,8 +376,9 @@ public class TacheTest {
     @Test
     public void testToString() throws Exception {
         String path = "test.org";
-        tache.ecritureFichier(path,false);
         File file = new File(path);
+        file.delete();
+        tache.ecritureFichier(path,false);
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
         StringWriter out = new StringWriter();
         int b;
