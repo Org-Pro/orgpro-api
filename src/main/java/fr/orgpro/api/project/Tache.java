@@ -146,11 +146,12 @@ public class Tache {
         this.tache.setLevel(1);
     }
 
-    public boolean ajoutCout(double cout){
+    public boolean ajoutCout(int cout){
         if(cout < 0){
             return false;
         }
         //this.cout = cout;
+        this.supprimerProperty(PROP_COST,true);
         this.ajoutProperty(PROP_COST, String.valueOf(cout),true);
         return true;
     }
@@ -205,8 +206,8 @@ public class Tache {
         return rst;
     }
 
-    public double getCout() {
-        return Double.parseDouble(getProperties().get(PROP_COST));
+    public int getCout() {
+        return Integer.parseInt(getProperties().get(PROP_COST));
     }
 
     public State getState() {
