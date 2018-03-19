@@ -623,6 +623,7 @@ public class TacheTest {
         assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "jean-marais"), true);
         assertEquals(Tache.modifierCollaborateurHeader(taches, "bobi", "jean"), false);
         Tache.supprimerHeader(Tache.HEADER_COLLABORATEUR,true);
+        Tache.ajoutHeader("test", "test", false);
         assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "jean-marais"), false);
     }
 
@@ -648,6 +649,7 @@ public class TacheTest {
         assertEquals(Tache.supprimerCollaborateurHeader(taches, "bob"), true);
         assertEquals(Tache.supprimerCollaborateurHeader(taches, "dylane"), true);
         Tache.supprimerHeader(Tache.HEADER_COLLABORATEUR,true);
+        Tache.ajoutHeader("test", "test", false);
         assertEquals(Tache.supprimerCollaborateurHeader(taches, "bob"), false);
     }
 
