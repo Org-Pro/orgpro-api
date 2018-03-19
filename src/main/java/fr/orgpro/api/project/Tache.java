@@ -94,6 +94,10 @@ public class Tache {
 
     }
 
+    public static void resetHeader(){
+        lstHeader = null;
+    }
+
     public static boolean ajoutCollaborateurHeader(String col){
         col = col.toLowerCase().trim();
         if (col.equals("") || col.contains(":")){

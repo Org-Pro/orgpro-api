@@ -27,6 +27,7 @@ public class TacheTest {
         title = "faire les courses";
         level = 1 + (int)(Math.random() * 5);
         tache = new Tache(title,level);
+        Tache.resetHeader();
     }
 
     @Before
@@ -602,6 +603,63 @@ public class TacheTest {
         tache.ajoutCollaborateur("bob");
         assertEquals(tache.supprimerCollaborateur("bob"), true);
     }*/
+
+    @Test
+    public void testAjoutCollaborateurHeader() throws Exception {
+        assertEquals(Tache.ajoutCollaborateurHeader(""), false);
+        assertEquals(Tache.ajoutCollaborateurHeader("bob"), true);
+        assertEquals(Tache.ajoutCollaborateurHeader("bob"), false);
+        assertEquals(Tache.ajoutCollaborateurHeader("dylane"), true);
+        Tache.supprimerHeader(Tache.HEADER_COLLABORATEUR, true);
+        assertEquals(Tache.ajoutCollaborateurHeader("bob"), true);
+    }
+
+    @Test
+    public void testmModifierCollaborateurHeader() throws Exception {
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        Tache t3 = new Tache("t3");
+        Tache t4 = new Tache("t4");
+        List<Tache> taches = new ArrayList<Tache>();
+        taches.add(t1);
+        taches.add(t2);
+        taches.add(t3);
+        taches.add(t4);
+
+        assertEquals(Tache.modifierCollaborateurHeader(taches, "", ""), false);
+        assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "bob"), false);
+        Tache.ajoutCollaborateurHeader("bob");
+        Tache.ajoutCollaborateurHeader("dylane");
+        assertEquals(Tache.modifierCollaborateurHeader(taches, "bobi", "bob"), false);
+        assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "dylane"), false);
+        taches.get(1).ajoutCollaborateur("bob");
+        assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "jean-marais"), true);
+        Tache.supprimerHeader(Tache.HEADER_COLLABORATEUR, true);
+        assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "jean-marais"), false);
+    }
+
+    @Test
+    public void testmSupprimerCollaborateurHeader() throws Exception {
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        Tache t3 = new Tache("t3");
+        Tache t4 = new Tache("t4");
+        List<Tache> taches = new ArrayList<Tache>();
+        taches.add(t1);
+        taches.add(t2);
+        taches.add(t3);
+        taches.add(t4);
+
+        assertEquals(Tache.supprimerCollaborateurHeader(taches, ""), false);
+        assertEquals(Tache.supprimerCollaborateurHeader(taches, "bob"), false);
+        Tache.ajoutCollaborateurHeader("bob");
+        Tache.ajoutCollaborateurHeader("dylane");
+        assertEquals(Tache.supprimerCollaborateurHeader(taches, "bobi"), false);
+        taches.get(1).ajoutCollaborateur("bob");
+        assertEquals(Tache.supprimerCollaborateurHeader(taches, "bob"), true);
+        Tache.supprimerHeader(Tache.HEADER_COLLABORATEUR, true);
+        assertEquals(Tache.supprimerCollaborateurHeader(taches, "bob"), false);
+    }
 
     @Test
     public void testSetCout() throws Exception {
