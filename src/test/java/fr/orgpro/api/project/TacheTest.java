@@ -621,8 +621,9 @@ public class TacheTest {
         assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "dylane"), false);
         taches.get(1).ajoutCollaborateur("bob");
         assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "jean-marais"), true);
-        //Tache.modifierHeader(Tache.HEADER_COLLABORATEUR,"", true);
-        //assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "jean-marais"), false);
+        assertEquals(Tache.modifierCollaborateurHeader(taches, "bobi", "jean"), false);
+        Tache.supprimerHeader(Tache.HEADER_COLLABORATEUR,true);
+        assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "jean-marais"), false);
     }
 
     @Test
@@ -646,8 +647,8 @@ public class TacheTest {
         taches.get(1).ajoutCollaborateur("bob");
         assertEquals(Tache.supprimerCollaborateurHeader(taches, "bob"), true);
         assertEquals(Tache.supprimerCollaborateurHeader(taches, "dylane"), true);
-        //Tache.modifierHeader(Tache.HEADER_COLLABORATEUR,"", true);
-        //assertEquals(Tache.supprimerCollaborateurHeader(taches, "bob"), false);
+        Tache.supprimerHeader(Tache.HEADER_COLLABORATEUR,true);
+        assertEquals(Tache.supprimerCollaborateurHeader(taches, "bob"), false);
     }
 
     @Test
