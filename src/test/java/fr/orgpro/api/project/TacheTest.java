@@ -610,8 +610,8 @@ public class TacheTest {
         assertEquals(Tache.ajoutCollaborateurHeader("bob"), true);
         assertEquals(Tache.ajoutCollaborateurHeader("bob"), false);
         assertEquals(Tache.ajoutCollaborateurHeader("dylane"), true);
-        Tache.supprimerHeader(Tache.HEADER_COLLABORATEUR, true);
-        assertEquals(Tache.ajoutCollaborateurHeader("bob"), true);
+        //Tache.supprimerHeader(Tache.HEADER_COLLABORATEUR, true);
+        //assertEquals(Tache.ajoutCollaborateurHeader("bob"), true);
     }
 
     @Test
@@ -634,8 +634,8 @@ public class TacheTest {
         assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "dylane"), false);
         taches.get(1).ajoutCollaborateur("bob");
         assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "jean-marais"), true);
-        Tache.modifierHeader(Tache.HEADER_COLLABORATEUR,"", true);
-        assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "jean-marais"), false);
+        //Tache.modifierHeader(Tache.HEADER_COLLABORATEUR,"", true);
+        //assertEquals(Tache.modifierCollaborateurHeader(taches, "bob", "jean-marais"), false);
     }
 
     @Test
@@ -654,12 +654,13 @@ public class TacheTest {
         assertEquals(Tache.supprimerCollaborateurHeader(taches, "bob"), false);
         Tache.ajoutCollaborateurHeader("bob");
         Tache.ajoutCollaborateurHeader("dylane");
+        Tache.ajoutCollaborateurHeader("brigitte");
         assertEquals(Tache.supprimerCollaborateurHeader(taches, "bobi"), false);
         taches.get(1).ajoutCollaborateur("bob");
         assertEquals(Tache.supprimerCollaborateurHeader(taches, "bob"), true);
         assertEquals(Tache.supprimerCollaborateurHeader(taches, "dylane"), true);
-        Tache.modifierHeader(Tache.HEADER_COLLABORATEUR,"", true);
-        assertEquals(Tache.supprimerCollaborateurHeader(taches, "bob"), false);
+        //Tache.modifierHeader(Tache.HEADER_COLLABORATEUR,"", true);
+        //assertEquals(Tache.supprimerCollaborateurHeader(taches, "bob"), false);
     }
 
     @Test
