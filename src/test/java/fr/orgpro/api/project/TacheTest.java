@@ -589,33 +589,18 @@ public class TacheTest {
         assertEquals(tache.getState(),State.DONE);
     }
 
-    /*@Test
-    public void testAjoutCollaborateur() throws Exception {
-        assertEquals(tache.ajoutCollaborateur("bob:"), false);
-        assertEquals(tache.ajoutCollaborateur("bob"), true);
-        assertEquals(tache.ajoutCollaborateur("jean"), true);
-    }
-
-    @Test
-    public void testSupprimerCollaborateur() throws Exception {
-        assertEquals(tache.supprimerCollaborateur("bob:"), false);
-        assertEquals(tache.supprimerCollaborateur("bob"), true);
-        tache.ajoutCollaborateur("bob");
-        assertEquals(tache.supprimerCollaborateur("bob"), true);
-    }*/
-
     @Test
     public void testAjoutCollaborateurHeader() throws Exception {
         assertEquals(Tache.ajoutCollaborateurHeader(""), false);
         assertEquals(Tache.ajoutCollaborateurHeader("bob"), true);
         assertEquals(Tache.ajoutCollaborateurHeader("bob"), false);
         assertEquals(Tache.ajoutCollaborateurHeader("dylane"), true);
-        //Tache.supprimerHeader(Tache.HEADER_COLLABORATEUR, true);
-        //assertEquals(Tache.ajoutCollaborateurHeader("bob"), true);
+        Tache.supprimerHeader(Tache.HEADER_COLLABORATEUR, true);
+        assertEquals(Tache.ajoutCollaborateurHeader("bob"), true);
     }
 
     @Test
-    public void testmModifierCollaborateurHeader() throws Exception {
+    public void testModifierCollaborateurHeader() throws Exception {
         Tache t1 = new Tache("t1");
         Tache t2 = new Tache("t2");
         Tache t3 = new Tache("t3");
@@ -639,7 +624,7 @@ public class TacheTest {
     }
 
     @Test
-    public void testmSupprimerCollaborateurHeader() throws Exception {
+    public void testSupprimerCollaborateurHeader() throws Exception {
         Tache t1 = new Tache("t1");
         Tache t2 = new Tache("t2");
         Tache t3 = new Tache("t3");
@@ -661,6 +646,17 @@ public class TacheTest {
         assertEquals(Tache.supprimerCollaborateurHeader(taches, "dylane"), true);
         //Tache.modifierHeader(Tache.HEADER_COLLABORATEUR,"", true);
         //assertEquals(Tache.supprimerCollaborateurHeader(taches, "bob"), false);
+    }
+
+    @Test
+    public void testAjoutCollaborateur() throws Exception {
+        Tache t1 = new Tache("t1");
+
+        assertEquals(tache.ajoutCollaborateur(""), false);
+        assertEquals(tache.ajoutCollaborateur("bob"), false);
+        Tache.ajoutCollaborateurHeader("bob");
+        assertEquals(tache.ajoutCollaborateur("bob"), true);
+        assertEquals(tache.ajoutCollaborateur("bob"), false);
     }
 
     @Test
