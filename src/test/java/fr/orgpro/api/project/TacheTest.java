@@ -65,6 +65,7 @@ public class TacheTest {
         assertEquals(Tache.supprimerHeader("", false), false);
         assertEquals(Tache.supprimerHeader("test", false), true);
         assertEquals(Tache.supprimerHeader(Tache.HEADER_COST, false), false);
+        assertEquals(Tache.supprimerHeader(Tache.HEADER_COST, true), false);
     }
 
     @Test
@@ -421,6 +422,7 @@ public class TacheTest {
     @Test
     public void testLectureFichier() throws Exception {
         Tache.ajoutHeader("test", "valeur", false);
+        Tache.ajoutCollaborateurHeader("bob");
         Tache tache1 = new Tache("Faire les courses",3);
         Tache tache2 = new Tache("Test");
         Tache tache3 = new Tache("");
