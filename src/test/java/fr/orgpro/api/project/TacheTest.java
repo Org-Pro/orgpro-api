@@ -650,13 +650,24 @@ public class TacheTest {
 
     @Test
     public void testAjoutCollaborateur() throws Exception {
-        Tache t1 = new Tache("t1");
-
         assertEquals(tache.ajoutCollaborateur(""), false);
         assertEquals(tache.ajoutCollaborateur("bob"), false);
         Tache.ajoutCollaborateurHeader("bob");
+        Tache.ajoutCollaborateurHeader("dylane");
         assertEquals(tache.ajoutCollaborateur("bob"), true);
         assertEquals(tache.ajoutCollaborateur("bob"), false);
+        assertEquals(tache.ajoutCollaborateur("bobi"), false);
+        assertEquals(tache.ajoutCollaborateur("dylane"), true);
+    }
+
+    @Test
+    public void testSupprimerCollaborateur() throws Exception {
+        assertEquals(tache.supprimerCollaborateur(""), false);
+        assertEquals(tache.supprimerCollaborateur("bob"), false);
+        Tache.ajoutCollaborateurHeader("bob");
+        tache.ajoutCollaborateur("bob");
+        assertEquals(tache.supprimerCollaborateur("bobi"), false);
+        assertEquals(tache.supprimerCollaborateur("bob"), true);
     }
 
     @Test
