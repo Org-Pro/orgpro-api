@@ -200,12 +200,10 @@ public class Tache {
             for (String ele : listCol) {
                 if (ele.equals(col)) {
                     existe = true;
-                    break;
                 } else {
                     newListCol.add(ele);
                 }
             }
-
             if(!existe){
                 return false;
             }
