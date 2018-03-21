@@ -680,6 +680,9 @@ public class TacheTest {
         tache.ajoutCollaborateur("bob");
         assertEquals(tache.supprimerCollaborateur("bobi"), false);
         assertEquals(tache.supprimerCollaborateur("bob"), true);
+        List<Tache> list = new ArrayList<Tache>();
+        list.add(tache);
+        assertEquals(Tache.supprimerCollaborateurHeader(list,"bob"), true);
     }
 
     @Test
