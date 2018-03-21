@@ -218,7 +218,12 @@ public class Tache {
                     rst.append(":").append(ele.trim());
                 }
             }
-            lstHeader.replace(HEADER_COLLABORATEUR, rst.toString());
+
+            if(rst.toString().trim().equals("")){
+                Tache.supprimerHeader(HEADER_COLLABORATEUR, true);
+            }else{
+                lstHeader.replace(HEADER_COLLABORATEUR, rst.toString());
+            }
 
             for (Tache tache : list){
                 if(tache.lstCollaborateur != null) {
@@ -237,7 +242,7 @@ public class Tache {
         }
     }
 
-    private List<String> getListCollaborateurHeader(){
+    public static List<String> getListCollaborateurHeader(){
         List<String> list = new ArrayList<String>();
         String colHeader = getHeader(HEADER_COLLABORATEUR);
         if (colHeader == null){

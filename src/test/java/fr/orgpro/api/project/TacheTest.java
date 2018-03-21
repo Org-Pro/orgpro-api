@@ -654,6 +654,13 @@ public class TacheTest {
     }
 
     @Test
+    public void testGetListCollaborateurHeader() throws Exception {
+        assertEquals(Tache.getListCollaborateurHeader(), null);
+        Tache.ajoutCollaborateurHeader("brigitte");
+        assertEquals(Tache.getListCollaborateurHeader().size(), 1);
+    }
+
+    @Test
     public void testAjoutCollaborateur() throws Exception {
         assertEquals(tache.ajoutCollaborateur(""), false);
         assertEquals(tache.ajoutCollaborateur("bob"), false);
