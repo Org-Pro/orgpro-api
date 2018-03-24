@@ -33,7 +33,7 @@ public class Tache {
     private static final String PROP_COST = "COST";
 
     public static final String HEADER_COST = "COST";
-    public static final String HEADER_COLLABORATEUR = "COLLABORATOR";
+    public static final String HEADER_COLLABORATOR = "COLLABORATOR";
 
     private OrgHead tache;
     private List<String> lstCollaborateur;
@@ -58,9 +58,9 @@ public class Tache {
         this.tache = new OrgHead(title);
         this.tache.setLevel(1);
         this.tache.setState(State.TODO);
-        this.ajoutProperty(PROP_COST,"0",true);
+        this.addPropriete(PROP_COST,"0",true);
         this.id = UUID.randomUUID().toString();
-        this.ajoutProperty(PROP_ID, this.id, true);
+        this.addPropriete(PROP_ID, this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     }
@@ -73,9 +73,9 @@ public class Tache {
         this.tache = new OrgHead(title);
         this.tache.setLevel(level);
         this.tache.setState(State.TODO);
-        this.ajoutProperty(PROP_COST,"0",true);
+        this.addPropriete(PROP_COST,"0",true);
         this.id = UUID.randomUUID().toString();
-        this.ajoutProperty(PROP_ID, this.id, true);
+        this.addPropriete(PROP_ID, this.id, true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     }
@@ -83,32 +83,32 @@ public class Tache {
     public Tache(String title, Tache tache) {
         this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
-        this.tache.setLevel(tache.getLevel() + 1);
+        this.tache.setLevel(tache.getNiveau() + 1);
         this.tache.setState(State.TODO);
         this.id = UUID.randomUUID().toString();
-        this.ajoutProperty(PROP_COST,"0",true);
-        this.ajoutProperty(PROP_ID, this.id ,true);
+        this.addPropriete(PROP_COST,"0",true);
+        this.addPropriete(PROP_ID, this.id ,true);
 
-        this.ajoutProperty( PROP_DEPENDENCE, tache.getId(), true);
+        this.addPropriete( PROP_DEPENDENCE, tache.getId(), true);
         this.dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     }
 
-    public static void resetHeader(){
+    public static void resetEnTete(){
         lstHeader = null;
     }
 
-    public static boolean ajoutCollaborateurHeader(String col){
+    public static boolean addCollaborateurEnTete(String col){
         col = col.toLowerCase().trim();
         if (col.equals("") || col.contains(":")){
             return false;
         }
         if(lstHeader == null){
             lstHeader = new LinkedHashMap<String, String>();
-            lstHeader.put(HEADER_COLLABORATEUR, col);
+            lstHeader.put(HEADER_COLLABORATOR, col);
             return true;
         }
-        String temp = getHeader(HEADER_COLLABORATEUR);
+        String temp = getEnTete(HEADER_COLLABORATOR);
         if(temp != null){
             String[] listCol = temp.split(":");
             for(String ele : listCol){
@@ -116,15 +116,15 @@ public class Tache {
                     return false;
                 }
             }
-            lstHeader.replace(HEADER_COLLABORATEUR, temp + ":" + col);
+            lstHeader.replace(HEADER_COLLABORATOR, temp + ":" + col);
             return true;
         }else{
-            lstHeader.put(HEADER_COLLABORATEUR, col);
+            lstHeader.put(HEADER_COLLABORATOR, col);
             return true;
         }
     }
 
-    public static boolean modifierCollaborateurHeader(List<Tache> list, String oldCol, String newCol){
+    public static boolean setCollaborateurEnTete(List<Tache> list, String oldCol, String newCol){
         oldCol = oldCol.toLowerCase().trim();
         newCol = newCol.toLowerCase().trim();
         if (oldCol.equals("") || oldCol.contains(":") || newCol.equals("") || newCol.contains(":")){
@@ -133,7 +133,7 @@ public class Tache {
         if(lstHeader == null || lstHeader.isEmpty()){
             return false;
         }
-        String temp = getHeader(HEADER_COLLABORATEUR);
+        String temp = getEnTete(HEADER_COLLABORATOR);
         boolean existe = false;
         if(temp != null){
             String[] listCol = temp.split(":");
@@ -165,14 +165,14 @@ public class Tache {
                     rst.append(":").append(ele.trim());
                 }
             }
-            lstHeader.replace(HEADER_COLLABORATEUR, rst.toString());
+            lstHeader.replace(HEADER_COLLABORATOR, rst.toString());
 
             for (Tache tache : list){
                 if(tache.lstCollaborateur != null) {
                     for(int i = 0; i < tache.lstCollaborateur.size(); i++){
                         if(tache.lstCollaborateur.get(i).equals(oldCol)){
                             tache.lstCollaborateur.set(i, newCol);
-                            tache.ecritureCollaborateur();
+                            tache.writeCollaborateur();
                             break;
                         }
                     }
@@ -184,7 +184,7 @@ public class Tache {
         }
     }
 
-    public static boolean supprimerCollaborateurHeader(List<Tache> list, String col){
+    public static boolean removeCollaborateurEnTete(List<Tache> list, String col){
         col = col.toLowerCase().trim();
         if (col.equals("") || col.contains(":")){
             return false;
@@ -192,7 +192,7 @@ public class Tache {
         if(lstHeader == null || lstHeader.isEmpty()){
             return false;
         }
-        String temp = getHeader(HEADER_COLLABORATEUR);
+        String temp = getEnTete(HEADER_COLLABORATOR);
         boolean existe = false;
         if(temp != null){
             String[] listCol = temp.split(":");
@@ -220,9 +220,9 @@ public class Tache {
             }
 
             if(rst.toString().trim().equals("")){
-                Tache.supprimerHeader(HEADER_COLLABORATEUR, true);
+                Tache.removeEnTete(HEADER_COLLABORATOR, true);
             }else{
-                lstHeader.replace(HEADER_COLLABORATEUR, rst.toString());
+                lstHeader.replace(HEADER_COLLABORATOR, rst.toString());
             }
 
             for (Tache tache : list){
@@ -230,7 +230,7 @@ public class Tache {
                     for(int i = 0; i < tache.lstCollaborateur.size(); i++){
                         if(tache.lstCollaborateur.get(i).equals(col)){
                             tache.lstCollaborateur.remove(i);
-                            tache.ecritureCollaborateur();
+                            tache.writeCollaborateur();
                             break;
                         }
                     }
@@ -242,9 +242,9 @@ public class Tache {
         }
     }
 
-    public static List<String> getListCollaborateurHeader(){
+    public static List<String> getCollaborateurEnTeteListe(){
         List<String> list = new ArrayList<String>();
-        String colHeader = getHeader(HEADER_COLLABORATEUR);
+        String colHeader = getEnTete(HEADER_COLLABORATOR);
         if (colHeader == null){
             return null;
         }else {
@@ -254,7 +254,7 @@ public class Tache {
         }
     }
 
-    public boolean ajoutCollaborateur(String val){
+    public boolean addCollaborateur(String val){
         val = val.toLowerCase().trim();
         if (val.contains(":") || val.isEmpty()){
             return false;
@@ -268,7 +268,7 @@ public class Tache {
             }
         }
         boolean existe = false;
-        List<String> listColHeader = getListCollaborateurHeader();
+        List<String> listColHeader = getCollaborateurEnTeteListe();
         if (listColHeader == null || listColHeader.isEmpty()){
             return false;
         }
@@ -281,11 +281,11 @@ public class Tache {
             return false;
         }
         lstCollaborateur.add(val);
-        ecritureCollaborateur();
+        writeCollaborateur();
         return true;
     }
 
-    public boolean supprimerCollaborateur(String val){
+    public boolean removeCollaborateur(String val){
         val = val.toLowerCase().trim();
         if (val.contains(":")|| val.isEmpty()){
             return false;
@@ -298,7 +298,7 @@ public class Tache {
             String tmp = iterator.next();
             if(tmp.equals(val)){
                 iterator.remove();
-                ecritureCollaborateur();
+                writeCollaborateur();
                 return true;
             }
         }
@@ -319,9 +319,9 @@ public class Tache {
 
     }*/
 
-    private void ecritureCollaborateur(){
+    private void writeCollaborateur(){
         if (lstCollaborateur == null || lstCollaborateur.isEmpty()){
-            this.supprimerProperty(PROP_COLLABORATOR, true);
+            this.removePropriete(PROP_COLLABORATOR, true);
         }else{
             boolean premier = true;
             StringBuilder rst = new StringBuilder();
@@ -333,41 +333,41 @@ public class Tache {
                     rst.append(":").append(ele.trim());
                 }
             }
-            this.ajoutProperty(PROP_COLLABORATOR, rst.toString(), true);
+            this.addPropriete(PROP_COLLABORATOR, rst.toString(), true);
         }
     }
 
     public void setDependance(Tache tache){
-        this.supprimerProperty(PROP_DEPENDENCE, true);
-        this.tache.setLevel(tache.getLevel() + 1);
-        this.ajoutProperty( PROP_DEPENDENCE, tache.getId(), true);
+        this.removePropriete(PROP_DEPENDENCE, true);
+        this.tache.setLevel(tache.getNiveau() + 1);
+        this.addPropriete( PROP_DEPENDENCE, tache.getId(), true);
     }
 
     public void removeDependance(){
-        this.supprimerProperty(PROP_DEPENDENCE, true);
+        this.removePropriete(PROP_DEPENDENCE, true);
         this.tache.setLevel(1);
     }
 
-    public boolean ajoutCout(int cout){
+    public boolean addCout(int cout){
         if(cout < 0){
             return false;
         }
         //this.cout = cout;
-        this.supprimerProperty(PROP_COST,true);
-        this.ajoutProperty(PROP_COST, String.valueOf(cout),true);
+        this.removePropriete(PROP_COST,true);
+        this.addPropriete(PROP_COST, String.valueOf(cout),true);
         return true;
     }
 
     private void setId(String id) {
         this.id = id;
-        this.ajoutProperty(PROP_ID, this.id, true);
+        this.addPropriete(PROP_ID, this.id, true);
     }
 
-    private void setState(State state){
+    private void setEtatTache(State state){
         tache.setState(state);
     }
 
-    private void setClock(Long time){
+    private void setMinuteur(Long time){
         tache.setClock(time);
     }
 
@@ -375,14 +375,14 @@ public class Tache {
      * Lance ou stop le minuteur
      * @return True si le minuteur est actif
      */
-    public boolean minuteur(){
+    public boolean useMinuteur(){
         if(valMinuteur == null){
             valMinuteur = System.currentTimeMillis();
             return true;
         }else{
             Long valEndMinuteur = System.currentTimeMillis();
             String s = new OrgRange(new OrgDateTime(valMinuteur , true), new OrgDateTime(valEndMinuteur , true), valMinuteur, valEndMinuteur).toString();
-            this.ajoutLogBookString(s);
+            this.addRegistreTexte(s);
             if(tache.getClock() == null){
                 tache.setClock(valEndMinuteur - valMinuteur);
             }else{
@@ -393,17 +393,17 @@ public class Tache {
         }
     }
 
-    public boolean minuteurParPropriete(){
+    public boolean useMinuteurParPropriete(){
         boolean rst;
         String val = this.getProperties().get(PROP_CLOCK);
         if(val == null){
             valMinuteur = null;
-            rst = minuteur();
-            this.ajoutProperty(PROP_CLOCK, valMinuteur.toString(), true);
+            rst = useMinuteur();
+            this.addPropriete(PROP_CLOCK, valMinuteur.toString(), true);
         }else{
             valMinuteur = Long.parseLong(val);
-            rst = minuteur();
-            this.supprimerProperty(PROP_CLOCK, true);
+            rst = useMinuteur();
+            this.removePropriete(PROP_CLOCK, true);
         }
         return rst;
     }
@@ -412,39 +412,39 @@ public class Tache {
         return Integer.parseInt(getProperties().get(PROP_COST));
     }
 
-    public State getState() {
+    public State getEtat() {
         return tache.getState();
     }
 
-    public Long getClock(){
+    public Long getMinuteur(){
         return tache.getClock();
     }
 
-    public String getClockString(){
+    public String getMinuteurTexte(){
         return tache.getClockString();
     }
 
-    public String getTitle(){
+    public String getTitre(){
         return tache.getTitle();
     }
 
-    public int getLevel(){
+    public int getNiveau(){
         return tache.getLevel();
     }
 
-    public List<String> getTags(){
+    public List<String> getTagListe(){
         return tache.getTags();
     }
 
-    public Date getDeadline(){
+    public Date getDateLimite(){
         return tache.getDeadline();
     }
 
-    public Date getScheduled(){
+    public Date getDateDebut(){
         return tache.getScheduled();
     }
 
-    public Date getClosed(){
+    public Date getDateFin(){
         return tache.getClosed();
     }
 
@@ -456,7 +456,7 @@ public class Tache {
         return id;
     }
 
-    public boolean changeLevel(int level){
+    public boolean setNiveau(int level){
         if(level < 1 || this.getProperties().get(PROP_DEPENDENCE)!= null){
             return false;
         }else{
@@ -465,11 +465,11 @@ public class Tache {
         return true;
     }
 
-    public void changeTitle(String title){
+    public void setTitre(String title){
         tache.setTitle(title);
     }
 
-    public boolean changeState(State state){
+    public boolean setEtat(State state){
         if(tache.getState().equals(state)){
             return false;
         }
@@ -488,18 +488,18 @@ public class Tache {
         }
 
         String log = "- State \"" + state.toString() + "\" FROM \"" + tache.getState().toString() + "\" ";
-        this.ajoutLogBook(log);
+        this.addRegistre(log);
         this.tache.setState(state);
 
         return true;
     }
 
-    public boolean nextState() {
+    public boolean setEtatSuivant() {
         if(tache.getState().toString().equals(State.TODO.toString())){
-            this.setState(State.ONGOING);
+            this.setEtatTache(State.ONGOING);
         }
         else if(tache.getState().toString().equals(State.ONGOING.toString())){
-            this.setState(State.DONE);
+            this.setEtatTache(State.DONE);
         }
         else if(tache.getState().toString().equals(State.DONE.toString()) || tache.getState().toString().equals(State.CANCELLED.toString())){
             return false;
@@ -507,7 +507,7 @@ public class Tache {
         return true;
     }
 
-    public void ajoutTag(String tag){
+    public void addTag(String tag){
         List<String> tags = tache.getTags();
         tags.add(tag);
         int i = 0;
@@ -519,7 +519,7 @@ public class Tache {
         tache.setTags(tagsTemp);
     }
 
-    public void supprimerTag(String tag){
+    public void removeTag(String tag){
         List<String> tags = tache.getTags();
         int i = 0;
 
@@ -540,7 +540,7 @@ public class Tache {
         tache.setTags(tagsTemp);
     }
 
-    public boolean ajoutDeadline(String deadline){
+    public boolean addDateLimite(String deadline){
         try {
             Date deadlineDate = dateFormat.parse(deadline);
             String dateValide = dateFormat.format(deadlineDate);
@@ -554,7 +554,7 @@ public class Tache {
         return true;
     }
 
-    public boolean ajoutScheduled(String scheduled){
+    public boolean addDateDebut(String scheduled){
         try {
             Date scheduledDate = dateFormat.parse(scheduled);
             String dateValide = dateFormat.format(scheduledDate);
@@ -568,7 +568,7 @@ public class Tache {
         return true;
     }
 
-    public boolean ajoutClosed(String closed){
+    public boolean addDateFin(String closed){
         try {
             Date closedDate = dateFormat.parse(closed);
             String dateValide = dateFormat.format(closedDate);
@@ -582,7 +582,7 @@ public class Tache {
         return true;
     }
 
-    public boolean ajoutProperty(String name, String value, boolean constructor){
+    public boolean addPropriete(String name, String value, boolean constructor){
         String name2 = name.toUpperCase();
         if(constructor){
             tache.addProperty(name,value);
@@ -598,7 +598,7 @@ public class Tache {
         return true;
     }
 
-    public boolean supprimerProperty(String name, boolean interne){
+    public boolean removePropriete(String name, boolean interne){
         if(!interne && (name.toUpperCase().equals(PROP_ID) || name.toUpperCase().equals(PROP_DEPENDENCE)
                 || name.toUpperCase().equals(PROP_CLOCK) || name.toUpperCase().equals(PROP_COLLABORATOR)
                 || name.toUpperCase().equals(PROP_COST))){
@@ -610,17 +610,17 @@ public class Tache {
         return true;
     }
 
-    private void ajoutLogBook(String log){
+    private void addRegistre(String log){
         Date date = new Date();
         log += new SimpleDateFormat("<yyyy-MM-dd HH:mm>").format(date);
         tache.addLog(log);
     }
 
-    private void ajoutLogBookString(String log){
+    private void addRegistreTexte(String log){
         tache.addLog(log);
     }
 
-    public boolean ecritureFichier(String path, boolean append){
+    public boolean writeFichier(String path, boolean append){
         OrgParserWriter ecriture = new OrgParserWriter();
         String ecrire = "";
         if(!append && lstHeader != null && !lstHeader.isEmpty()){
@@ -642,7 +642,7 @@ public class Tache {
         return true;
     }
 
-    public static boolean ajoutHeader(String clef, String valeur, boolean constructor){
+    public static boolean addEnTete(String clef, String valeur, boolean constructor){
         if(lstHeader == null){
             lstHeader = new LinkedHashMap<String, String>();
         }
@@ -658,14 +658,14 @@ public class Tache {
         return true;
     }
 
-    public static String getHeader(String clef){
+    public static String getEnTete(String clef){
         if(lstHeader == null || clef.trim().equals("")){
             return null;
         }
         return lstHeader.get(clef.trim());
     }
 
-    public static boolean modifierHeader(String clef, String valeur, boolean constructor){
+    public static boolean setEnTete(String clef, String valeur, boolean constructor){
         if(!constructor){
             if(clef.trim().toUpperCase().equals(HEADER_COST)){
                 return false;
@@ -681,7 +681,7 @@ public class Tache {
         return true;
     }
 
-    public static boolean supprimerHeader(String clef, boolean constructor){
+    public static boolean removeEnTete(String clef, boolean constructor){
         if(!constructor){
             if(clef.trim().toUpperCase().equals(HEADER_COST)){
                 return false;
@@ -702,7 +702,7 @@ public class Tache {
             return false;
         }
         if(list.size() > numTache + 1){
-            if (list.get(numTache + 1).getLevel() > list.get(numTache).getLevel()){
+            if (list.get(numTache + 1).getNiveau() > list.get(numTache).getNiveau()){
                 return false;
             }
         }
@@ -718,7 +718,7 @@ public class Tache {
         return true;
     }
 
-    public static List<Tache> lectureFichier(String path){
+    public static List<Tache> readFichier(String path){
         lstHeader = null;
         List<Tache> list = new ArrayList<Tache>();
 
@@ -741,42 +741,42 @@ public class Tache {
 
                             temp = line.split("( )+", 3);
                             if(temp[1].equals(State.TODO.toString())){
-                                tache.setState(State.TODO);
+                                tache.setEtatTache(State.TODO);
                             }else if(temp[1].equals(State.DONE.toString())){
-                                tache.setState(State.DONE);
+                                tache.setEtatTache(State.DONE);
                             }else if(temp[1].equals(State.ONGOING.toString())){
-                                tache.setState(State.ONGOING);
+                                tache.setEtatTache(State.ONGOING);
                             }else if(temp[1].equals(State.CANCELLED.toString())){
-                                tache.setState(State.CANCELLED);
+                                tache.setEtatTache(State.CANCELLED);
                             }
-                            tache.changeLevel(temp[0].trim().length());
+                            tache.setNiveau(temp[0].trim().length());
 
                             temp = temp[2].split(":");
-                            tache.changeTitle(temp[0].trim());
+                            tache.setTitre(temp[0].trim());
                             for (int i = 1; i < temp.length; i++){
-                                tache.ajoutTag(temp[i]);
+                                tache.addTag(temp[i]);
                             }
                         }else if(line.trim().startsWith(CLOCK) && tache != null){
                             temp = line.split(":");
                             long heure = Long.parseLong(temp[1].trim());
                             long minute = Long.parseLong(temp[2].trim());
                             long seconde = Long.parseLong(temp[3].trim());
-                            tache.setClock((heure * 3600000) + (minute * 60000) + (seconde * 1000 ));
+                            tache.setMinuteur((heure * 3600000) + (minute * 60000) + (seconde * 1000 ));
                         }else if((line.trim().startsWith(CLOSED) || line.trim().startsWith(DEADLINE) || line.trim().startsWith(SCHEDULED)) && tache != null){
                             temp = line.split(">");
                             for (String ele : temp){
                                 String[] s = ele.split("<");
                                 switch (s[0].trim()){
                                     case CLOSED:{
-                                        tache.ajoutClosed(s[1].trim());
+                                        tache.addDateFin(s[1].trim());
                                         break;
                                     }
                                     case DEADLINE:{
-                                        tache.ajoutDeadline(s[1].trim());
+                                        tache.addDateLimite(s[1].trim());
                                         break;
                                     }
                                     case SCHEDULED:{
-                                        tache.ajoutScheduled(s[1].trim());
+                                        tache.addDateDebut(s[1].trim());
                                         break;
                                     }
                                 }
@@ -788,24 +788,24 @@ public class Tache {
                                 if(temp[1].equals(PROP_ID)){
                                     tache.setId(temp[2].trim());
                                 }else if(temp[1].equals(PROP_DEPENDENCE) || temp[1].equals(PROP_CLOCK)) {
-                                    tache.ajoutProperty(temp[1].trim(), temp[2].trim(), true);
+                                    tache.addPropriete(temp[1].trim(), temp[2].trim(), true);
                                 }else if(temp[1].equals(PROP_COLLABORATOR)){
-                                    tache.ajoutProperty(PROP_COLLABORATOR, temp[2].trim(), true);
+                                    tache.addPropriete(PROP_COLLABORATOR, temp[2].trim(), true);
                                     tache.lstCollaborateur = new ArrayList<String>();
                                     temp = temp[2].trim().split(":");
                                     tache.lstCollaborateur.addAll(Arrays.asList(temp));
                                 }else if(temp[1].equals(PROP_COST)){
                                     //tache.cout = Double.parseDouble(temp[2].trim());
-                                    tache.ajoutProperty(temp[1].trim(), temp[2].trim(), true);
+                                    tache.addPropriete(temp[1].trim(), temp[2].trim(), true);
                                 }else{
-                                    tache.ajoutProperty(temp[1].trim(), temp[2].trim(), false);
+                                    tache.addPropriete(temp[1].trim(), temp[2].trim(), false);
                                 }
                                 line = br.readLine().trim();
                             }
                         }else if(line.trim().startsWith(LOGBOOK) && tache != null){
                             line = br.readLine().trim();
                             while(!line.equals(END)){
-                                tache.ajoutLogBookString(line);
+                                tache.addRegistreTexte(line);
                                 line = br.readLine().trim();
                             }
                         }else if(line.trim().startsWith("#+")){
@@ -827,17 +827,17 @@ public class Tache {
         return list;
     }
 
-    public static boolean supprimerTache (List<Tache> taches, int numTache) {
+    public static boolean removeTache(List<Tache> taches, int numTache) {
         if(numTache < 0 || numTache >= taches.size() || taches == null){
             return false;
         }
         List<Tache> tacheSup = new ArrayList<Tache>();
-        int level = taches.get(numTache).getLevel();
+        int level = taches.get(numTache).getNiveau();
         tacheSup.add(taches.get(numTache));
         if(taches.size() > numTache + 1) {
             int i;
             for (i = numTache + 1; i < taches.size(); i++) {
-                if (taches.get(i).getLevel() <= level) {
+                if (taches.get(i).getNiveau() <= level) {
                     break;
                 } else {
                     tacheSup.add(taches.get(i));
@@ -850,12 +850,12 @@ public class Tache {
         return true;
     }
     
-    public static boolean deleteDependanceListe(List<Tache> list, int numTache){
+    public static boolean removeDependanceListe(List<Tache> list, int numTache){
         if(numTache < 0 || list.size() - 1 < numTache){
             return false;
         }
         if(list.size() > numTache + 1){
-            if (list.get(numTache + 1).getLevel() > list.get(numTache).getLevel()){
+            if (list.get(numTache + 1).getNiveau() > list.get(numTache).getNiveau()){
                 return false;
             }
         }

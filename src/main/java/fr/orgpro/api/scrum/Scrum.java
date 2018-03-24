@@ -12,21 +12,21 @@ import java.util.List;
  */
 public class Scrum {
 
-    public static List<Tache> listerTacheState(List<Tache> liste, State state){
+    public static List<Tache> listTacheEtat(List<Tache> liste, State state){
         List<Tache> taches = new ArrayList<Tache>();
         for(Tache tache : liste){
-            if(tache.getState().toString().equals(state.toString())){
+            if(tache.getEtat().toString().equals(state.toString())){
                 taches.add(tache);
             }
         }
         return taches;
     }
 
-    public static List<Tache> listerTacheScheduled(List<Tache> liste){
+    public static List<Tache> listTacheDateDebut(List<Tache> liste){
         List<Tache> taches = new ArrayList<Tache>();
         for(Tache tache : liste){
-            if(tache.getScheduled() != null) {
-                if (tache.getScheduled().before(new Date()) && tache.getState() == State.TODO) {
+            if(tache.getDateDebut() != null) {
+                if (tache.getDateDebut().before(new Date()) && tache.getEtat() == State.TODO) {
                     taches.add(tache);
                 }
             }
@@ -38,10 +38,10 @@ public class Scrum {
         if(liste.size() <= 0){
             return null;
         }
-        int coutIteration =  Integer.parseInt(liste.get(0).getHeader(Tache.HEADER_COST));
+        int coutIteration =  Integer.parseInt(liste.get(0).getEnTete(Tache.HEADER_COST));
         int coutTache = 0;
         for(Tache tache : liste){
-            if(tache.getLevel() == 1 && tache.getState() == State.ONGOING){
+            if(tache.getNiveau() == 1 && tache.getEtat() == State.ONGOING){
                 coutTache += tache.getCout();
             }
         }
