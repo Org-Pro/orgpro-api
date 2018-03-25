@@ -53,6 +53,10 @@ public class Tache {
         //this.ajoutProperty(PROP_COST,"0",true);
     }
 
+    /**
+     * Création d'une tâche
+     * @param title Titre de la tâche
+     */
     public Tache(String title) {
         this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
@@ -65,6 +69,11 @@ public class Tache {
 
     }
 
+    /**
+     * Création d'une tâche
+     * @param title Titre de la tâche
+     * @param level Niveau de la tâche
+     */
     public Tache(String title,int level) {
         if(level < 1){
             level = 1;
@@ -80,6 +89,11 @@ public class Tache {
 
     }
 
+    /**
+     * Création d'une tâche avec dépendance
+     * @param title Titre de la tâche
+     * @param tache Tâche à dépendre
+     */
     public Tache(String title, Tache tache) {
         this.ecriture = new OrgParserWriter();
         this.tache = new OrgHead(title);
@@ -94,10 +108,18 @@ public class Tache {
 
     }
 
+    /**
+     * Remet à null la liste de l'en-tête
+     */
     public static void resetEnTete(){
         lstHeader = null;
     }
 
+    /**
+     * Ajout d'un collaborateur dans l'en-tête
+     * @param col Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur ne doit pas déjà exister)
+     * @return True si l'ajout du collaborateur est effectué, false sinon
+     */
     public static boolean addCollaborateurEnTete(String col){
         col = col.toLowerCase().trim();
         if (col.equals("") || col.contains(":")){
@@ -124,6 +146,13 @@ public class Tache {
         }
     }
 
+    /**
+     * Modifie le nom d'un collaborateur dans l'en-tête ainsi que dans la liste des tâches dont il est lié
+     * @param list Liste des tâches
+     * @param oldCol Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur doit déjà exister)
+     * @param newCol Nouveau nom  (Ne peut pas contenir ":" ou être vide | Le collaborateur ne doit pas déjà exister)
+     * @return True si la modification du nom est effectuée, false sinon
+     */
     public static boolean setCollaborateurEnTete(List<Tache> list, String oldCol, String newCol){
         oldCol = oldCol.toLowerCase().trim();
         newCol = newCol.toLowerCase().trim();
@@ -184,6 +213,12 @@ public class Tache {
         }
     }
 
+    /**
+     * Supprime le nom d'un collaborateur dans l'en-tête ainsi que dans la liste des tâches dont il est lié
+     * @param list Liste des tâches
+     * @param col Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur doit déjà exister)
+     * @return True si la suppression du nom est effectuée, false sinon
+     */
     public static boolean removeCollaborateurEnTete(List<Tache> list, String col){
         col = col.toLowerCase().trim();
         if (col.equals("") || col.contains(":")){
@@ -242,6 +277,10 @@ public class Tache {
         }
     }
 
+    /**
+     * Liste les collaborateurs de l'en-tête
+     * @return La liste des collaborateurs
+     */
     public static List<String> getCollaborateurEnTeteListe(){
         List<String> list = new ArrayList<String>();
         String colHeader = getEnTete(HEADER_COLLABORATOR);
@@ -254,6 +293,11 @@ public class Tache {
         }
     }
 
+    /**
+     * Ajoute un collaborateur à la tâche
+     * @param val Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur doit exister dans l'en-tête | Le collaborateur ne doit pas déjà être lié à la tâche)
+     * @return True si l'ajout est effectué, false sinon
+     */
     public boolean addCollaborateur(String val){
         val = val.toLowerCase().trim();
         if (val.contains(":") || val.isEmpty()){
@@ -285,6 +329,11 @@ public class Tache {
         return true;
     }
 
+    /**
+     * Supprime un collaborateur de la tâche
+     * @param val Nom du collaborateur (Ne peut pas contenir ":" ou être vide |Le collaborateur doit déjà être lié à la tâche)
+     * @return True si la suppression est effectuée, false sinon
+     */
     public boolean removeCollaborateur(String val){
         val = val.toLowerCase().trim();
         if (val.contains(":")|| val.isEmpty()){
@@ -305,20 +354,6 @@ public class Tache {
         return false;
     }
 
-    /*private String valeurCollaborateurHeader(){
-        boolean premier = true;
-        StringBuilder rst = new StringBuilder();
-        for (String ele : lstCollaborateur){
-            if (premier){
-                rst.append(ele.trim());
-                premier = false;
-            }else{
-                rst.append(":").append(ele.trim());
-            }
-        }
-
-    }*/
-
     private void writeCollaborateur(){
         if (lstCollaborateur == null || lstCollaborateur.isEmpty()){
             this.removePropriete(PROP_COLLABORATOR, true);
@@ -337,22 +372,33 @@ public class Tache {
         }
     }
 
+    /**
+     * Modifie la dépendance de la tâche
+     * @param tache Tâche à dépendre
+     */
     public void setDependance(Tache tache){
         this.removePropriete(PROP_DEPENDENCE, true);
         this.tache.setLevel(tache.getNiveau() + 1);
         this.addPropriete( PROP_DEPENDENCE, tache.getId(), true);
     }
 
+    /**
+     * Supprime la dépendance de la tâche
+     */
     public void removeDependance(){
         this.removePropriete(PROP_DEPENDENCE, true);
         this.tache.setLevel(1);
     }
 
+    /**
+     * Ajoute un coût à la tâche
+     * @param cout Le coût à attribuer
+     * @return True si l'ajout du coût est effectué, false sinon
+     */
     public boolean addCout(int cout){
         if(cout < 0){
             return false;
         }
-        //this.cout = cout;
         this.removePropriete(PROP_COST,true);
         this.addPropriete(PROP_COST, String.valueOf(cout),true);
         return true;
@@ -372,8 +418,8 @@ public class Tache {
     }
 
     /**
-     * Lance ou stop le minuteur
-     * @return True si le minuteur est actif
+     * Lance ou stop le minuteur et écrit dans le registre chaque temps
+     * @return True si le minuteur est actif, false s'il est stoppé
      */
     public boolean useMinuteur(){
         if(valMinuteur == null){
@@ -393,6 +439,10 @@ public class Tache {
         }
     }
 
+    /**
+     * Lance ou stop le minuteur en sauvegardant le temps initial lors du lancement et écrit dans le registre chaque temps
+     * @return True si le minuteur est actif, false s'il est stoppé
+     */
     public boolean useMinuteurParPropriete(){
         boolean rst;
         String val = this.getProperties().get(PROP_CLOCK);
@@ -408,54 +458,107 @@ public class Tache {
         return rst;
     }
 
+    /**
+     * Coût actuel de la tâche
+     * @return Le coût de la tâche
+     */
     public int getCout() {
         return Integer.parseInt(getProperties().get(PROP_COST));
     }
 
+    /**
+     * Etat actuel de la tâche
+     * @return L'etat de la tâche
+     */
     public State getEtat() {
         return tache.getState();
     }
 
+    /**
+     * Temps total actuel de la tâche
+     * @return Le temps passé sur la tâche en millisecondes
+     */
     public Long getMinuteur(){
         return tache.getClock();
     }
 
+    /**
+     * Temps total actuel de la tâche
+     * @return Le temps passé sur la tâche au format texte
+     */
     public String getMinuteurTexte(){
         return tache.getClockString();
     }
 
+    /**
+     * Titre actuel de la tâche
+     * @return Le titre de la tâche
+     */
     public String getTitre(){
         return tache.getTitle();
     }
 
+    /**
+     * Niveau actuel de la tâche
+     * @return Le niveau de la tâche
+     */
     public int getNiveau(){
         return tache.getLevel();
     }
 
+    /**
+     * Liste des tags associés à la tâche
+     * @return La liste des tags
+     */
     public List<String> getTagListe(){
         return tache.getTags();
     }
 
+    /**
+     * Date limite actuelle de la tâche
+     * @return La date limite
+     */
     public Date getDateLimite(){
         return tache.getDeadline();
     }
 
+    /**
+     * Date de commencement actuelle de la tâche
+     * @return La date de commencement de la tâche
+     */
     public Date getDateDebut(){
         return tache.getScheduled();
     }
 
+    /**
+     * Date d'aboutissement actuelle de la tâche
+     * @return La date d'aboutissement de la tâche
+     */
     public Date getDateFin(){
         return tache.getClosed();
     }
 
+    /**
+     * Proriétés liées à la tâche
+     * @return Un objet contenant la liste des propriétés liées à la tâche
+     */
     public OrgProperties getProperties(){
         return tache.getProperties();
     }
 
+    /**
+     * L'id actuel de la tâche
+     * @return L'id de la tâche
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Modifie le niveau de la tâche
+     * @param level Nouveau niveau de la tâche (Le niveau doit être positif)
+     * @return True si la modification du niveau est effectuée, false sinon
+     */
     public boolean setNiveau(int level){
         if(level < 1 || this.getProperties().get(PROP_DEPENDENCE)!= null){
             return false;
@@ -465,10 +568,19 @@ public class Tache {
         return true;
     }
 
+    /**
+     * Mododifie le titre la tâche
+     * @param title Nouveau titre
+     */
     public void setTitre(String title){
         tache.setTitle(title);
     }
 
+    /**
+     * Change l'état de la tâche et écrit dans le registre le changement (TODO -> ONGOING -> DONE -> CANCELLED)
+     * @param state Nouvel état de la tâche (Doit respecter les règles du kanban)
+     * @return True si le changement d'état de la tâche est effectué, false sinon
+     */
     public boolean setEtat(State state){
         if(tache.getState().equals(state)){
             return false;
@@ -494,6 +606,10 @@ public class Tache {
         return true;
     }
 
+    /**
+     * Passe l'état de la tâche à l'état suivant en respectant les règles du kanban (TODO -> ONGOING -> DONE)
+     * @return True si le changement d'état est effectué, false sinon
+     */
     public boolean setEtatSuivant() {
         if(tache.getState().toString().equals(State.TODO.toString())){
             this.setEtatTache(State.ONGOING);
@@ -507,6 +623,7 @@ public class Tache {
         return true;
     }
 
+    // TODO
     public void addTag(String tag){
         List<String> tags = tache.getTags();
         tags.add(tag);
@@ -519,6 +636,7 @@ public class Tache {
         tache.setTags(tagsTemp);
     }
 
+    // TODO
     public void removeTag(String tag){
         List<String> tags = tache.getTags();
         int i = 0;
@@ -540,6 +658,11 @@ public class Tache {
         tache.setTags(tagsTemp);
     }
 
+    /**
+     * Ajoute ou modifie la date limite de la tâche
+     * @param deadline Date limite de la tâche (Au format YYYY-MM-DD ou YYYY/MM/DD)
+     * @return True si le changement de la date limite est effectué, false sinon
+     */
     public boolean addDateLimite(String deadline){
         try {
             Date deadlineDate = dateFormat.parse(deadline);
@@ -554,6 +677,11 @@ public class Tache {
         return true;
     }
 
+    /**
+     * Ajoute ou modifie la date de commencement de la tâche
+     * @param scheduled Date de commencement de la tâche (Au format YYYY-MM-DD ou YYYY/MM/DD)
+     * @return True si le changement de la date de commencement est effectué, false sinon
+     */
     public boolean addDateDebut(String scheduled){
         try {
             Date scheduledDate = dateFormat.parse(scheduled);
@@ -568,6 +696,11 @@ public class Tache {
         return true;
     }
 
+    /**
+     * Ajoute ou modifie la date d'aboutissement de la tâche
+     * @param closed Date d'aboutissement de la tâche (Au format YYYY-MM-DD ou YYYY/MM/DD)
+     * @return True si le changement de la date d'aboutissement est effectué, false sinon
+     */
     public boolean addDateFin(String closed){
         try {
             Date closedDate = dateFormat.parse(closed);
@@ -582,6 +715,13 @@ public class Tache {
         return true;
     }
 
+    /**
+     * Ajoute une propriété à la tâche
+     * @param name Clef de la propriété
+     * @param value Valeur de la propriété
+     * @param constructor Si true, les valeurs des clefs suivantes peuvent être modifiées : ID, DEPENDENCE, CLOCK, COLLABORATOR, COST
+     * @return True l'ajout de la propriété de la tâche est effectué, false sinon
+     */
     public boolean addPropriete(String name, String value, boolean constructor){
         String name2 = name.toUpperCase();
         if(constructor){
@@ -598,8 +738,14 @@ public class Tache {
         return true;
     }
 
-    public boolean removePropriete(String name, boolean interne){
-        if(!interne && (name.toUpperCase().equals(PROP_ID) || name.toUpperCase().equals(PROP_DEPENDENCE)
+    /**
+     * Supprime une propriété de la tâche
+     * @param name Clef de la propriété
+     * @param constructor Si true, les valeurs des clefs suivantes peuvent être modifiées : ID, DEPENDENCE, CLOCK, COLLABORATOR, COST
+     * @return True la suppression de la propriété de la tâche est effectuée, false sinon
+     */
+    public boolean removePropriete(String name, boolean constructor){
+        if(!constructor && (name.toUpperCase().equals(PROP_ID) || name.toUpperCase().equals(PROP_DEPENDENCE)
                 || name.toUpperCase().equals(PROP_CLOCK) || name.toUpperCase().equals(PROP_COLLABORATOR)
                 || name.toUpperCase().equals(PROP_COST))){
             return false;
@@ -610,6 +756,10 @@ public class Tache {
         return true;
     }
 
+    /**
+     * Ajoute une ligne au registre de la tâche
+     * @param log Valeur à ajouter au registre de la tâche
+     */
     private void addRegistre(String log){
         Date date = new Date();
         log += new SimpleDateFormat("<yyyy-MM-dd HH:mm>").format(date);
@@ -620,6 +770,12 @@ public class Tache {
         tache.addLog(log);
     }
 
+    /**
+     * Création ou modification du fichier
+     * @param path Chemin du fichier
+     * @param append True pour une écrire à la fin du fichier, false pour réécrire tout le fichier
+     * @return True si la modification du fichier est effectuée
+     */
     public boolean writeFichier(String path, boolean append){
         OrgParserWriter ecriture = new OrgParserWriter();
         String ecrire = "";
@@ -642,12 +798,19 @@ public class Tache {
         return true;
     }
 
+    /**
+     * Ajout d'une valeur dans l'en-tête
+     * @param clef Clef de l'en-tête
+     * @param valeur Valeur de l'en-tête
+     * @param constructor Si true, les valeurs des clefs suivantes peuvent être ajoutées : COLLABORATOR, COST
+     * @return True si l'ajout dans l'en-tête est effectué, false sinon
+     */
     public static boolean addEnTete(String clef, String valeur, boolean constructor){
         if(lstHeader == null){
             lstHeader = new LinkedHashMap<String, String>();
         }
         if(!constructor){
-            if(clef.trim().toUpperCase().equals(HEADER_COST)){
+            if(clef.trim().toUpperCase().equals(HEADER_COST) || clef.trim().toUpperCase().equals(HEADER_COLLABORATOR)){
                 return false;
             }
         }
@@ -658,6 +821,11 @@ public class Tache {
         return true;
     }
 
+    /**
+     * Valeur de l'en-tête selon la clef
+     * @param clef La clef liée à la valeur
+     * @return La valeur de l'en-tête. Null s'il elle n'existe pas
+     */
     public static String getEnTete(String clef){
         if(lstHeader == null || clef.trim().equals("")){
             return null;
@@ -665,9 +833,16 @@ public class Tache {
         return lstHeader.get(clef.trim());
     }
 
+    /**
+     * Modifie la valeur de l'en-tête selon la clef
+     * @param clef La clef liée à la valeur
+     * @param valeur La nouvelle valeur
+     * @param constructor Si true, les valeurs des clefs suivantes peuvent être modifiées : COLLABORATOR, COST
+     * @return True si la modification de valeur de l'en-tête est effectuée, false sinon
+     */
     public static boolean setEnTete(String clef, String valeur, boolean constructor){
         if(!constructor){
-            if(clef.trim().toUpperCase().equals(HEADER_COST)){
+            if(clef.trim().toUpperCase().equals(HEADER_COST)|| clef.trim().toUpperCase().equals(HEADER_COLLABORATOR)){
                 return false;
             }
         }
@@ -681,9 +856,15 @@ public class Tache {
         return true;
     }
 
+    /**
+     * Supprime la valeur et la clef de l'en-tête selon la clef
+     * @param clef La clef à supprimer
+     * @param constructor Si true, les valeurs des clefs suivantes peuvent être supprimée : COLLABORATOR, COST
+     * @return True si la suppression de la clef / valeur est effectuée, false sinon
+     */
     public static boolean removeEnTete(String clef, boolean constructor){
         if(!constructor){
-            if(clef.trim().toUpperCase().equals(HEADER_COST)){
+            if(clef.trim().toUpperCase().equals(HEADER_COST)|| clef.trim().toUpperCase().equals(HEADER_COLLABORATOR)){
                 return false;
             }
         }
@@ -697,6 +878,13 @@ public class Tache {
         return true;
     }
 
+    /**
+     * Ajoute une dépendance à une tâche
+     * @param list Liste des tâches
+     * @param numTache La tâche qui dépend (La tâche doit exister dans la liste)
+     * @param numTacheDep La tâche qui reçoit la dépendance (La tâche doit exister dans la liste)
+     * @return True si la modification de la dépendance est effectuée, false sinon
+     */
     public static boolean setDependanceListe(List<Tache> list, int numTache, int numTacheDep){
         if(numTache < 0 || list.size() - 1 < numTache || numTacheDep < 0 || list.size() - 1 < numTacheDep || numTache == numTacheDep){
             return false;
@@ -718,6 +906,11 @@ public class Tache {
         return true;
     }
 
+    /**
+     * Lecture du fichier
+     * @param path Chemin du fichier
+     * @return La liste des tâches du fichier. Null s'il y eu un problème lors de la lecture
+     */
     public static List<Tache> readFichier(String path){
         lstHeader = null;
         List<Tache> list = new ArrayList<Tache>();
@@ -827,6 +1020,12 @@ public class Tache {
         return list;
     }
 
+    /**
+     * Supprime une tâche
+     * @param taches Liste des tâches
+     * @param numTache Numéro de la tâche (La tâche doit exister dans la liste)
+     * @return True si la suppression est effectuée, false sinon
+     */
     public static boolean removeTache(List<Tache> taches, int numTache) {
         if(numTache < 0 || numTache >= taches.size() || taches == null){
             return false;
@@ -849,7 +1048,13 @@ public class Tache {
         }
         return true;
     }
-    
+
+    /**
+     * Supprime la dépendance d'une tâche
+     * @param list La liste des tâches
+     * @param numTache Numéro de la tâche (Elle ne doit pas avoir une tâche qui dépend d'elle)
+     * @return True si la suppression de la dépendance tâche est effectué, false sinon
+     */
     public static boolean removeDependanceListe(List<Tache> list, int numTache){
         if(numTache < 0 || list.size() - 1 < numTache){
             return false;
