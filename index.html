@@ -1,69 +1,75 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<div class="jumbotron">
-	<div class="container">
-	<h3>Qu'est-ce que Org-Pro ?</h3>
-	<p>Org-Pro est un outil qui permet de simplifier la gestion de projet. Il utilise des fichiers au format OrgMode ayant la caractéristique d'être très complet.</p>
-
-	<h3>Pourquoi utiliser Org-Pro ?</h3>
-	<p>Simple d'utilisation, il vous permet d'utiliser un logiciel de gestion de projet en local sur votre machine. Les fichiers générés conservent la structure d'OrgMode, et peuvent donc être utilisés dans d'autres logiciels utilisant le même format.</p>
-
-	<h3>Comment puis-je l'utiliser ?</h3>
-	<p>Org-Pro est utilisable sur n'importe quel ordinateur sous Unix ou Windows. Le seul pré-requis est d'installer JAVA 8.</p>
-
-	<h3>Fonctionnalitées disponible :</h3>
-		<h4>Partie Tache : </h4><br>
-			<p>
-			- (Constructeur) Tache(String title) :	Construit un objet tâche à partir du titre donné en paramètre.<br>
-
-			- (Constructeur) Tache(String title, Tache tache) : Construit un objet tâche à partir du titre donné en paramètre et définie la tâche créé comme dépendante de la tâche donné en paramètre.<br>
-
-			- boolean ajoutCollaborateur(String val) : Permet d'ajouter un collaborateur à un tâche. Le paramètre correspond au nom/prénom du collaborateur. Ne peut pas contenir de ":". Return false si contient ":" sinon true.<br>
-
-			- boolean supprimerCollaborateur(String val) : Permet de supprimer un collaborateur d'une tâche. Le paramètre correspond au nom/prénom du collaborateur. Ne peut pas contenur de ":". Return false si contient ":" sinon true<br>
-
-			- setDependance(Tache tache) : Permet de définir la tâche comme dépendante de la tâche donné en paramètre.<br>
-
-			- removeDependance() : Permet de supprimer les dépendances de la tâche.<br>
-
-			- changeTitle(String title) : Permet de modifier le titre de la tâche.<br>
-
-			- boolean changeState(State state) : Permet de changer le state d'une tâche et d'écrire le changement dans le logbook si cela respecte les rêgles du kanban. TODO -> ONGOING -> DONE -> CANCELLED. Return true si le changement de state à fonctionné sinon false.<br>
-
-			- boolean nextState() : Permet de passer au state suivant. TODO -> ONGOING -> DONE. Return false si la tâche était déja dans un state fini (DONE ou CANCELLED) sinon true.<br>
-
-			- ajoutTag(String tag) : Permet d'ajouter un tag à la tâche.<br>
-
-			- supprimerTag(String tag) : Permet de supprimer un tag à la tâche.<br>
-
-			- boolean ajoutDeadline(String deadline) : Permet d'ajouter une deadline à une tâche sous la forme "yyyy-mm-dd". Return false si la date est incorrect sinon true.<br>
-
-			- boolean ajoutScheduled(String scheduled) : Permet d'ajouter une date scheduled à une tâche quand on prévoit de commencer à faire la tâche sous la forme "yyyy-mm-dd". Return false si la date est incorrect sinon true.<br>
-
-			- boolean ajoutClosed(String closed) : Permet d'ajouter une date closed à une tâche quand la tâche est fini sous la forme "yyyy-mm-dd". Return false si la date est incorrect sinon true.<br>
-
-			- boolean ajoutProperty(String name, String value, boolean constructor) : Permet d'ajouter une property à un tâche à partir de la clé (name) et de sa valeur (value). On ne peut pas modifier les property "ID, DEPENDENCE, COLLABORATOR, CLOCK" sauf si le paramètre constructeur vaut true. Return true si l'ajout est passé.<br>
-
-			- boolean supprimerProperty(String name, boolean interne) : Permet de supprimer une property à partir de la clé (name). On ne peut pas modifier les property "ID, DEPENDENCE, COLLABORATOR, CLOCK" sauf si le paramètre interne vaut true. Return true si la suppression est passé.<br>
-
-			- boolean ecritureFichier(String path, boolean append) : Permet d'écrire les données de la tâche dans un fichier donné en paramètre (path). Si le paramètre append vaut true l'écriture se fera à la fin du fichier sinon elle écrasera le fichier. Return true si l'écriture est passé sinon false.<br>
-
-			- static List&ltTache&gt lectureFichier(String path) : Permet de lire un fichier à partir du path. Return la liste de tâche récupérer dans le fichier sinon null.<br>
-
-			- static boolean supprimerTache(List&ltTache&gt taches, int numTache) : Permet de supprimer une tâche d'une liste en paramètre (taches) à partir du numéro de la tâche dans la liste (numTache). Si d'autre tâche dépende de la tâche à supprimer alors elles seront supprimer aussi. Return true si la suppression est passé sinon false.<br>
-
-			- static boolean deleteDependanceListe(Liste&ltTache&gt list, int numTache) : Permet de rendre indépendante une tâche si elle possède une dépendance en donnant le numéro de la tâche (numTache) dans la liste (list). La méthode va réorganiser la liste en mettant la tache à la fin de la liste.
-			La tâche choisi ne peut pas devenir indépendante s'il existe dans la liste une tâche qui dépend d'elle. Return true si la suppression de dépendance est passé sinon false.<br>
-
-			- String toString() : Retourne les info de la tâche comme elles sont écrit dans le fichier.<br><br>
-
-			<h4>Partie Scrum : </h4><br>
-			- static Liste&ltTache&gt listerTacheState(Liste&ltTache&gt liste, State state) : A partir de la liste en paramètre (liste), la méthode va retourner une liste de tâche qui sont dans l'état donné en paramètre (state).<br>
-
-			- static Liste&ltTache&gt listerTacheScheduled(Liste&ltTache&gt liste) : A partir de la liste en paramètre (liste), la méthode va retourner une liste de tâche qui ont leurs date scheduled passé et qui sont toujours dans l'état TODO.	
-	</p>
-
-	<h3>Guide d'installation</h3>
-	<p>Trouvable sur ce <a href="https://github.com/Org-Pro/orgpro-api/blob/master/README.md">lien</a>.</p>
-	</div>
-</div>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<!-- NewPage -->
+<html lang="fr">
+<head>
+<!-- Generated by javadoc (1.8.0_161) on Mon Mar 26 22:03:43 CEST 2018 -->
+<title>Generated Documentation (Untitled)</title>
+<script type="text/javascript">
+    tmpTargetPage = "" + window.location.search;
+    if (tmpTargetPage != "" && tmpTargetPage != "undefined")
+        tmpTargetPage = tmpTargetPage.substring(1);
+    if (tmpTargetPage.indexOf(":") != -1 || (tmpTargetPage != "" && !validURL(tmpTargetPage)))
+        tmpTargetPage = "undefined";
+    targetPage = tmpTargetPage;
+    function validURL(url) {
+        try {
+            url = decodeURIComponent(url);
+        }
+        catch (error) {
+            return false;
+        }
+        var pos = url.indexOf(".html");
+        if (pos == -1 || pos != url.length - 5)
+            return false;
+        var allowNumber = false;
+        var allowSep = false;
+        var seenDot = false;
+        for (var i = 0; i < url.length - 5; i++) {
+            var ch = url.charAt(i);
+            if ('a' <= ch && ch <= 'z' ||
+                    'A' <= ch && ch <= 'Z' ||
+                    ch == '$' ||
+                    ch == '_' ||
+                    ch.charCodeAt(0) > 127) {
+                allowNumber = true;
+                allowSep = true;
+            } else if ('0' <= ch && ch <= '9'
+                    || ch == '-') {
+                if (!allowNumber)
+                     return false;
+            } else if (ch == '/' || ch == '.') {
+                if (!allowSep)
+                    return false;
+                allowNumber = false;
+                allowSep = false;
+                if (ch == '.')
+                     seenDot = true;
+                if (ch == '/' && seenDot)
+                     return false;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+    function loadFrames() {
+        if (targetPage != "" && targetPage != "undefined")
+             top.classFrame.location = top.targetPage;
+    }
+</script>
+</head>
+<frameset cols="20%,80%" title="Documentation frame" onload="top.loadFrames()">
+<frameset rows="30%,70%" title="Left frames" onload="top.loadFrames()">
+<frame src="overview-frame.html" name="packageListFrame" title="All Packages">
+<frame src="allclasses-frame.html" name="packageFrame" title="All classes and interfaces (except non-static nested types)">
+</frameset>
+<frame src="overview-summary.html" name="classFrame" title="Package, class and interface descriptions" scrolling="yes">
+<noframes>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<h2>Frame Alert</h2>
+<p>This document is designed to be viewed using the frames feature. If you see this message, you are using a non-frame-capable web client. Link to <a href="overview-summary.html">Non-frame version</a>.</p>
+</noframes>
+</frameset>
+</html>
