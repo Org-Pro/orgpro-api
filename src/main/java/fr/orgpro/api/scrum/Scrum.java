@@ -12,6 +12,12 @@ import java.util.List;
  */
 public class Scrum {
 
+    /**
+     * Liste les tâches qui ont l'état indiqué
+     * @param liste La liste des tâches
+     * @param state L'état qui permet de faire le trie
+     * @return La nouvelle liste des tâches ayant le même état
+     */
     public static List<Tache> listTacheEtat(List<Tache> liste, State state){
         List<Tache> taches = new ArrayList<Tache>();
         for(Tache tache : liste){
@@ -22,6 +28,11 @@ public class Scrum {
         return taches;
     }
 
+    /**
+     * Liste les tâches qui ont une date de commencement passée (Seulement avec l'état : TODO)
+     * @param liste La liste des tâches
+     * @return La nouvelle liste des tâche ayant une date de commencement passée avec l'état TODO
+     */
     public static List<Tache> listTacheDateDebut(List<Tache> liste){
         List<Tache> taches = new ArrayList<Tache>();
         for(Tache tache : liste){
@@ -34,6 +45,11 @@ public class Scrum {
         return taches;
     }
 
+    /**
+     * Compare le coût des taches de niveau 1 avec le coût disponible (Seulement avec l'état : ONGOING)
+     * @param liste La liste des tâches
+     * @return La différence entre le coût total des tâches et le coût disponible. Null si la liste est vide
+     */
     public static Integer compareCout(List<Tache> liste){
         if(liste.size() <= 0){
             return null;
