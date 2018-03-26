@@ -228,6 +228,9 @@ public class TacheTest {
             }
         }
         assertEquals(test,true);
+        assertEquals(tache.addTag("test"), true);
+        assertEquals(tache.addTag(":"), false);
+        assertEquals(tache.addTag("test"), false);
     }
 
     @Test
@@ -253,6 +256,10 @@ public class TacheTest {
             }
         }
         assertEquals(test,false);
+        tache.addTag("test");
+        assertEquals(tache.removeTag("test"), true);
+        assertEquals(tache.removeTag(":"), false);
+        assertEquals(tache.removeTag("test"), false);
     }
 
 

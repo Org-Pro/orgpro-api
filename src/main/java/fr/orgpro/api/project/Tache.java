@@ -569,7 +569,7 @@ public class Tache {
     }
 
     /**
-     * Mododifie le titre la tâche
+     * Modifie le titre la tâche
      * @param title Nouveau titre
      */
     public void setTitre(String title){
@@ -623,8 +623,21 @@ public class Tache {
         return true;
     }
 
-    // TODO
-    public void addTag(String tag){
+    /**
+     * Ajoute un tag à la tâche
+     * @param tag Tag à ajouter à la tâche (Ne peut pas contenir ":" ou être vide |Le tag ne doit pas déjà être lié à la tâche)
+     * @return True si l'ajout est effectué, false sinon
+     */
+    public boolean addTag(String tag){
+        tag = tag.toUpperCase().trim();
+        if (tag.equals("") || tag.contains(":")){
+            return false;
+        }
+        for (String ele : tache.getTags()){
+            if(ele.equals(tag)){
+                return false;
+            }
+        }
         List<String> tags = tache.getTags();
         tags.add(tag);
         int i = 0;
@@ -634,10 +647,29 @@ public class Tache {
             i++;
         }
         tache.setTags(tagsTemp);
+        return true;
     }
 
-    // TODO
-    public void removeTag(String tag){
+    /**
+     * Supprime un tag de la tâche
+     * @param tag Tag à supprimer à la tâche (Ne peut pas contenir ":" ou être vide |Le tag doit déjà être lié à la tâche)
+     * @return True si la suppression est effectuée, false sinon
+     */
+    public boolean removeTag(String tag){
+        tag = tag.toUpperCase().trim();
+        if (tag.equals("") || tag.contains(":")){
+            return false;
+        }
+        boolean existe = false;
+        for (String ele : tache.getTags()){
+            if(ele.equals(tag)){
+                existe = true;
+                break;
+            }
+        }
+        if(!existe){
+            return false;
+        }
         List<String> tags = tache.getTags();
         int i = 0;
 
@@ -656,6 +688,7 @@ public class Tache {
             i++;
         }
         tache.setTags(tagsTemp);
+        return true;
     }
 
     /**
