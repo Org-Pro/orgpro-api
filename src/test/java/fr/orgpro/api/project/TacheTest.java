@@ -256,6 +256,7 @@ public class TacheTest {
             }
         }
         assertEquals(test,false);
+        tache.addTag(addTag);
         tache.addTag("test");
         assertEquals(tache.removeTag("test"), true);
         assertEquals(tache.removeTag(":"), false);
