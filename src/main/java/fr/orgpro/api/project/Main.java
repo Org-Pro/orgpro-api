@@ -43,8 +43,8 @@ public class Main {
         for (Tache ele : list){
 
             System.out.println(ele.toString());
-        }
-        Tache t1 = new Tache("t1");
+        }*/
+        /*Tache t1 = new Tache("t1");
         Tache t2 = new Tache("t2");
         Tache t3 = new Tache("t3");
         Tache t4 = new Tache("t4");
@@ -60,6 +60,20 @@ public class Main {
         Tache.supprimerTache(taches,1);
         for (Tache ele : taches){
             System.out.println(ele.toString());
+        }**/
+
+        /*List<Tache> list = Tache.lectureFichier("test.org");
+        //System.out.println(Tache.ajoutCollaborateurHeader("bob"));
+        //System.out.println(Tache.supprimerCollaborateurHeader(list,"aze"));
+        System.out.println(list.get(1).supprimerCollaborateur("aaa"));
+        boolean premier = true;
+        for (Tache t : list){
+            if(premier){
+                premier = false;
+                t.ecritureFichier("test.org", false);
+            }else {
+                t.ecritureFichier("test.org", true);
+            }
         }*/
     }
 
