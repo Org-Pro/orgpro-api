@@ -1,4 +1,4 @@
-version '1.0-alpha-SNAPSHOT'
+version '1.0-beta-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: "jacoco"
