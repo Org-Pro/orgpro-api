@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class Scrum {
 
+
     /**
      * Liste les tâches qui ont l'état indiqué
      * @param liste La liste des tâches
@@ -62,5 +63,23 @@ public class Scrum {
             }
         }
         return coutIteration-coutTache;
+    }
+
+    /**
+     * Liste les tâches qui possèdent le tag indiqué en paramètre
+     * @param liste La liste des tâches
+     * @param tag Le tag qui permet de faire le trie
+     * @return La nouvelle liste des tâches qui possède le tag en paramètre
+     */
+    public static List<Tache> listTacheTag(List<Tache> liste, String tag){
+        List<Tache> taches = new ArrayList<Tache>();
+        List<String> tags;
+        for(Tache tache : liste){
+            tags = tache.getTagListe();
+            if(tags.contains(tag.toUpperCase())){
+                taches.add(tache);
+            }
+        }
+        return taches;
     }
 }

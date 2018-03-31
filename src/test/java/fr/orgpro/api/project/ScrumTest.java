@@ -105,4 +105,35 @@ public class ScrumTest {
         assertEquals(Scrum.compareCout(taches),1,0);
         Tache.removeEnTete(Tache.HEADER_COST,true);
     }
+
+    @Test
+    public void testListTacheTag() throws Exception {
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        Tache t3 = new Tache("t3");
+
+        String functional = "functional";
+        String technical = "technical";
+        String test = "test";
+
+        t1.addTag(functional);
+        t1.addTag(test);
+        t2.addTag(technical);
+        t3.addTag(test);
+
+        List<Tache> taches = new ArrayList<Tache>();
+        taches.add(t1);
+        taches.add(t2);
+        taches.add(t3);
+
+        List<Tache> liste = new ArrayList<Tache>();
+        liste.add(t1);
+
+        assertEquals(Scrum.listTacheTag(taches,functional),liste);
+
+        liste.clear();
+        liste.add(t2);
+
+        assertEquals(Scrum.listTacheTag(taches,technical),liste);
+    }
 }
