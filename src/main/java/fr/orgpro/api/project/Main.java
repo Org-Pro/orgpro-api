@@ -1,9 +1,9 @@
 package fr.orgpro.api.project;
 
-import fr.orgpro.api.scrum.Scrum;
+//import fr.orgpro.api.scrum.Scrum;
 
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 
 public class Main {
 
@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args){
 
-        /*ystem.out.println("Org-Pro");
+        /*system.out.println("Org-Pro");
         Tache tache = new Tache("Faire les courses : 0");
         Tache t = new Tache("Test : 1");
         tache.changeState(State.ONGOING);
