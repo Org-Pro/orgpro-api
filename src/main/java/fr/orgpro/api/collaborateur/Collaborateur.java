@@ -1,4 +1,4 @@
-package fr.orgpro.api.project;
+package fr.orgpro.api.collaborateur;
 
 public class Collaborateur implements CollaborateurInterface {
 

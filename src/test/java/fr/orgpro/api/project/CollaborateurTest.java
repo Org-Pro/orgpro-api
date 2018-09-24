@@ -1,5 +1,8 @@
 package fr.orgpro.api.project;
 
+import fr.orgpro.api.collaborateur.CollaborateurFactory;
+import fr.orgpro.api.collaborateur.CollaborateurInterface;
+import fr.orgpro.api.collaborateur.CollaborateurType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
