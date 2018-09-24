@@ -47,4 +47,3 @@ Les commandes :
 ### Récupération
 Vous pouvez récupérer la librairie JAVA pour l'importer dans votre projet via le chemin :  
 - A partir du répertoire courant du projet : /build/lib/
-

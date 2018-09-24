@@ -407,7 +407,7 @@ public class TacheTest {
         String id = tache.getId();
         boolean idNull = false;
         boolean idVide = false;
-        if(id.equals("")){
+        if("".equals(id)){
             idVide = true;
         }
         if(id == null){

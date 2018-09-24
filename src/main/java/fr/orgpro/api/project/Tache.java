@@ -117,12 +117,12 @@ public class Tache {
 
     /**
      * Ajout d'un collaborateur dans l'en-tête
-     * @param col Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur ne doit pas déjà exister)
+     * @param nom Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur ne doit pas déjà exister)
      * @return True si l'ajout du collaborateur est effectué, false sinon
      */
-    public static boolean addCollaborateurEnTete(String col){
-        col = col.toLowerCase().trim();
-        if (col.equals("") || col.contains(":")){
+    public static boolean addCollaborateurEnTete(String nom){
+        String col = nom.toLowerCase().trim();
+        if ("".equals(col) || col.contains(":")){
             return false;
         }
         if(lstHeader == null){
@@ -149,14 +149,14 @@ public class Tache {
     /**
      * Modifie le nom d'un collaborateur dans l'en-tête ainsi que dans la liste des tâches dont il est lié
      * @param list Liste des tâches
-     * @param oldCol Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur doit déjà exister)
-     * @param newCol Nouveau nom  (Ne peut pas contenir ":" ou être vide | Le collaborateur ne doit pas déjà exister)
+     * @param oldName Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur doit déjà exister)
+     * @param newName Nouveau nom  (Ne peut pas contenir ":" ou être vide | Le collaborateur ne doit pas déjà exister)
      * @return True si la modification du nom est effectuée, false sinon
      */
-    public static boolean setCollaborateurEnTete(List<Tache> list, String oldCol, String newCol){
-        oldCol = oldCol.toLowerCase().trim();
-        newCol = newCol.toLowerCase().trim();
-        if (oldCol.equals("") || oldCol.contains(":") || newCol.equals("") || newCol.contains(":")){
+    public static boolean setCollaborateurEnTete(List<Tache> list, String oldName, String newName){
+        String oldCol = oldName.toLowerCase().trim();
+        String newCol = newName.toLowerCase().trim();
+        if ("".equals(oldCol) || oldCol.contains(":") || "".equals(newCol) || newCol.contains(":")){
             return false;
         }
         if(lstHeader == null || lstHeader.isEmpty()){
@@ -216,12 +216,12 @@ public class Tache {
     /**
      * Supprime le nom d'un collaborateur dans l'en-tête ainsi que dans la liste des tâches dont il est lié
      * @param list Liste des tâches
-     * @param col Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur doit déjà exister)
+     * @param nom Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur doit déjà exister)
      * @return True si la suppression du nom est effectuée, false sinon
      */
-    public static boolean removeCollaborateurEnTete(List<Tache> list, String col){
-        col = col.toLowerCase().trim();
-        if (col.equals("") || col.contains(":")){
+    public static boolean removeCollaborateurEnTete(List<Tache> list, String nom){
+        String col = nom.toLowerCase().trim();
+        if ("".equals(col) || col.contains(":")){
             return false;
         }
         if(lstHeader == null || lstHeader.isEmpty()){
@@ -254,7 +254,7 @@ public class Tache {
                 }
             }
 
-            if(rst.toString().trim().equals("")){
+            if("".equals(rst.toString().trim())){
                 Tache.removeEnTete(HEADER_COLLABORATOR, true);
             }else{
                 lstHeader.replace(HEADER_COLLABORATOR, rst.toString());
@@ -295,11 +295,11 @@ public class Tache {
 
     /**
      * Ajoute un collaborateur à la tâche
-     * @param val Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur doit exister dans l'en-tête | Le collaborateur ne doit pas déjà être lié à la tâche)
+     * @param nom Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur doit exister dans l'en-tête | Le collaborateur ne doit pas déjà être lié à la tâche)
      * @return True si l'ajout est effectué, false sinon
      */
-    public boolean addCollaborateur(String val){
-        val = val.toLowerCase().trim();
+    public boolean addCollaborateur(String nom){
+        String val = nom.toLowerCase().trim();
         if (val.contains(":") || val.isEmpty()){
             return false;
         }
@@ -331,11 +331,11 @@ public class Tache {
 
     /**
      * Supprime un collaborateur de la tâche
-     * @param val Nom du collaborateur (Ne peut pas contenir ":" ou être vide |Le collaborateur doit déjà être lié à la tâche)
+     * @param nom Nom du collaborateur (Ne peut pas contenir ":" ou être vide |Le collaborateur doit déjà être lié à la tâche)
      * @return True si la suppression est effectuée, false sinon
      */
-    public boolean removeCollaborateur(String val){
-        val = val.toLowerCase().trim();
+    public boolean removeCollaborateur(String nom){
+        String val = nom.toLowerCase().trim();
         if (val.contains(":")|| val.isEmpty()){
             return false;
         }
@@ -625,12 +625,12 @@ public class Tache {
 
     /**
      * Ajoute un tag à la tâche
-     * @param tag Tag à ajouter à la tâche (Ne peut pas contenir ":" ou être vide |Le tag ne doit pas déjà être lié à la tâche)
+     * @param nomTag Tag à ajouter à la tâche (Ne peut pas contenir ":" ou être vide |Le tag ne doit pas déjà être lié à la tâche)
      * @return True si l'ajout est effectué, false sinon
      */
-    public boolean addTag(String tag){
-        tag = tag.toUpperCase().trim();
-        if (tag.equals("") || tag.contains(":")){
+    public boolean addTag(String nomTag){
+        String tag = nomTag.toUpperCase().trim();
+        if ("".equals(tag) || tag.contains(":")){
             return false;
         }
         for (String ele : tache.getTags()){
@@ -652,12 +652,12 @@ public class Tache {
 
     /**
      * Supprime un tag de la tâche
-     * @param tag Tag à supprimer à la tâche (Ne peut pas contenir ":" ou être vide |Le tag doit déjà être lié à la tâche)
+     * @param nomTag Tag à supprimer à la tâche (Ne peut pas contenir ":" ou être vide |Le tag doit déjà être lié à la tâche)
      * @return True si la suppression est effectuée, false sinon
      */
-    public boolean removeTag(String tag){
-        tag = tag.toUpperCase().trim();
-        if (tag.equals("") || tag.contains(":")){
+    public boolean removeTag(String nomTag){
+        String tag = nomTag.toUpperCase().trim();
+        if ("".equals(tag) || tag.contains(":")){
             return false;
         }
         boolean existe = false;
@@ -760,9 +760,9 @@ public class Tache {
         if(constructor){
             tache.addProperty(name,value);
         }else{
-            if(name2.equals(PROP_ID) || name2.equals(PROP_DEPENDENCE)
-                    || name2.equals(PROP_CLOCK) || name2.equals(PROP_COLLABORATOR)
-                    || name2.equals(PROP_COST)){
+            if(PROP_ID.equals(name2) || PROP_DEPENDENCE.equals(name2)
+                    || PROP_CLOCK.equals(name2) || PROP_COLLABORATOR.equals(name2)
+                    || PROP_COST.equals(name2)){
                 return false;
             }else{
                 tache.addProperty(name,value);
@@ -778,9 +778,9 @@ public class Tache {
      * @return True la suppression de la propriété de la tâche est effectuée, false sinon
      */
     public boolean removePropriete(String name, boolean constructor){
-        if(!constructor && (name.toUpperCase().equals(PROP_ID) || name.toUpperCase().equals(PROP_DEPENDENCE)
-                || name.toUpperCase().equals(PROP_CLOCK) || name.toUpperCase().equals(PROP_COLLABORATOR)
-                || name.toUpperCase().equals(PROP_COST))){
+        if(!constructor && (PROP_ID.equalsIgnoreCase(name) || PROP_DEPENDENCE.equalsIgnoreCase(name)
+                || PROP_CLOCK.equalsIgnoreCase(name) || PROP_COLLABORATOR.equalsIgnoreCase(name)
+                || PROP_COST.equalsIgnoreCase(name))){
             return false;
         }
         OrgProperties properties = tache.getProperties();
@@ -795,8 +795,8 @@ public class Tache {
      */
     private void addRegistre(String log){
         Date date = new Date();
-        log += new SimpleDateFormat("<yyyy-MM-dd HH:mm>").format(date);
-        tache.addLog(log);
+        String newLog = log + new SimpleDateFormat("<yyyy-MM-dd HH:mm>").format(date);
+        tache.addLog(newLog);
     }
 
     private void addRegistreTexte(String log){
@@ -843,11 +843,11 @@ public class Tache {
             lstHeader = new LinkedHashMap<String, String>();
         }
         if(!constructor){
-            if(clef.trim().toUpperCase().equals(HEADER_COST) || clef.trim().toUpperCase().equals(HEADER_COLLABORATOR)){
+            if(HEADER_COST.equalsIgnoreCase(clef.trim()) || HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
-        if(lstHeader.get(clef.trim()) != null || clef.trim().equals("") || valeur.equals("")){
+        if(lstHeader.get(clef.trim()) != null || "".equals(clef.trim()) || "".equals(valeur)) {
             return false;
         }
         lstHeader.put(clef.trim(), valeur.trim());
@@ -860,7 +860,7 @@ public class Tache {
      * @return La valeur de l'en-tête. Null s'il elle n'existe pas
      */
     public static String getEnTete(String clef){
-        if(lstHeader == null || clef.trim().equals("")){
+        if(lstHeader == null || "".equals(clef.trim())){
             return null;
         }
         return lstHeader.get(clef.trim());
@@ -875,11 +875,11 @@ public class Tache {
      */
     public static boolean setEnTete(String clef, String valeur, boolean constructor){
         if(!constructor){
-            if(clef.trim().toUpperCase().equals(HEADER_COST)|| clef.trim().toUpperCase().equals(HEADER_COLLABORATOR)){
+            if(HEADER_COST.equalsIgnoreCase(clef.trim())|| HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
-        if(lstHeader == null || clef.trim().equals("") || valeur.equals("")){
+        if(lstHeader == null || "".equals(clef.trim()) || "".equals(valeur)){
             return false;
         }
         if(lstHeader.get(clef.trim()) == null){
@@ -897,11 +897,11 @@ public class Tache {
      */
     public static boolean removeEnTete(String clef, boolean constructor){
         if(!constructor){
-            if(clef.trim().toUpperCase().equals(HEADER_COST)|| clef.trim().toUpperCase().equals(HEADER_COLLABORATOR)){
+            if(HEADER_COST.equalsIgnoreCase(clef.trim())|| HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
-        if(lstHeader == null || clef.trim().equals("")){
+        if(lstHeader == null || "".equals(clef.trim())){
             return false;
         }
         if(lstHeader.get(clef.trim()) == null){
@@ -1003,6 +1003,8 @@ public class Tache {
                                     }
                                     case SCHEDULED:{
                                         tache.addDateDebut(s[1].trim());
+                                        break;
+                                    } default:{
                                         break;
                                     }
                                 }
