@@ -117,11 +117,11 @@ public class Tache {
 
     /**
      * Ajout d'un collaborateur dans l'en-tête
-     * @param col Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur ne doit pas déjà exister)
+     * @param nom Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur ne doit pas déjà exister)
      * @return True si l'ajout du collaborateur est effectué, false sinon
      */
-    public static boolean addCollaborateurEnTete(String col){
-        col = col.toLowerCase().trim();
+    public static boolean addCollaborateurEnTete(String nom){
+        String col = nom.toLowerCase().trim();
         if ("".equals(col) || col.contains(":")){
             return false;
         }
@@ -156,7 +156,7 @@ public class Tache {
     public static boolean setCollaborateurEnTete(List<Tache> list, String oldName, String newName){
         String oldCol = oldName.toLowerCase().trim();
         String newCol = newName.toLowerCase().trim();
-        if (oldCol.equals("") || oldCol.contains(":") || newCol.equals("") || newCol.contains(":")){
+        if ("".equals(oldCol) || oldCol.contains(":") || "".equals(newCol) || newCol.contains(":")){
             return false;
         }
         if(lstHeader == null || lstHeader.isEmpty()){
@@ -221,7 +221,7 @@ public class Tache {
      */
     public static boolean removeCollaborateurEnTete(List<Tache> list, String nom){
         String col = nom.toLowerCase().trim();
-        if (col.equals("") || col.contains(":")){
+        if ("".equals(col) || col.contains(":")){
             return false;
         }
         if(lstHeader == null || lstHeader.isEmpty()){
@@ -254,7 +254,7 @@ public class Tache {
                 }
             }
 
-            if(rst.toString().trim().equals("")){
+            if("".equals(rst.toString().trim())){
                 Tache.removeEnTete(HEADER_COLLABORATOR, true);
             }else{
                 lstHeader.replace(HEADER_COLLABORATOR, rst.toString());
@@ -760,9 +760,9 @@ public class Tache {
         if(constructor){
             tache.addProperty(name,value);
         }else{
-            if(name2.equals(PROP_ID) || name2.equals(PROP_DEPENDENCE)
-                    || name2.equals(PROP_CLOCK) || name2.equals(PROP_COLLABORATOR)
-                    || name2.equals(PROP_COST)){
+            if(PROP_ID.equals(name2) || PROP_DEPENDENCE.equals(name2)
+                    || PROP_CLOCK.equals(name2) || PROP_COLLABORATOR.equals(name2)
+                    || PROP_COST.equals(name2)){
                 return false;
             }else{
                 tache.addProperty(name,value);
@@ -778,9 +778,9 @@ public class Tache {
      * @return True la suppression de la propriété de la tâche est effectuée, false sinon
      */
     public boolean removePropriete(String name, boolean constructor){
-        if(!constructor && (name.toUpperCase().equals(PROP_ID) || name.toUpperCase().equals(PROP_DEPENDENCE)
-                || name.toUpperCase().equals(PROP_CLOCK) || name.toUpperCase().equals(PROP_COLLABORATOR)
-                || name.toUpperCase().equals(PROP_COST))){
+        if(!constructor && (PROP_ID.equalsIgnoreCase(name) || PROP_DEPENDENCE.equalsIgnoreCase(name)
+                || PROP_CLOCK.equalsIgnoreCase(name) || PROP_COLLABORATOR.equalsIgnoreCase(name)
+                || PROP_COST.equalsIgnoreCase(name))){
             return false;
         }
         OrgProperties properties = tache.getProperties();
@@ -843,7 +843,7 @@ public class Tache {
             lstHeader = new LinkedHashMap<String, String>();
         }
         if(!constructor){
-            if(clef.trim().toUpperCase().equals(HEADER_COST) || clef.trim().toUpperCase().equals(HEADER_COLLABORATOR)){
+            if(HEADER_COST.equalsIgnoreCase(clef.trim()) || HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
@@ -875,11 +875,11 @@ public class Tache {
      */
     public static boolean setEnTete(String clef, String valeur, boolean constructor){
         if(!constructor){
-            if(clef.trim().toUpperCase().equals(HEADER_COST)|| clef.trim().toUpperCase().equals(HEADER_COLLABORATOR)){
+            if(HEADER_COST.equalsIgnoreCase(clef.trim())|| HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
-        if(lstHeader == null || clef.trim().equals("") || valeur.equals("")){
+        if(lstHeader == null || "".equals(clef.trim()) || "".equals(valeur)){
             return false;
         }
         if(lstHeader.get(clef.trim()) == null){
@@ -897,11 +897,11 @@ public class Tache {
      */
     public static boolean removeEnTete(String clef, boolean constructor){
         if(!constructor){
-            if(clef.trim().toUpperCase().equals(HEADER_COST)|| clef.trim().toUpperCase().equals(HEADER_COLLABORATOR)){
+            if(HEADER_COST.equalsIgnoreCase(clef.trim())|| HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
-        if(lstHeader == null || clef.trim().equals("")){
+        if(lstHeader == null || "".equals(clef.trim())){
             return false;
         }
         if(lstHeader.get(clef.trim()) == null){
