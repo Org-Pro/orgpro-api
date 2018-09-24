@@ -8,7 +8,8 @@ public class CollaborateurFactory {
         }
         if(CollaborateurType.CLASSIC.toString().equals(type.toString())){
             return new Collaborateur();
+        }else {
+            return null;
         }
-        return null;
     }
 }

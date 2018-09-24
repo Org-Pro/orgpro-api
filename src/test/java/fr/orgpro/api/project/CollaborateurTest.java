@@ -1,5 +1,6 @@
 package fr.orgpro.api.project;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,6 +15,11 @@ public class CollaborateurTest {
     public void setUpClass() throws Exception {
         factory = new CollaborateurFactory();
         collab = factory.getCollaborateur(CollaborateurType.CLASSIC);
+    }
+
+    @After
+    public void tearDownClass() throws Exception {
+        collab = null;
     }
 
     @Test
