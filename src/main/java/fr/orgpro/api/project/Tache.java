@@ -72,9 +72,10 @@ public class Tache {
     /**
      * Création d'une tâche
      * @param title Titre de la tâche
-     * @param level Niveau de la tâche
+     * @param lvl Niveau de la tâche
      */
-    public Tache(String title,int level) {
+    public Tache(String title,int lvl) {
+        int level = lvl;
         if(level < 1){
             level = 1;
         }
