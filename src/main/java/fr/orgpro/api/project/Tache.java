@@ -760,9 +760,9 @@ public class Tache {
         if(constructor){
             tache.addProperty(name,value);
         }else{
-            if(name2.equals(PROP_ID) || name2.equals(PROP_DEPENDENCE)
-                    || name2.equals(PROP_CLOCK) || name2.equals(PROP_COLLABORATOR)
-                    || name2.equals(PROP_COST)){
+            if(PROP_ID.equals(name2) || PROP_DEPENDENCE.equals(name2)
+                    || PROP_CLOCK.equals(name2) || PROP_COLLABORATOR.equals(name2)
+                    || PROP_COST.equals(name2)){
                 return false;
             }else{
                 tache.addProperty(name,value);
@@ -778,9 +778,9 @@ public class Tache {
      * @return True la suppression de la propriété de la tâche est effectuée, false sinon
      */
     public boolean removePropriete(String name, boolean constructor){
-        if(!constructor && (name.equalsIgnoreCase(PROP_ID) || name.equalsIgnoreCase(PROP_DEPENDENCE)
-                || name.equalsIgnoreCase(PROP_CLOCK) || name.equalsIgnoreCase(PROP_COLLABORATOR)
-                || name.equalsIgnoreCase(PROP_COST))){
+        if(!constructor && (PROP_ID.equalsIgnoreCase(name) || PROP_DEPENDENCE.equalsIgnoreCase(name)
+                || PROP_CLOCK.equalsIgnoreCase(name) || PROP_COLLABORATOR.equalsIgnoreCase(name)
+                || PROP_COST.equalsIgnoreCase(name))){
             return false;
         }
         OrgProperties properties = tache.getProperties();
@@ -843,7 +843,7 @@ public class Tache {
             lstHeader = new LinkedHashMap<String, String>();
         }
         if(!constructor){
-            if(clef.trim().equalsIgnoreCase(HEADER_COST) || clef.trim().equalsIgnoreCase(HEADER_COLLABORATOR)){
+            if(HEADER_COST.equalsIgnoreCase(clef.trim()) || HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
@@ -875,11 +875,11 @@ public class Tache {
      */
     public static boolean setEnTete(String clef, String valeur, boolean constructor){
         if(!constructor){
-            if(clef.trim().equalsIgnoreCase(HEADER_COST)|| clef.trim().equalsIgnoreCase(HEADER_COLLABORATOR)){
+            if(HEADER_COST.equalsIgnoreCase(clef.trim())|| HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
-        if(lstHeader == null || clef.trim().equals("") || valeur.equals("")){
+        if(lstHeader == null || "".equals(clef.trim()) || "".equals(valeur)){
             return false;
         }
         if(lstHeader.get(clef.trim()) == null){
@@ -897,11 +897,11 @@ public class Tache {
      */
     public static boolean removeEnTete(String clef, boolean constructor){
         if(!constructor){
-            if(clef.trim().equalsIgnoreCase(HEADER_COST)|| clef.trim().equalsIgnoreCase(HEADER_COLLABORATOR)){
+            if(HEADER_COST.equalsIgnoreCase(clef.trim())|| HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
-        if(lstHeader == null || clef.trim().equals("")){
+        if(lstHeader == null || "".equals(clef.trim())){
             return false;
         }
         if(lstHeader.get(clef.trim()) == null){
