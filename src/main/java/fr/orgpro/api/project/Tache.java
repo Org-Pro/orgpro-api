@@ -117,11 +117,11 @@ public class Tache {
 
     /**
      * Ajout d'un collaborateur dans l'en-tête
-     * @param col Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur ne doit pas déjà exister)
+     * @param nom Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur ne doit pas déjà exister)
      * @return True si l'ajout du collaborateur est effectué, false sinon
      */
-    public static boolean addCollaborateurEnTete(String col){
-        col = col.toLowerCase().trim();
+    public static boolean addCollaborateurEnTete(String nom){
+        String col = nom.toLowerCase().trim();
         if ("".equals(col) || col.contains(":")){
             return false;
         }
