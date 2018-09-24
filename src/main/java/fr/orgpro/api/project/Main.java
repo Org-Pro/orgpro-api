@@ -74,7 +74,17 @@ public class Main {
             }else {
                 t.ecritureFichier("test.org", true);
             }
-        }*/
+        }
+        CollaborateurFactory fac = new CollaborateurFactory();
+        CollaborateurInterface collab = fac.getCollaborateur(CollaborateurType.CLASSIC);
+        if(Collaborateur.class.isInstance(collab)){
+            System.out.println("OK");
+        }else{
+            System.out.println("KO");
+        }
+        collab.setNom("Jean");
+        collab.setNom("Thibault");
+        System.out.println(collab.getNom());*/
     }
 
 
