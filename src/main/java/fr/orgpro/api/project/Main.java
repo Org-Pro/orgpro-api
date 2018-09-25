@@ -5,6 +5,14 @@ package fr.orgpro.api.project;
 //import java.util.ArrayList;
 //import java.util.List;
 
+import fr.orgpro.api.collaborateur.CollaborateurFactory;
+import fr.orgpro.api.collaborateur.CollaborateurFichier;
+import fr.orgpro.api.collaborateur.CollaborateurInterface;
+import fr.orgpro.api.collaborateur.CollaborateurType;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
 
@@ -69,6 +77,31 @@ public class Main {
             }else {
                 t.ecritureFichier("test.org", true);
             }
+        }
+        CollaborateurFactory fac = new CollaborateurFactory();
+        CollaborateurInterface collab = fac.getCollaborateur(CollaborateurType.CLASSIC);
+        if(Collaborateur.class.isInstance(collab)){
+            System.out.println("OK");
+        }else{
+            System.out.println("KO");
+        }
+        collab.setNom("Jean");
+        collab.setNom("Thibault");
+        System.out.println(collab.getNom());
+        String path = "test.txt";
+        CollaborateurFactory fac = new CollaborateurFactory();
+        CollaborateurInterface collab = fac.getCollaborateur(CollaborateurType.CLASSIC);
+        collab.setNom("Thibault");
+        CollaborateurInterface collab2 = fac.getCollaborateur(CollaborateurType.CLASSIC);
+        collab2.setNom("Alex");
+        List<CollaborateurInterface> lstC = new ArrayList<CollaborateurInterface>();
+        lstC.add(collab);
+        lstC.add(collab2);
+        CollaborateurFichier.ecritureFichier(lstC,path,false);
+        List<CollaborateurInterface> liste = new ArrayList<CollaborateurInterface>();
+        liste = CollaborateurFichier.lectureFichier(path);
+        for (CollaborateurInterface c : liste) {
+            System.out.println(c.toString() + "\n");
         }*/
     }
 
