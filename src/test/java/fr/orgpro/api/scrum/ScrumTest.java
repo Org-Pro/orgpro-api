@@ -1,5 +1,7 @@
-package fr.orgpro.api.project;
+package fr.orgpro.api.scrum;
 
+import fr.orgpro.api.project.State;
+import fr.orgpro.api.project.Tache;
 import fr.orgpro.api.scrum.Scrum;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package fr.orgpro.api.project;
+package fr.orgpro.api.collaborateur;
 
 import fr.orgpro.api.collaborateur.Collaborateur;
 import fr.orgpro.api.collaborateur.CollaborateurFactory;

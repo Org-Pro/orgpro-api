@@ -14,4 +14,9 @@ public class Collaborateur implements CollaborateurInterface {
     public String getNom() {
         return nom;
     }
+
+    @Override
+    public String toString() {
+        return CollaborateurType.CLASSIC.toString() + ';' + nom;
+    }
 }
