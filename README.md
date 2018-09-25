@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 [![Build Status](https://travis-ci.org/Org-Pro/orgpro-api.svg?branch=stockage_collaborat)](https://travis-ci.org/Org-Pro/orgpro-api)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9648a5e072954637af782a8451d4d3cc)](https://www.codacy.com/app/Trellorg/orgpro-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Org-Pro/orgpro-api&amp;utm_campaign=Badge_Grade)
 [![Coverage Status](https://coveralls.io/repos/github/Org-Pro/orgpro-api/badge.png?branch=stockage_collaborat)](https://coveralls.io/github/Org-Pro/orgpro-api?branch=stockage_collaborat)
+=======
+[![Build Status](https://travis-ci.org/Org-Pro/orgpro-api.svg?branch=master)](https://travis-ci.org/Org-Pro/orgpro-api)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9648a5e072954637af782a8451d4d3cc)](https://www.codacy.com/app/Trellorg/orgpro-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Org-Pro/orgpro-api&amp;utm_campaign=Badge_Grade)
+[![Coverage Status](https://coveralls.io/repos/github/Org-Pro/orgpro-api/badge.svg?branch=master)](https://coveralls.io/github/Org-Pro/orgpro-api?branch=master)
+>>>>>>> b8e7482864205ecb77c6cf1a4f405c3237a1c948
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://github.com/CodeChillAlluna/code-chill/blob/master/LICENSE)
 
 <https://org-pro.github.io/orgpro-api/>
@@ -47,4 +53,3 @@ Les commandes :
 ### Récupération
 Vous pouvez récupérer la librairie JAVA pour l'importer dans votre projet via le chemin :  
 - A partir du répertoire courant du projet : /build/lib/
-

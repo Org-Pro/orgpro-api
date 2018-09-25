@@ -33,8 +33,6 @@ public class Main {
         tache.ajoutClosed("2018-02-02");
         tache.ajoutProperty("Liste Principal", "riz, : dinde, : huile", false);
         tache.ajoutProperty("Liste Secondaire", "coca,gateaux", false);
-
-
        // System.out.println(tache);
         //System.out.println(t);
         tache.minuteur();
@@ -47,16 +45,13 @@ public class Main {
         List<Tache> list;
         list = Tache.lectureFichier("liste.org");
         System.out.println(list.size());
-
         for (Tache ele : list){
-
             System.out.println(ele.toString());
         }*/
         /*Tache t1 = new Tache("t1");
         Tache t2 = new Tache("t2");
         Tache t3 = new Tache("t3");
         Tache t4 = new Tache("t4");
-
         t2.setDependance(t1);
         t3.setDependance(t1);
         t4.setDependance(t3);
