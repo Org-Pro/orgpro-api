@@ -43,15 +43,15 @@ public class GoogleTasksApi {
      * @return An authorized Credential object.
      * @throws IOException If the credentials.json file cannot be found.
      */
-    private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
+    private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT,String credential_user) throws IOException {
         // Load client secrets.
-        InputStream in = GoogleTasksApi.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+        InputStream in = GoogleTasksApi.class.getResourceAsStream(credential_user);
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH + credential_user)))
                 .setAccessType("offline")
                 .build();
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
@@ -60,15 +60,23 @@ public class GoogleTasksApi {
     public static void main(String... args) throws IOException, GeneralSecurityException {
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        Tasks service = new Tasks.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+        Tasks service = new Tasks.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT, CREDENTIALS_FILE_PATH))
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+
+        Tasks service2 = new Tasks.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT, "/credentialsSecondAccount.json"))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
 
         getTacheListe(service);
+
+        getTacheListe(service2);
         // MDE3MDM0OTYxMjk2MDUyMTc4Nzg6NTk0ODcyMjg2NDA5NTQwMjow
+        /*
         Task t = new Task();
         t.setTitle("test insert");
-        service.tasks().insert("MDE3MDM0OTYxMjk2MDUyMTc4Nzg6NTk0ODcyMjg2NDA5NTQwMjow", t).execute();
+        service.tasks().insert("MTYwMDg1MzY4MTg0MzA3MjA4Mjc6OTk1ODAyNzU5ODgyMDQ2ODow", t).execute();
+*/
     }
 
     public static List<TaskList> getTacheListe(Tasks service) throws IOException {
