@@ -34,7 +34,7 @@ public class GoogleTasksApi {
      * Global instance of the scopes required by this quickstart.
      * If modifying these scopes, delete your previously saved tokens/ folder.
      */
-    private static final List<String> SCOPES = Collections.singletonList(TasksScopes.TASKS_READONLY);
+    private static final List<String> SCOPES = Collections.singletonList(TasksScopes.TASKS);
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
     /**
@@ -65,7 +65,10 @@ public class GoogleTasksApi {
                 .build();
 
         getTacheListe(service);
-
+        // MDE3MDM0OTYxMjk2MDUyMTc4Nzg6NTk0ODcyMjg2NDA5NTQwMjow
+        Task t = new Task();
+        t.setTitle("test insert");
+        service.tasks().insert("MDE3MDM0OTYxMjk2MDUyMTc4Nzg6NTk0ODcyMjg2NDA5NTQwMjow", t).execute();
     }
 
     public static List<TaskList> getTacheListe(Tasks service) throws IOException {
