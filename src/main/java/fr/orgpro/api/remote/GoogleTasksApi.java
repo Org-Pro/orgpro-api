@@ -16,10 +16,12 @@ public class GoogleTasksApi {
 
         Tasks service = gtService.getTasks(CREDENTIALS_FILE_PATH);
         List<TaskList> ltk = googleList.getTacheListe(service);
-        System.out.println(ltk.toString());
         Task t = new Task();
-        t.setTitle("test insert");
-        service.tasks().insert(ltk.get(0).getId(), t).execute();
+        t.setTitle("New task");
+        TaskList tkl = new TaskList();
+        tkl.setTitle("New task List");
+        googleList.postTacheList(service, tkl);
+        service.tasks().insert(tkl.getId(), t).execute();
         // service.tasks().insert(ltk.get(1).getId(), t).execute();
 
     }
