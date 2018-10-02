@@ -373,6 +373,10 @@ public class Tache {
         }
     }
 
+    public List<String> getCollaborateur(){
+        return lstCollaborateur;
+    }
+
     /**
      * Modifie la dépendance de la tâche
      * @param tache Tâche à dépendre
