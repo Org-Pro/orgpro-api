@@ -138,4 +138,29 @@ public class ScrumTest {
 
         assertEquals(Scrum.listTacheTag(taches,technical),liste);
     }
+
+    @Test
+    public void testListTacheCollaborateur() throws Exception {
+        String nom = "Thibault";
+
+        Tache tache = new Tache("t1");
+        Tache tache2 = new Tache("t2");
+        Tache tache3 = new Tache("t3");
+
+        List<Tache> liste = new ArrayList<Tache>();
+        Tache.addCollaborateurEnTete(nom);
+        tache.addCollaborateur(nom);
+        tache2.addCollaborateur(nom);
+        liste.add(tache);
+        liste.add(tache2);
+        liste.add(tache3);
+        List<Tache> listeA = new ArrayList<Tache>();
+        listeA = Scrum.listTacheCollaborateur(liste,nom);
+        List<Tache> listeE = new ArrayList<Tache>();
+        listeE.add(tache);
+        listeE.add(tache2);
+        assertEquals(listeE.toString(),listeA.toString());
+
+    }
+
 }

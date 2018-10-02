@@ -1,5 +1,6 @@
 package fr.orgpro.api.scrum;
 
+import fr.orgpro.api.collaborateur.Collaborateur;
 import fr.orgpro.api.project.State;
 import fr.orgpro.api.project.Tache;
 
@@ -77,6 +78,18 @@ public class Scrum {
         for(Tache tache : liste){
             tags = tache.getTagListe();
             if(tags.contains(tag.toUpperCase())){
+                taches.add(tache);
+            }
+        }
+        return taches;
+    }
+
+    public static List<Tache> listTacheCollaborateur(List<Tache> liste, String collaborateur){
+        List<Tache> taches = new ArrayList<Tache>();
+        List<String> collaborateurs = new ArrayList<String>();
+        for(Tache tache : liste){
+            collaborateurs = tache.getCollaborateur();
+            if(collaborateurs != null && collaborateurs.contains(collaborateur.toLowerCase())){
                 taches.add(tache);
             }
         }
