@@ -171,7 +171,6 @@ public class SQLiteDataBase {
             stmt = c.createStatement();
             stmt.execute("PRAGMA foreign_keys = ON");
             int rst = stmt.executeUpdate("delete from collaborateur where pseudo = ('" + collaborateur + "');");
-            System.out.println(rst);
 
             stmt.close();
             c.close();
