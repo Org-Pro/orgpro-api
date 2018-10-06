@@ -66,9 +66,9 @@ public class GoogleTasksApi {
 
         getTacheListe(service);
         // MDE3MDM0OTYxMjk2MDUyMTc4Nzg6NTk0ODcyMjg2NDA5NTQwMjow
-        Task t = new Task();
+        /*Task t = new Task();
         t.setTitle("test insert");
-        service.tasks().insert("MDE3MDM0OTYxMjk2MDUyMTc4Nzg6NTk0ODcyMjg2NDA5NTQwMjow", t).execute();
+        service.tasks().insert("MDE3MDM0OTYxMjk2MDUyMTc4Nzg6NTk0ODcyMjg2NDA5NTQwMjow", t).execute();*/
     }
 
     public static List<TaskList> getTacheListe(Tasks service) throws IOException {
