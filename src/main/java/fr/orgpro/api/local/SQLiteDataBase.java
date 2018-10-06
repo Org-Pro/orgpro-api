@@ -1,12 +1,10 @@
 package fr.orgpro.api.local;
 
-import com.sun.istack.internal.NotNull;
 import fr.orgpro.api.project.Tache;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SQLiteDataBase {
@@ -227,7 +225,7 @@ public class SQLiteDataBase {
         return true;
     }
 
-    public static boolean synchroUpdateEstSynchro(@NotNull Tache tache, boolean estSynchro){
+    public static boolean synchroUpdateEstSynchro(@Nonnull Tache tache, boolean estSynchro){
         Statement stmt;
         Connection c = connection();
         try {
@@ -246,7 +244,7 @@ public class SQLiteDataBase {
         return true;
     }
 
-    public static boolean synchroUpdateGoogleIdTache(@NotNull Tache tache,@Nullable String google_id_tache){
+    public static boolean synchroUpdateGoogleIdTache(@Nonnull Tache tache,@Nullable String google_id_tache){
         Statement stmt;
         Connection c = connection();
         try {
