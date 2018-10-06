@@ -78,7 +78,7 @@ public class SQLiteDataBaseTest {
     }
 
     @Test
-    public void synchroAddTacheCollaborateur() throws Exception {
+    public void testSynchroAddTacheCollaborateur() throws Exception {
         String col = nomCol();
         Tache tache = new Tache("");
         assertFalse(SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null, null));
@@ -88,7 +88,7 @@ public class SQLiteDataBaseTest {
     }
 
     @Test
-    public void synchroDeleteTacheCollaborateur() throws Exception {
+    public void testSynchroDeleteTacheCollaborateur() throws Exception {
         String col = nomCol();
         Tache tache = new Tache("");
         assertFalse(SQLiteDataBase.synchroDeleteTacheCollaborateur(tache, col));
@@ -100,27 +100,27 @@ public class SQLiteDataBaseTest {
     }
 
     @Test
-    public void synchroUpdateEstSynchro() throws Exception {
+    public void testSynchroUpdateEstSynchro() throws Exception {
         String col = nomCol();
         Tache tache = new Tache("");
-        assertFalse(SQLiteDataBase.synchroUpdateEstSynchro(tache, false));
-        assertFalse(SQLiteDataBase.synchroUpdateEstSynchro(null, false));
+        assertFalse(SQLiteDataBase.synchroUpdateEstSynchro(tache, col, false));
+        assertFalse(SQLiteDataBase.synchroUpdateEstSynchro(null, col, false));
         SQLiteDataBase.addTache(tache);
         SQLiteDataBase.addCollaborateur(col, null, null, null);
         SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null, null);
-        assertTrue(SQLiteDataBase.synchroUpdateEstSynchro(tache, true));
+        assertTrue(SQLiteDataBase.synchroUpdateEstSynchro(tache, col, true));
     }
 
     @Test
-    public void synchroUpdateGoogleIdTache() throws Exception {
+    public void testSynchroUpdateGoogleIdTache() throws Exception {
         String col = nomCol();
         Tache tache = new Tache("");
-        assertFalse(SQLiteDataBase.synchroUpdateGoogleIdTache(tache, "id"));
-        assertFalse(SQLiteDataBase.synchroUpdateGoogleIdTache(null, "id"));
+        assertFalse(SQLiteDataBase.synchroUpdateGoogleIdTache(tache, col, "id"));
+        assertFalse(SQLiteDataBase.synchroUpdateGoogleIdTache(null, col, "id"));
         SQLiteDataBase.addTache(tache);
         SQLiteDataBase.addCollaborateur(col, null, null, null);
         SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null, null);
-        assertTrue(SQLiteDataBase.synchroUpdateGoogleIdTache(tache, "id"));
+        assertTrue(SQLiteDataBase.synchroUpdateGoogleIdTache(tache, col, "id"));
     }
 
     private static String nomCol(){

@@ -10,25 +10,6 @@ import java.util.List;
 public class SQLiteDataBase {
     private static final String DB_NAME = "orgpro.db";
 
-    /*public static void main( String args[] ) {
-        //createTable();
-        List<Tache> list = new ArrayList<>();
-        list.add(new Tache(""));
-        list.add(new Tache(""));
-
-        addTacheListe(list);
-        //deleteTache(list.get(0));
-        addCollaborateur("col2", "qsdfzq", "qdazd", null);
-        synchroAddTacheCollaborateur(list.get(1), "col", "aqdqd", null);
-
-        synchroUpdateEstSynchro(list.get(1), true);
-        System.out.println(synchroUpdateGoogleIdTache(list.get(1), "test"));
-        //synchAddTacheCollaborateur(list.get(1), "col");
-        //System.out.println(deleteCollaborateur("col"));
-        //synchDeleteTacheCollaborateur(list.get(1), "col");
-
-    }*/
-
     /**
      * Connexion avec la base de données locale
      * @return La connexion si elle est établie, null sinon
@@ -47,7 +28,8 @@ public class SQLiteDataBase {
     }
 
     /**
-     * Créé la structure de la base de données locale
+     * Crée la structure de la base de données locale
+     * @return False en cas d'erreur
      */
     public static boolean createTable(){
         Statement stmt;
@@ -88,8 +70,9 @@ public class SQLiteDataBase {
     }
 
     /**
-     * Supprime la tâche de la base de données locale
-     * @param tache La tâche à supprimer
+     * Ajoute la tâche de la base de données locale
+     * @param tache La tâche à ajouter
+     * @return False en cas d'erreur
      */
     public static boolean addTache(@Nonnull Tache tache){
         Statement stmt;
@@ -108,6 +91,11 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Ajoute les tâches de la liste à la base de données locale
+     * @param tacheListe La liste contenant les tâches à ajouter
+     * @return False en cas d'erreur
+     */
     public static boolean addTacheListe(@Nonnull List<Tache> tacheListe){
         Statement stmt;
         Connection c = connection();
@@ -127,6 +115,11 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Supprime la tâche de la base de données locale
+     * @param tache La tâche à supprimer
+     * @return False en cas d'erreur
+     */
     public static boolean deleteTache(@Nonnull Tache tache){
         Statement stmt;
         Connection c = connection();
@@ -146,6 +139,14 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Ajoute un collaborateur à la base de données locale
+     * @param collaborateur Pseudo du collaborateur à ajouter
+     * @param nom Nom du collaborateur à ajouter
+     * @param prenom Prenom du collaborateur à ajouter
+     * @param google_id_liste L'id de la liste créée par l'API Google du collaborateur à ajouter
+     * @return False en cas d'erreur
+     */
     public static boolean addCollaborateur(@Nonnull String collaborateur, @Nullable String nom, @Nullable String prenom, @Nullable String google_id_liste){
         Statement stmt;
         Connection c = connection();
@@ -164,6 +165,11 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Supprime un collaborateur de la base de données locale
+     * @param collaborateur Pseudo du collaborateur à supprimer
+     * @return False en cas d'erreur
+     */
     public static boolean deleteCollaborateur(@Nonnull String collaborateur){
         Statement stmt;
         Connection c = connection();
@@ -183,6 +189,14 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Ajoute un lien entre une tâche et un collaborateur avec des paramètres supplémentaires liés aux APIs
+     * @param tache La tâche à lier
+     * @param collaborateur Le collaborateur à lier
+     * @param google_id_tache L'id de la tâche créée par l'API Google
+     * @param estSynchro L'état de la synchronisation avec les APIs en ligne
+     * @return False en cas d'erreur
+     */
     public static boolean synchroAddTacheCollaborateur(@Nonnull Tache tache, @Nonnull String collaborateur, @Nullable String google_id_tache, @Nullable Boolean estSynchro){
         Statement stmt;
         Connection c = connection();
@@ -205,6 +219,12 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Supprime le lien entre une tâche et un collaborateur
+     * @param tache La tâche à délier
+     * @param collaborateur Le collaborateur à délier
+     * @return False en cas d'erreur
+     */
     public static boolean synchroDeleteTacheCollaborateur(@Nonnull Tache tache, @Nonnull String collaborateur){
         Statement stmt;
         Connection c = connection();
@@ -224,13 +244,20 @@ public class SQLiteDataBase {
         return true;
     }
 
-    public static boolean synchroUpdateEstSynchro(@Nonnull Tache tache, boolean estSynchro){
+    /**
+     * Modifie l'état de synchronisation d'un lien entre une tâche et un collaborateur
+     * @param tache La tâche liée
+     * @param collaborateur Le pseudo du collaborateur lié
+     * @param estSynchro L'état de la synchronisation avec les APIs en ligne à modifier
+     * @return False en cas d'erreur
+     */
+    public static boolean synchroUpdateEstSynchro(@Nonnull Tache tache, @Nonnull String collaborateur, boolean estSynchro){
         Statement stmt;
         Connection c = connection();
         try {
             stmt = c.createStatement();
             stmt.execute("PRAGMA foreign_keys = ON");
-            int rst = stmt.executeUpdate("update synchro set est_synchro='" + estSynchro + "' where uuid_tache='" + tache.getId() + "';");
+            int rst = stmt.executeUpdate("update synchro set est_synchro='" + estSynchro + "' where uuid_tache='" + tache.getId() + "' and pseudo_collaborateur='" + collaborateur + "';");
 
             stmt.close();
             c.close();
@@ -243,13 +270,21 @@ public class SQLiteDataBase {
         return true;
     }
 
-    public static boolean synchroUpdateGoogleIdTache(@Nonnull Tache tache,@Nullable String google_id_tache){
+
+    /**
+     * Modifie l'id de tâche liée à l'API Google d'un lien entre une tâche et un collaborateur
+     * @param tache La tâche liée
+     * @param collaborateur Le pseudo du collaborateur lié
+     * @param google_id_tache L'id de la tâche liée à l'API Google à modifier
+     * @return False en cas d'erreur
+     */
+    public static boolean synchroUpdateGoogleIdTache(@Nonnull Tache tache, @Nonnull String collaborateur, @Nullable String google_id_tache){
         Statement stmt;
         Connection c = connection();
         try {
             stmt = c.createStatement();
             stmt.execute("PRAGMA foreign_keys = ON");
-            int rst = stmt.executeUpdate("update synchro set google_id_tache=" + stringReqValue(google_id_tache) + " where uuid_tache='" + tache.getId() + "';");
+            int rst = stmt.executeUpdate("update synchro set google_id_tache=" + stringReqValue(google_id_tache) + " where uuid_tache='" + tache.getId() + "' and pseudo_collaborateur='" + collaborateur + "';");
 
             stmt.close();
             c.close();
@@ -262,6 +297,11 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Permet de retouner un string entre guillemets même s'il est null
+     * @param val Le string à traiter
+     * @return Le string entre guillemets
+     */
     private static String stringReqValue(@Nullable String val){
         if(val == null) return "null";
         else return "'" + val + "'";
