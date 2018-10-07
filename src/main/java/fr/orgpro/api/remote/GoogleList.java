@@ -45,15 +45,21 @@ public class GoogleList {
                 .execute();
     }
 
-    public boolean postTache(String path, String name) {
+    /**
+     * Cette fonction prend le nom du collabaroteur et le nom de la tache
+     * afin d'envoyer sur le google calendar de l'utilisateur la tache.
+     * @param collabo Nom du collaborateur
+     * @param name Nom de la tache
+     * @return boolean
+     */
+    public boolean postTache(String collabo, String name) {
         try {
-            Tasks tasks = gts.getTasks(path);
+            Tasks tasks = gts.getTasks(collabo);
             TaskList tkl = new TaskList().setTitle(this.orgpro);
-            Task t = new Task();
-            t.setTitle(name);
+            final Task t = new Task().setTitle(name);
 
             tkl = postTacheList(tasks, tkl);
-            t = tasks.tasks().insert(tkl.getId(), t).execute();
+            tasks.tasks().insert(tkl.getId(), t).execute();
             return true;
         } catch (IOException e) {
             return false;
