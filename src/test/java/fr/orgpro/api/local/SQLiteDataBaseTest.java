@@ -23,6 +23,7 @@ public class SQLiteDataBaseTest {
 
     @AfterClass
     public static void tearDownClass() throws Exception {
+        SQLiteConnection.closeConnection();
         new File("orgpro.db").delete();
     }
 

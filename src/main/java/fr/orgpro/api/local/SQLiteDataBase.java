@@ -4,52 +4,32 @@ import fr.orgpro.api.project.Tache;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.sql.*;
 import java.util.List;
+
+import static fr.orgpro.api.local.SQLiteConnection.getStatement;
 
 public class SQLiteDataBase {
     private static final String DB_NAME = "orgpro.db";
 
-    /**
-     * Connexion avec la base de données locale
-     * @return La connexion si elle est établie, null sinon
-     */
-    private static Connection connection(){
-        Connection c;
-        try {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:" + DB_NAME );
-        } catch ( Exception e ) {
-            //System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            return null;
-        }
-        //System.out.println("Opened database successfully");
-        return c;
-    }
 
     /**
      * Crée la structure de la base de données locale
      * @return False en cas d'erreur
      */
     public static boolean createTable(){
-        Statement stmt;
-        Connection c = connection();
         try {
-            stmt = c.createStatement();
-            stmt.execute("PRAGMA foreign_keys = ON");
-
-            stmt.execute("create table if not exists collaborateur (" +
+            getStatement().execute("create table if not exists collaborateur (" +
                     "pseudo char(255) primary key not null," +
                     "nom char(255)," +
                     "prenom char(255)," +
                     "google_id_liste char(255)" +
                     ");");
 
-            stmt.execute("create table if not exists tache (" +
+            getStatement().execute("create table if not exists tache (" +
                     "uuid char(255) primary key not null" +
                     ");");
 
-            stmt.execute("create table if not exists synchro (" +
+            getStatement().execute("create table if not exists synchro (" +
                     "uuid_tache char(255) not null," +
                     "pseudo_collaborateur char(255) not null," +
                     "google_id_tache char(255)," +
@@ -58,9 +38,6 @@ public class SQLiteDataBase {
                     "foreign key (uuid_tache) references tache(uuid) on delete cascade DEFERRABLE INITIALLY DEFERRED," +
                     "foreign key (pseudo_collaborateur) references collaborateur(pseudo) on delete cascade DEFERRABLE INITIALLY DEFERRED" +
                     ");");
-
-            stmt.close();
-            c.close();
         } catch ( Exception e ) {
             //System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             return false;
@@ -75,15 +52,8 @@ public class SQLiteDataBase {
      * @return False en cas d'erreur
      */
     public static boolean addTache(@Nonnull Tache tache){
-        Statement stmt;
-        Connection c = connection();
         try {
-            stmt = c.createStatement();
-            stmt.execute("PRAGMA foreign_keys = ON");
-            stmt.execute("insert into tache(uuid) values('" + tache.getId() + "');");
-
-            stmt.close();
-            c.close();
+            getStatement().execute("insert into tache(uuid) values('" + tache.getId() + "');");
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
             return false;
@@ -97,17 +67,10 @@ public class SQLiteDataBase {
      * @return False en cas d'erreur
      */
     public static boolean addTacheListe(@Nonnull List<Tache> tacheListe){
-        Statement stmt;
-        Connection c = connection();
         try {
-            stmt = c.createStatement();
-            stmt.execute("PRAGMA foreign_keys = ON");
             for (Tache tache : tacheListe){
-                stmt.execute("insert into tache(uuid) values('" + tache.getId() + "');");
+                getStatement().execute("insert into tache(uuid) values('" + tache.getId() + "');");
             }
-
-            stmt.close();
-            c.close();
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
             return false;
@@ -121,16 +84,8 @@ public class SQLiteDataBase {
      * @return False en cas d'erreur
      */
     public static boolean deleteTache(@Nonnull Tache tache){
-        Statement stmt;
-        Connection c = connection();
         try {
-            stmt = c.createStatement();
-            stmt.execute("PRAGMA foreign_keys = ON");
-            int rst = stmt.executeUpdate("delete from tache where uuid = ('" + tache.getId() + "');");
-
-            stmt.close();
-            c.close();
-
+            int rst = getStatement().executeUpdate("delete from tache where uuid = ('" + tache.getId() + "');");
             if (rst == 0) return false;
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -148,16 +103,9 @@ public class SQLiteDataBase {
      * @return False en cas d'erreur
      */
     public static boolean addCollaborateur(@Nonnull String collaborateur, @Nullable String nom, @Nullable String prenom, @Nullable String google_id_liste){
-        Statement stmt;
-        Connection c = connection();
         try {
-            stmt = c.createStatement();
-            stmt.execute("PRAGMA foreign_keys = ON");
-            stmt.execute("insert into collaborateur(pseudo, nom, prenom, google_id_liste) values('"
+            getStatement().execute("insert into collaborateur(pseudo, nom, prenom, google_id_liste) values('"
                     + collaborateur + "', " + stringReqValue(nom) + ", " + stringReqValue(prenom) + ", " + stringReqValue(google_id_liste) + ");");
-
-            stmt.close();
-            c.close();
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
             return false;
@@ -171,16 +119,8 @@ public class SQLiteDataBase {
      * @return False en cas d'erreur
      */
     public static boolean deleteCollaborateur(@Nonnull String collaborateur){
-        Statement stmt;
-        Connection c = connection();
         try {
-            stmt = c.createStatement();
-            stmt.execute("PRAGMA foreign_keys = ON");
-            int rst = stmt.executeUpdate("delete from collaborateur where pseudo = ('" + collaborateur + "');");
-
-            stmt.close();
-            c.close();
-
+            int rst = getStatement().executeUpdate("delete from collaborateur where pseudo = ('" + collaborateur + "');");
             if (rst == 0) return false;
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -198,20 +138,12 @@ public class SQLiteDataBase {
      * @return False en cas d'erreur
      */
     public static boolean synchroAddTacheCollaborateur(@Nonnull Tache tache, @Nonnull String collaborateur, @Nullable String google_id_tache, @Nullable Boolean estSynchro){
-        Statement stmt;
-        Connection c = connection();
         try {
-            stmt = c.createStatement();
-            stmt.execute("PRAGMA foreign_keys = ON");
-
             boolean synchro_req = false;
             // TODO google_id_tache != null -> à verifier ?
             if(google_id_tache != null && estSynchro != null) synchro_req = estSynchro;
-            stmt.execute("insert into synchro(uuid_tache, pseudo_collaborateur, google_id_tache, est_synchro) values('"
+            getStatement().execute("insert into synchro(uuid_tache, pseudo_collaborateur, google_id_tache, est_synchro) values('"
                     + tache.getId() + "', '" + collaborateur + "', " + stringReqValue(google_id_tache) + ",'" + synchro_req + "');");
-
-            stmt.close();
-            c.close();
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
             return false;
@@ -226,16 +158,8 @@ public class SQLiteDataBase {
      * @return False en cas d'erreur
      */
     public static boolean synchroDeleteTacheCollaborateur(@Nonnull Tache tache, @Nonnull String collaborateur){
-        Statement stmt;
-        Connection c = connection();
         try {
-            stmt = c.createStatement();
-            stmt.execute("PRAGMA foreign_keys = ON");
-            int rst = stmt.executeUpdate("delete from synchro where uuid_tache='" + tache.getId() + "' and pseudo_collaborateur='" + collaborateur + "';");
-
-            stmt.close();
-            c.close();
-
+            int rst = getStatement().executeUpdate("delete from synchro where uuid_tache='" + tache.getId() + "' and pseudo_collaborateur='" + collaborateur + "';");
             if (rst == 0) return false;
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -252,16 +176,8 @@ public class SQLiteDataBase {
      * @return False en cas d'erreur
      */
     public static boolean synchroUpdateEstSynchro(@Nonnull Tache tache, @Nonnull String collaborateur, boolean estSynchro){
-        Statement stmt;
-        Connection c = connection();
         try {
-            stmt = c.createStatement();
-            stmt.execute("PRAGMA foreign_keys = ON");
-            int rst = stmt.executeUpdate("update synchro set est_synchro='" + estSynchro + "' where uuid_tache='" + tache.getId() + "' and pseudo_collaborateur='" + collaborateur + "';");
-
-            stmt.close();
-            c.close();
-
+            int rst = getStatement().executeUpdate("update synchro set est_synchro='" + estSynchro + "' where uuid_tache='" + tache.getId() + "' and pseudo_collaborateur='" + collaborateur + "';");
             if (rst == 0) return false;
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -279,16 +195,8 @@ public class SQLiteDataBase {
      * @return False en cas d'erreur
      */
     public static boolean synchroUpdateGoogleIdTache(@Nonnull Tache tache, @Nonnull String collaborateur, @Nullable String google_id_tache){
-        Statement stmt;
-        Connection c = connection();
         try {
-            stmt = c.createStatement();
-            stmt.execute("PRAGMA foreign_keys = ON");
-            int rst = stmt.executeUpdate("update synchro set google_id_tache=" + stringReqValue(google_id_tache) + " where uuid_tache='" + tache.getId() + "' and pseudo_collaborateur='" + collaborateur + "';");
-
-            stmt.close();
-            c.close();
-
+            int rst = getStatement().executeUpdate("update synchro set google_id_tache=" + stringReqValue(google_id_tache) + " where uuid_tache='" + tache.getId() + "' and pseudo_collaborateur='" + collaborateur + "';");
             if (rst == 0) return false;
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
