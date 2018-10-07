@@ -10,7 +10,7 @@ import java.util.List;
 
 public class GoogleList {
     private static GoogleList INSTANCE = new GoogleList();
-    private GoogleTasksService gts = GoogleTasksService.getInstance();
+    private static GoogleTasksService gts = GoogleTasksService.getInstance();
     private String orgpro = "ORGPRO";
     /**
      * Cette fonction prend les informations de l'utilisateurs dans un Tasks
