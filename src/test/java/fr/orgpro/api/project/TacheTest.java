@@ -708,4 +708,19 @@ public class TacheTest {
         assertEquals(tache.getCout(),coutT,0);
     }
 
+    @Test
+    public void testGetSprint() throws Exception {
+        assertEquals(1,tache.getSprint().intValue());
+        tache.incrementeSprint();
+        assertEquals(2,tache.getSprint().intValue());
+    }
+
+    @Test
+    public void testIncrementeSprint() throws Exception {
+        tache.incrementeSprint();
+        assertEquals(1,tache.getSprint().intValue());
+        tache.incrementeSprint();
+        assertEquals(2,tache.getSprint().intValue());
+    }
+
 }

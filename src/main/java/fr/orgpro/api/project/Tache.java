@@ -34,6 +34,7 @@ public class Tache {
 
     public static final String HEADER_COST = "COST";
     public static final String HEADER_COLLABORATOR = "COLLABORATOR";
+    private static final String HEADER_SPRINT = "SPRINT";
 
     private OrgHead tache;
     private List<String> lstCollaborateur;
@@ -114,6 +115,25 @@ public class Tache {
      */
     public static void resetEnTete(){
         lstHeader = null;
+    }
+
+    public static Integer getSprint(){
+        if(getEnTete(HEADER_SPRINT) == null){
+            addEnTete(HEADER_SPRINT,"1",true);
+            return 1;
+        }
+        Integer sprint = Integer.parseInt(getEnTete(HEADER_SPRINT));
+        return sprint;
+    }
+
+    public static void incrementeSprint(){
+        if(getEnTete(HEADER_SPRINT) == null){
+            addEnTete(HEADER_SPRINT,"1",true);
+            return;
+        }
+        Integer sprint = Integer.parseInt(getEnTete(HEADER_SPRINT));
+        sprint = sprint + 1;
+        setEnTete(HEADER_SPRINT,sprint.toString(),true);
     }
 
     /**
@@ -840,7 +860,7 @@ public class Tache {
      * Ajout d'une valeur dans l'en-tête
      * @param clef Clef de l'en-tête
      * @param valeur Valeur de l'en-tête
-     * @param constructor Si true, les valeurs des clefs suivantes peuvent être ajoutées : COLLABORATOR, COST
+     * @param constructor Si true, les valeurs des clefs suivantes peuvent être ajoutées : COLLABORATOR, COST, SPRINT
      * @return True si l'ajout dans l'en-tête est effectué, false sinon
      */
     public static boolean addEnTete(String clef, String valeur, boolean constructor){
@@ -848,7 +868,7 @@ public class Tache {
             lstHeader = new LinkedHashMap<String, String>();
         }
         if(!constructor){
-            if(HEADER_COST.equalsIgnoreCase(clef.trim()) || HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
+            if(HEADER_SPRINT.equalsIgnoreCase(clef.trim()) || HEADER_COST.equalsIgnoreCase(clef.trim()) || HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
@@ -880,7 +900,7 @@ public class Tache {
      */
     public static boolean setEnTete(String clef, String valeur, boolean constructor){
         if(!constructor){
-            if(HEADER_COST.equalsIgnoreCase(clef.trim())|| HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
+            if(HEADER_SPRINT.equalsIgnoreCase(clef.trim()) || HEADER_COST.equalsIgnoreCase(clef.trim())|| HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
@@ -902,7 +922,7 @@ public class Tache {
      */
     public static boolean removeEnTete(String clef, boolean constructor){
         if(!constructor){
-            if(HEADER_COST.equalsIgnoreCase(clef.trim())|| HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
+            if(HEADER_SPRINT.equalsIgnoreCase(clef.trim()) || HEADER_COST.equalsIgnoreCase(clef.trim())|| HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
