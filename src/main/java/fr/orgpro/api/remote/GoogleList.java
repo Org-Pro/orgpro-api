@@ -3,13 +3,15 @@ package fr.orgpro.api.remote;
 import com.google.api.services.tasks.Tasks;
 import com.google.api.services.tasks.model.TaskList;
 import com.google.api.services.tasks.model.TaskLists;
+import com.google.api.services.tasks.model.Task;
 
 import java.io.IOException;
 import java.util.List;
 
 public class GoogleList {
     private static GoogleList INSTANCE = new GoogleList();
-
+    private GoogleTasksService gts = GoogleTasksService.getInstance();
+    private String orgpro = "ORGPRO";
     /**
      * Cette fonction prend les informations de l'utilisateurs dans un Tasks
      * et renvoi toutes les liste de taches de l'utilisateur dans une liste
@@ -17,7 +19,7 @@ public class GoogleList {
      * @return List<TaskList>
      * @throws IOException
      */
-    public List<TaskList> getTacheListe(Tasks service) throws IOException {
+    private List<TaskList> getTacheListe(Tasks service) throws IOException {
         TaskLists result = service.tasklists().list()
                 .execute();
         List<TaskList> taskLists = result.getItems();
@@ -32,7 +34,7 @@ public class GoogleList {
      * @return une nouvelle TaskList ou une TaskList existante
      * @throws IOException
      */
-    public TaskList postTacheList(Tasks service, TaskList taskList) throws IOException {
+    TaskList postTacheList(Tasks service, TaskList taskList) throws IOException {
         List<TaskList> taskLists = getTacheListe(service);
         for (TaskList tkl: taskLists) {
             if (tkl.getTitle().equalsIgnoreCase(taskList.getTitle())) {
@@ -41,6 +43,21 @@ public class GoogleList {
         }
         return service.tasklists().insert(taskList)
                 .execute();
+    }
+
+    public boolean postTache(String path, String name) {
+        try {
+            Tasks tasks = gts.getTasks(path);
+            TaskList tkl = new TaskList().setTitle(this.orgpro);
+            Task t = new Task();
+            t.setTitle(name);
+
+            tkl = postTacheList(tasks, tkl);
+            t = tasks.tasks().insert(tkl.getId(), t).execute();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     /**
