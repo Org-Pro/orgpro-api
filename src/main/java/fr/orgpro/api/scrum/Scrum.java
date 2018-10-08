@@ -1,6 +1,5 @@
 package fr.orgpro.api.scrum;
 
-import fr.orgpro.api.collaborateur.Collaborateur;
 import fr.orgpro.api.project.State;
 import fr.orgpro.api.project.Tache;
 
