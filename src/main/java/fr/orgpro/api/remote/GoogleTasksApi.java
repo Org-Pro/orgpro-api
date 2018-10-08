@@ -13,7 +13,7 @@ public class GoogleTasksApi {
     private static final GoogleList googleList = GoogleList.getInstance();
 
     public static void main(String... args) throws IOException {
-
+/*
         Tasks service = gtService.getTasks(CREDENTIALS_FILE_PATH);
         List<TaskList> ltk = googleList.getTacheListe(service);
         Task t = new Task();
@@ -23,7 +23,7 @@ public class GoogleTasksApi {
         googleList.postTacheList(service, tkl);
         service.tasks().insert(tkl.getId(), t).execute();
         // service.tasks().insert(ltk.get(1).getId(), t).execute();
-
+*/
     }
 
 }

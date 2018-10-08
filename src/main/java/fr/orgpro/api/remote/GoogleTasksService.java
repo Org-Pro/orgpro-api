@@ -13,6 +13,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.tasks.Tasks;
 import com.google.api.services.tasks.TasksScopes;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -47,27 +48,35 @@ public class GoogleTasksService {
      */
     private Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT, String credential_user) throws IOException {
         // Load client secrets.
-        InputStream in = GoogleTasksApi.class.getResourceAsStream(credential_user);
+        final String CREDENTIALS_FILE_PATH = "/credentials.json";
+        System.out.println("1");
+        System.out.println("Working Directory = " +
+                System.getProperty("user.dir"));
+        InputStream in = GoogleTasksApi.class.getResourceAsStream("/" + credential_user + CREDENTIALS_FILE_PATH);
+
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        System.out.println("3");
 
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH + credential_user)))
+                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH + "/" + credential_user)))
                 .setAccessType("offline")
                 .build();
+        System.out.println("4");
+
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
     /**
-     * @param credentialFilePath path to the Google credential file
+     * @param collaboName name of the coworker we wish to send data to google
      * @return A Tasks that can be use by the application to get
      * or send data from or to google
      * the google api
      * @throws IOException  If the credentials.json file cannot be found.
      */
-    public Tasks getTasks(String credentialFilePath) throws IOException {
-        return new Tasks.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT, credentialFilePath))
+    public Tasks getTasks(String collaboName) throws IOException {
+        return new Tasks.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT, collaboName))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
