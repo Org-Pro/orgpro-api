@@ -2,7 +2,6 @@ package fr.orgpro.api.scrum;
 
 import fr.orgpro.api.project.State;
 import fr.orgpro.api.project.Tache;
-import fr.orgpro.api.scrum.Scrum;
 import org.junit.Test;
 
 import java.text.DateFormat;
@@ -18,10 +17,10 @@ import static org.junit.Assert.assertEquals;
  */
 public class ScrumTest {
 
-    @Test
+    /*@Test
     public void testScrum() throws Exception {
         Scrum testScrum = new Scrum();
-    }
+    }*/
 
     @Test
     public void testListerTacheState(){

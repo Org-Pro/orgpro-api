@@ -34,7 +34,7 @@ public class Tache {
 
     public static final String HEADER_COST = "COST";
     public static final String HEADER_COLLABORATOR = "COLLABORATOR";
-    private static final String HEADER_SPRINT = "SPRINT";
+    public static final String HEADER_SPRINT = "SPRINT";
 
     private OrgHead tache;
     private List<String> lstCollaborateur;

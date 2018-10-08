@@ -10,13 +10,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class CollaborateurTest {
-
-    private CollaborateurFactory factory;
+    
     private CollaborateurInterface collabClassic;
 
     @Before
     public void setUpClass() throws Exception {
-        factory = new CollaborateurFactory();
+        CollaborateurFactory factory = new CollaborateurFactory();
         collabClassic = factory.getCollaborateur(CollaborateurType.CLASSIC);
     }
 
