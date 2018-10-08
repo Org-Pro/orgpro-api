@@ -9,19 +9,29 @@ import fr.orgpro.api.collaborateur.CollaborateurFactory;
 import fr.orgpro.api.collaborateur.CollaborateurFichier;
 import fr.orgpro.api.collaborateur.CollaborateurInterface;
 import fr.orgpro.api.collaborateur.CollaborateurType;
+import fr.orgpro.api.local.SQLiteConnection;
+import fr.orgpro.api.local.SQLiteDataBase;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-
-
-
     public static void main(String[] args){
 
-        /*system.out.println("Org-Pro");
+        /*System.out.println("Org-Pro");
         Tache tache = new Tache("Faire les courses : 0");
-        Tache t = new Tache("Test : 1");
+        Tache.addEnTete("test", "ok", false);
+
+        Tache.readFichier("liste.org");
+        tache.writeFichier("liste.org", true);
+        SQLiteDataBase.addTache(tache);
+        SQLiteDataBase.addCollaborateur("bob", null, null, null);
+        SQLiteConnection.closeConnection();
+        tache.writeFichier("liste.org", false);*/
+
+
+
+        /*Tache t = new Tache("Test : 1");
         tache.changeState(State.ONGOING);
         tache.changeState(State.DONE);
         String tag = "COURSE";
@@ -104,6 +114,4 @@ public class Main {
             System.out.println(c.toString() + "\n");
         }*/
     }
-
-
 }

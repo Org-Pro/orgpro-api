@@ -17,14 +17,14 @@ public class SQLiteDataBaseTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        SQLiteDataBase.createTable();
         numCol = 0;
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
         SQLiteConnection.closeConnection();
-        new File("orgpro.db").delete();
+        new File(SQLiteConnection.getDbFolder() + "/" + SQLiteConnection.getDbName()).delete();
+        new File(SQLiteConnection.getDbFolder()).delete();
     }
 
     @Before
