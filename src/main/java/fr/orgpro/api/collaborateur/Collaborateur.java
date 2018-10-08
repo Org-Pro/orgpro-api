@@ -4,6 +4,10 @@ public class Collaborateur implements CollaborateurInterface {
 
     private String nom;
 
+    public Collaborateur(String nom) {
+        this.nom = nom;
+    }
+
     public Collaborateur() {
     }
 

@@ -5,15 +5,11 @@ package fr.orgpro.api.project;
 //import java.util.ArrayList;
 //import java.util.List;
 
-import fr.orgpro.api.collaborateur.CollaborateurFactory;
-import fr.orgpro.api.collaborateur.CollaborateurFichier;
-import fr.orgpro.api.collaborateur.CollaborateurInterface;
-import fr.orgpro.api.collaborateur.CollaborateurType;
-import fr.orgpro.api.local.SQLiteConnection;
-import fr.orgpro.api.local.SQLiteDataBase;
+//import fr.orgpro.api.collaborateur.CollaborateurFactory;
+//import fr.orgpro.api.collaborateur.CollaborateurFichier;
+//import fr.orgpro.api.collaborateur.CollaborateurInterface;
+//import fr.orgpro.api.collaborateur.CollaborateurType;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args){
