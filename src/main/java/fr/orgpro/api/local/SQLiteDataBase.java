@@ -9,8 +9,6 @@ import java.util.List;
 import static fr.orgpro.api.local.SQLiteConnection.getStatement;
 
 public class SQLiteDataBase {
-    private static final String DB_NAME = "orgpro.db";
-
 
     /**
      * Crée la structure de la base de données locale
