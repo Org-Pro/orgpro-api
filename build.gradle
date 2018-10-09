@@ -22,6 +22,10 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'com.google.api-client:google-api-client:1.25.0'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    compile 'com.google.apis:google-api-services-tasks:v1-rev55-1.25.0'
+    compile 'org.xerial:sqlite-jdbc:3.7.2'
 }
 
 jacocoTestReport {

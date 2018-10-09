@@ -34,7 +34,8 @@ public class Tache {
 
     public static final String HEADER_COST = "COST";
     public static final String HEADER_COLLABORATOR = "COLLABORATOR";
-    public static final String HEADER_SPRINT = "SPRINT";
+    private static final String HEADER_SPRINT = "SPRINT";
+    public static final String HEADER_DB = "DB";
 
     private OrgHead tache;
     private List<String> lstCollaborateur;
@@ -868,7 +869,10 @@ public class Tache {
             lstHeader = new LinkedHashMap<String, String>();
         }
         if(!constructor){
-            if(HEADER_SPRINT.equalsIgnoreCase(clef.trim()) || HEADER_COST.equalsIgnoreCase(clef.trim()) || HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
+            if(HEADER_SPRINT.equalsIgnoreCase(clef.trim())
+                    || HEADER_COST.equalsIgnoreCase(clef.trim())
+                    || HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())
+                    || HEADER_DB.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
@@ -900,7 +904,10 @@ public class Tache {
      */
     public static boolean setEnTete(String clef, String valeur, boolean constructor){
         if(!constructor){
-            if(HEADER_SPRINT.equalsIgnoreCase(clef.trim()) || HEADER_COST.equalsIgnoreCase(clef.trim())|| HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
+            if(HEADER_SPRINT.equalsIgnoreCase(clef.trim())
+                    || HEADER_COST.equalsIgnoreCase(clef.trim())
+                    || HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())
+                    || HEADER_DB.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
@@ -922,7 +929,10 @@ public class Tache {
      */
     public static boolean removeEnTete(String clef, boolean constructor){
         if(!constructor){
-            if(HEADER_SPRINT.equalsIgnoreCase(clef.trim()) || HEADER_COST.equalsIgnoreCase(clef.trim())|| HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())){
+            if(HEADER_SPRINT.equalsIgnoreCase(clef.trim())
+                    || HEADER_COST.equalsIgnoreCase(clef.trim())
+                    || HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())
+                    || HEADER_DB.equalsIgnoreCase(clef.trim())){
                 return false;
             }
         }
