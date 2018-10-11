@@ -1,5 +1,6 @@
 package fr.orgpro.api.project;
 
+import fr.orgpro.api.collaborateur.Collaborateur;
 import fr.orgpro.api.orgzly.OrgHead;
 import fr.orgpro.api.orgzly.OrgProperties;
 import fr.orgpro.api.orgzly.datetime.OrgDateTime;
@@ -292,6 +293,11 @@ public class Tache {
             Collections.addAll(list, tab);
             return list;
         }
+    }
+
+    public List<Collaborateur> getCollaborateurFromTache(Tache t) {
+        List<Collaborateur> list = new ArrayList<>();
+        
     }
 
     /**
