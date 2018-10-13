@@ -10,6 +10,8 @@ package fr.orgpro.api.project;
 //import fr.orgpro.api.collaborateur.CollaborateurInterface;
 //import fr.orgpro.api.collaborateur.CollaborateurType;
 
+//import fr.orgpro.api.local.SQLiteConnection;
+//import fr.orgpro.api.local.SQLiteDataBase;
 
 public class Main {
     public static void main(String[] args){
@@ -21,7 +23,10 @@ public class Main {
         Tache.readFichier("liste.org");
         tache.writeFichier("liste.org", true);
         SQLiteDataBase.addTache(tache);
-        SQLiteDataBase.addCollaborateur("bob", null, null, null);
+        //SQLiteDataBase.addCollaborateur("bob", null, null, null);
+        //SQLiteDataBase.deleteCollaborateur("test");
+        SQLiteDataBase.updateCollaborateur("bob", "alex");
+        //SQLiteDataBase.synchroAddTacheCollaborateur(tache, "alex", null, null);
         SQLiteConnection.closeConnection();
         tache.writeFichier("liste.org", false);*/
 

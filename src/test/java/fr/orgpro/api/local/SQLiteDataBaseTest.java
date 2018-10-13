@@ -79,6 +79,17 @@ public class SQLiteDataBaseTest {
     }
 
     @Test
+    public void testUpdateCollaborateur() throws Exception {
+        String col1 = nomCol();
+        String col2 = nomCol();
+        SQLiteDataBase.addCollaborateur(col1, null, null, null);
+        SQLiteDataBase.addCollaborateur(col2, null, null, null);
+        assertFalse(SQLiteDataBase.updateCollaborateur(col1, col2));
+        assertFalse(SQLiteDataBase.updateCollaborateur("aze", "eza"));
+        assertTrue(SQLiteDataBase.updateCollaborateur(col1, "test"));
+    }
+
+    @Test
     public void testSynchroAddTacheCollaborateur() throws Exception {
         String col = nomCol();
         Tache tache = new Tache("");
