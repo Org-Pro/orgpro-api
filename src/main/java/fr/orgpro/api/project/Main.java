@@ -5,10 +5,7 @@ package fr.orgpro.api.project;
 //import java.util.ArrayList;
 //import java.util.List;
 
-import fr.orgpro.api.collaborateur.CollaborateurFactory;
-import fr.orgpro.api.collaborateur.CollaborateurFichier;
-import fr.orgpro.api.collaborateur.CollaborateurInterface;
-import fr.orgpro.api.collaborateur.CollaborateurType;
+import fr.orgpro.api.collaborateur.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +15,22 @@ public class Main {
 
 
     public static void main(String[] args){
+/*
 
-        /*system.out.println("Org-Pro");
+        System.out.println("Org-Pro");
+
         Tache tache = new Tache("Faire les courses : 0");
-        Tache t = new Tache("Test : 1");
-        tache.changeState(State.ONGOING);
+        //Tache t = new Tache("Test : 1");
+
+        Collaborateur c = new Collaborateur();
+
+        c.setNom("batrayer");
+
+        System.out.println(tache.addCollaborateur("batrayer"));
+
+        System.out.println(tache.getCollaborateurFromTache(tache));
+
+        /*
         tache.changeState(State.DONE);
         String tag = "COURSE";
         tache.ajoutTag(tag);

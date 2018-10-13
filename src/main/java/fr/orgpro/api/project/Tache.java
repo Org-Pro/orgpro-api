@@ -295,9 +295,15 @@ public class Tache {
         }
     }
 
-    public List<Collaborateur> getCollaborateurFromTache(Tache t) {
-        List<Collaborateur> list = new ArrayList<>();
-        
+    public List<String> getCollaborateurFromTache(Tache t) {
+        List<String> list = new ArrayList<>();
+        System.out.println("list collabo fichier : " + t.lstCollaborateur);
+        if(t.lstCollaborateur != null) {
+            for(int i = 0; i < t.lstCollaborateur.size(); i++) {
+                    list.add(lstCollaborateur.get(i));
+                }
+            }
+        return list;
     }
 
     /**
