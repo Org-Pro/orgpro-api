@@ -2,7 +2,6 @@ package fr.orgpro.api.scrum;
 
 import fr.orgpro.api.project.State;
 import fr.orgpro.api.project.Tache;
-import fr.orgpro.api.scrum.Scrum;
 import org.junit.Test;
 
 import java.text.DateFormat;
@@ -18,10 +17,10 @@ import static org.junit.Assert.assertEquals;
  */
 public class ScrumTest {
 
-    @Test
+    /*@Test
     public void testScrum() throws Exception {
         Scrum testScrum = new Scrum();
-    }
+    }*/
 
     @Test
     public void testListerTacheState(){
@@ -138,4 +137,29 @@ public class ScrumTest {
 
         assertEquals(Scrum.listTacheTag(taches,technical),liste);
     }
+
+    @Test
+    public void testListTacheCollaborateur() throws Exception {
+        String nom = "Thibault";
+
+        Tache tache = new Tache("t1");
+        Tache tache2 = new Tache("t2");
+        Tache tache3 = new Tache("t3");
+
+        List<Tache> liste = new ArrayList<Tache>();
+        Tache.addCollaborateurEnTete(nom);
+        tache.addCollaborateur(nom);
+        tache2.addCollaborateur(nom);
+        liste.add(tache);
+        liste.add(tache2);
+        liste.add(tache3);
+        List<Tache> listeA = new ArrayList<Tache>();
+        listeA = Scrum.listTacheCollaborateur(liste,nom);
+        List<Tache> listeE = new ArrayList<Tache>();
+        listeE.add(tache);
+        listeE.add(tache2);
+        assertEquals(listeE.toString(),listeA.toString());
+
+    }
+
 }

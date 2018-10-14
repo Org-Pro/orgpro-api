@@ -670,14 +670,17 @@ public class TacheTest {
 
     @Test
     public void testAjoutCollaborateur() throws Exception {
+        String nom1 = "bob";
+        String nom2 = "dylane";
         assertEquals(tache.addCollaborateur(""), false);
-        assertEquals(tache.addCollaborateur("bob"), false);
-        Tache.addCollaborateurEnTete("bob");
-        Tache.addCollaborateurEnTete("dylane");
-        assertEquals(tache.addCollaborateur("bob"), true);
-        assertEquals(tache.addCollaborateur("bob"), false);
+        assertEquals(tache.addCollaborateur(nom1), false);
+        Tache.addCollaborateurEnTete(nom1);
+        Tache.addCollaborateurEnTete(nom2);
+        assertEquals(tache.addCollaborateur(nom1), true);
+        assertEquals(nom1,tache.getCollaborateur().get(0));
+        assertEquals(tache.addCollaborateur(nom1), false);
         assertEquals(tache.addCollaborateur("bobi"), false);
-        assertEquals(tache.addCollaborateur("dylane"), true);
+        assertEquals(tache.addCollaborateur(nom2), true);
     }
 
     @Test
@@ -703,6 +706,21 @@ public class TacheTest {
 
         assertEquals(tache.addCout(coutT), true);
         assertEquals(tache.getCout(),coutT,0);
+    }
+
+    @Test
+    public void testGetSprint() throws Exception {
+        assertEquals(1,tache.getSprint().intValue());
+        tache.incrementeSprint();
+        assertEquals(2,tache.getSprint().intValue());
+    }
+
+    @Test
+    public void testIncrementeSprint() throws Exception {
+        tache.incrementeSprint();
+        assertEquals(1,tache.getSprint().intValue());
+        tache.incrementeSprint();
+        assertEquals(2,tache.getSprint().intValue());
     }
 
 }

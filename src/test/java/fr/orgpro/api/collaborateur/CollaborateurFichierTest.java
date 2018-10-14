@@ -10,10 +10,10 @@ import static org.junit.Assert.*;
 
 public class CollaborateurFichierTest {
 
-    @Test
+   /* @Test
     public void testCollaborateurFichier() {
         CollaborateurFichier cf = new CollaborateurFichier();
-    }
+    }*/
 
     @Test
     public void testEcritureFichierTrue() {

@@ -1,4 +1,4 @@
-version '1.1-SNAPSHOT'
+version '1.0.1-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: "jacoco"
@@ -18,6 +18,12 @@ buildscript {
 }
 repositories {
     mavenCentral()
+}
+
+task fatJar(type: Jar) {
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
 
 dependencies {

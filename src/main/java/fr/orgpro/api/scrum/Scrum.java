@@ -82,4 +82,16 @@ public class Scrum {
         }
         return taches;
     }
+
+    public static List<Tache> listTacheCollaborateur(List<Tache> liste, String collaborateur){
+        List<Tache> taches = new ArrayList<Tache>();
+        List<String> collaborateurs = new ArrayList<String>();
+        for(Tache tache : liste){
+            collaborateurs = tache.getCollaborateur();
+            if(collaborateurs != null && collaborateurs.contains(collaborateur.toLowerCase())){
+                taches.add(tache);
+            }
+        }
+        return taches;
+    }
 }
