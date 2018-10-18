@@ -6,6 +6,7 @@ import com.google.api.services.tasks.model.TaskLists;
 import com.google.api.services.tasks.model.Task;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 public class GoogleList {
