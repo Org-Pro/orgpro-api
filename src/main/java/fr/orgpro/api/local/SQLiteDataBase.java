@@ -34,7 +34,7 @@ public class SQLiteDataBase {
                     "est_synchro boolean not null default false," +
                     "unique (uuid_tache, pseudo_collaborateur)," +
                     "foreign key (uuid_tache) references tache(uuid) on delete cascade DEFERRABLE INITIALLY DEFERRED," +
-                    "foreign key (pseudo_collaborateur) references collaborateur(pseudo) on delete cascade DEFERRABLE INITIALLY DEFERRED" +
+                    "foreign key (pseudo_collaborateur) references collaborateur(pseudo) on delete cascade on update cascade DEFERRABLE INITIALLY DEFERRED" +
                     ");");
         } catch ( Exception e ) {
             //System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -119,6 +119,23 @@ public class SQLiteDataBase {
     public static boolean deleteCollaborateur(@Nonnull String collaborateur){
         try {
             int rst = getStatement().executeUpdate("delete from collaborateur where pseudo = ('" + collaborateur + "');");
+            if (rst == 0) return false;
+        }catch ( Exception e ) {
+            //System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Modifie le pseudo d'un collaborateur déjà existant
+     * @param oldCollaborateur Le pseudo du collaborateur à modifier
+     * @param newCollaborateur Le nouveau pseudo du collaborateur à modifier
+     * @return False en cas d'erreur
+     */
+    public static boolean updateCollaborateur(@Nonnull String oldCollaborateur, @Nonnull String newCollaborateur){
+        try {
+            int rst = getStatement().executeUpdate("update collaborateur set pseudo='" + newCollaborateur + "' where pseudo='" + oldCollaborateur + "';");
             if (rst == 0) return false;
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());

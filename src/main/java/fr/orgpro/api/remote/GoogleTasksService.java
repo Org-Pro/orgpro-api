@@ -13,10 +13,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.tasks.Tasks;
 import com.google.api.services.tasks.TasksScopes;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,23 +46,21 @@ public class GoogleTasksService {
     private Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT, String credential_user) throws IOException {
         // Load client secrets.
         final String CREDENTIALS_FILE_PATH = "/credentials.json";
-        System.out.println("1");
-        System.out.println("Working Directory = " +
-                System.getProperty("user.dir"));
-        InputStream in = GoogleTasksApi.class.getResourceAsStream("/" + credential_user + CREDENTIALS_FILE_PATH);
-
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
-        System.out.println("3");
-
+        try {
+            InputStream in = new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/" + credential_user + CREDENTIALS_FILE_PATH);
+            GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+            GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                    HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
+                    .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH + "/" + credential_user)))
+                    .setAccessType("offline")
+                    .build();
+            return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
         // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH + "/" + credential_user)))
-                .setAccessType("offline")
-                .build();
-        System.out.println("4");
 
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
     /**
