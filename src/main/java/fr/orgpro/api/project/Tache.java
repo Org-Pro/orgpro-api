@@ -35,8 +35,9 @@ public class Tache {
 
     public static final String HEADER_COST = "COST";
     public static final String HEADER_COLLABORATOR = "COLLABORATOR";
-    private static final String HEADER_SPRINT = "SPRINT";
+    public static final String HEADER_SPRINT = "SPRINT";
     public static final String HEADER_DB = "DB";
+    public static final String HEADER_SPRINT_DATE = "DATE_SPRINT";
 
     private OrgHead tache;
     private List<String> lstCollaborateur;
@@ -136,6 +137,35 @@ public class Tache {
         Integer sprint = Integer.parseInt(getEnTete(HEADER_SPRINT));
         sprint = sprint + 1;
         setEnTete(HEADER_SPRINT,sprint.toString(),true);
+    }
+
+    public static String getDateSprint(){
+        if(getEnTete(HEADER_SPRINT_DATE) == null){
+            return null;
+        }else{
+            return getEnTete(HEADER_SPRINT_DATE);
+        }
+    }
+
+    public static boolean setDateSprint(String date){
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date dateSprint = dateFormat.parse(date);
+            String dateValide = dateFormat.format(dateSprint);
+            if(dateValide.compareTo(date) != 0){
+                return false;
+            }
+            if(dateSprint.before(new Date()) && dateFormat.format(dateSprint).compareTo(dateFormat.format(new Date())) != 0){
+                return false;
+            }else if(getEnTete(HEADER_SPRINT_DATE ) == null) {
+                addEnTete(HEADER_SPRINT_DATE,date,true);
+            }else{
+                setEnTete(HEADER_SPRINT_DATE,date,true);
+            }
+        } catch (ParseException e) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -881,6 +911,7 @@ public class Tache {
         }
         if(!constructor){
             if(HEADER_SPRINT.equalsIgnoreCase(clef.trim())
+                    || HEADER_SPRINT_DATE.equalsIgnoreCase(clef.trim())
                     || HEADER_COST.equalsIgnoreCase(clef.trim())
                     || HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())
                     || HEADER_DB.equalsIgnoreCase(clef.trim())){
@@ -916,6 +947,7 @@ public class Tache {
     public static boolean setEnTete(String clef, String valeur, boolean constructor){
         if(!constructor){
             if(HEADER_SPRINT.equalsIgnoreCase(clef.trim())
+                    || HEADER_SPRINT_DATE.equalsIgnoreCase(clef.trim())
                     || HEADER_COST.equalsIgnoreCase(clef.trim())
                     || HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())
                     || HEADER_DB.equalsIgnoreCase(clef.trim())){
@@ -941,6 +973,7 @@ public class Tache {
     public static boolean removeEnTete(String clef, boolean constructor){
         if(!constructor){
             if(HEADER_SPRINT.equalsIgnoreCase(clef.trim())
+                    || HEADER_SPRINT_DATE.equalsIgnoreCase(clef.trim())
                     || HEADER_COST.equalsIgnoreCase(clef.trim())
                     || HEADER_COLLABORATOR.equalsIgnoreCase(clef.trim())
                     || HEADER_DB.equalsIgnoreCase(clef.trim())){

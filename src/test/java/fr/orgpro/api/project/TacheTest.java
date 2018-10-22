@@ -723,4 +723,23 @@ public class TacheTest {
         assertEquals(2,tache.getSprint().intValue());
     }
 
+    @Test
+    public void testSetDateSprint() throws Exception {
+        String dateSprint = dateFormat.format(new Date());
+        assertEquals(null, tache.getDateSprint());
+        assertEquals(true,tache.setDateSprint(dateSprint));
+        assertEquals(dateSprint,tache.getDateSprint());
+        tache.setDateSprint(dateSprint);
+        assertEquals(dateSprint,tache.getDateSprint());
+    }
+
+    @Test
+    public void testSetDateSprintWrong() throws Exception {
+        String dateSprint = "2000-01-01";
+        String dateSprint2 = "2000-50-50";
+        String dateSprint3 = "hello";
+        assertEquals(false,tache.setDateSprint(dateSprint));
+        assertEquals(false,tache.setDateSprint(dateSprint2));
+        assertEquals(false,tache.setDateSprint(dateSprint3));
+    }
 }
