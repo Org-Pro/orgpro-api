@@ -1,12 +1,14 @@
 package fr.orgpro.api.remote;
 
+import com.google.api.client.util.DateTime;
 import com.google.api.services.tasks.Tasks;
 import com.google.api.services.tasks.model.TaskList;
 import com.google.api.services.tasks.model.TaskLists;
 import com.google.api.services.tasks.model.Task;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class GoogleList {
@@ -51,18 +53,26 @@ public class GoogleList {
      * afin d'envoyer sur le google calendar de l'utilisateur la tache.
      * @param collabo Nom du collaborateur
      * @param name Nom de la tache
+     * @param datefinal Date de fin de la tache
      * @return boolean
      */
-    public boolean postTache(String collabo, String name) {
+    public boolean postTache(String collabo, String name, Date datefinal) {
         try {
             Tasks tasks = gts.getTasks(collabo);
             TaskList tkl = new TaskList().setTitle(this.orgpro);
             final Task t = new Task().setTitle(name);
-
+            if(datefinal != null) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(datefinal);
+                c.add(Calendar.DATE, 1);
+                DateTime d = new DateTime(c.getTime());
+                t.setDue(d);
+            }
             tkl = postTacheList(tasks, tkl);
             tasks.tasks().insert(tkl.getId(), t).execute();
             return true;
         } catch (IOException e) {
+            e.printStackTrace();
             return false;
         }
     }
