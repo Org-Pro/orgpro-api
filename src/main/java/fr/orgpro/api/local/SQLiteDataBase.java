@@ -145,6 +145,28 @@ public class SQLiteDataBase {
     }
 
     /**
+     * Modifie l'id de la liste de l'API google d'un collaborateur déjà existant
+     * @param collaborateur Le pseudo du collaborateur concerné
+     * @param googleIdListe Nouvel id de la liste de l'API google
+     * @return False en cas d'erreur
+     */
+    public static boolean updateCollaborateurGoogleIdListe(@Nonnull String collaborateur, @Nullable String googleIdListe){
+        try {
+            int rst;
+            if(googleIdListe == null)
+                rst = getStatement().executeUpdate("update collaborateur set google_id_liste=null where pseudo='" + collaborateur + "';");
+            else
+                rst = getStatement().executeUpdate("update collaborateur set google_id_liste='" + googleIdListe + "' where pseudo='" + collaborateur + "';");
+            if (rst == 0) return false;
+        }catch ( Exception e ) {
+            //System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
      * Ajoute un lien entre une tâche et un collaborateur avec des paramètres supplémentaires liés aux APIs
      * @param tache La tâche à lier
      * @param collaborateur Le collaborateur à lier
@@ -193,6 +215,23 @@ public class SQLiteDataBase {
     public static boolean synchroUpdateEstSynchro(@Nonnull Tache tache, @Nonnull String collaborateur, boolean estSynchro){
         try {
             int rst = getStatement().executeUpdate("update synchro set est_synchro='" + estSynchro + "' where uuid_tache='" + tache.getId() + "' and pseudo_collaborateur='" + collaborateur + "';");
+            if (rst == 0) return false;
+        }catch ( Exception e ) {
+            //System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Modifie l'état de synchronisation de tous les liens entre une tâche et un collaborateur selon une tâche choisie
+     * @param tache La tâche concernée
+     * @param estSynchro L'état de la synchronisation avec les APIs en ligne à modifier
+     * @return False en cas d'erreur
+     */
+    public static boolean synchroUpdateAllEstSynchroByTache(@Nonnull Tache tache, boolean estSynchro){
+        try {
+            int rst = getStatement().executeUpdate("update synchro set est_synchro='" + estSynchro + "' where uuid_tache='" + tache.getId() + "';");
             if (rst == 0) return false;
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
