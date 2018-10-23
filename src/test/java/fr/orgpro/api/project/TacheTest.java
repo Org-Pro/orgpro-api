@@ -742,4 +742,23 @@ public class TacheTest {
         assertEquals(false,tache.setDateSprint(dateSprint2));
         assertEquals(false,tache.setDateSprint(dateSprint3));
     }
+
+    @Test
+    public void testAddDeleteSprint() throws Exception {
+        tache.addSprint();
+        List<String> tags = tache.getTagListe();
+        String expected = "SPRINT" + tache.getEnTete(tache.HEADER_SPRINT);
+        assertEquals(expected,tags.get(0));
+        assertEquals(true,tache.deleteSprint(1));
+        assertEquals(false,tache.deleteSprint(1));
+    }
+
+    @Test
+    public void testAddDateSprint() throws Exception {
+        assertEquals(false,tache.addDateSprint());
+        String dateSprint = dateFormat.format(new Date());
+        tache.setDateSprint(dateSprint);
+        assertEquals(true, tache.addDateSprint());
+    }
+
 }

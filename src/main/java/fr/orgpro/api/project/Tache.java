@@ -168,6 +168,22 @@ public class Tache {
         return true;
     }
 
+    public void addSprint(){
+        addTag("SPRINT" + getSprint());
+    }
+
+    public boolean deleteSprint(int sprint){
+        return removeTag("SPRINT" + sprint);
+    }
+
+    public boolean addDateSprint(){
+        if(getEnTete(HEADER_SPRINT_DATE) == null){
+            return false;
+        }else{
+            return addDateLimite(getDateSprint());
+        }
+    }
+
     /**
      * Ajout d'un collaborateur dans l'en-tête
      * @param nom Nom du collaborateur (Ne peut pas contenir ":" ou être vide | Le collaborateur ne doit pas déjà exister)
