@@ -723,4 +723,42 @@ public class TacheTest {
         assertEquals(2,tache.getSprint().intValue());
     }
 
+    @Test
+    public void testSetDateSprint() throws Exception {
+        String dateSprint = dateFormat.format(new Date());
+        assertEquals(null, tache.getDateSprint());
+        assertEquals(true,tache.setDateSprint(dateSprint));
+        assertEquals(dateSprint,tache.getDateSprint());
+        tache.setDateSprint(dateSprint);
+        assertEquals(dateSprint,tache.getDateSprint());
+    }
+
+    @Test
+    public void testSetDateSprintWrong() throws Exception {
+        String dateSprint = "2000-01-01";
+        String dateSprint2 = "2000-50-50";
+        String dateSprint3 = "hello";
+        assertEquals(false,tache.setDateSprint(dateSprint));
+        assertEquals(false,tache.setDateSprint(dateSprint2));
+        assertEquals(false,tache.setDateSprint(dateSprint3));
+    }
+
+    @Test
+    public void testAddDeleteSprint() throws Exception {
+        tache.addSprint();
+        List<String> tags = tache.getTagListe();
+        String expected = "SPRINT" + tache.getEnTete(tache.HEADER_SPRINT);
+        assertEquals(expected,tags.get(0));
+        assertEquals(true,tache.deleteSprint(1));
+        assertEquals(false,tache.deleteSprint(1));
+    }
+
+    @Test
+    public void testAddDateSprint() throws Exception {
+        assertEquals(false,tache.addDateSprint());
+        String dateSprint = dateFormat.format(new Date());
+        tache.setDateSprint(dateSprint);
+        assertEquals(true, tache.addDateSprint());
+    }
+
 }
