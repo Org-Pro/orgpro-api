@@ -28,10 +28,14 @@ public class Main {
         //SQLiteDataBase.deleteCollaborateur("test");
         //SQLiteDataBase.addCollaborateur("alex", null, null, null);
         //SQLiteDataBase.updateCollaborateurGoogleIdListe("bob", null);
-        SQLiteDataBase.synchroAddTacheCollaborateur(tache, "alex", null, null);
-        SQLiteDataBase.synchroAddTacheCollaborateur(tache, "bob", null, null);
-        SQLiteDataBase.synchroUpdateAllEstSynchroByTache(tache, true);
+        //SQLiteDataBase.synchroAddTacheCollaborateur(tache, "bob", null, null);
+        //SQLiteDataBase.synchroAddTacheCollaborateur(tache, "bob", null, null);
+        //SQLiteDataBase.synchroUpdateAllEstSynchroByTache(tache, true);
+        //SQLiteDataBase.updateCollaborateurGoogleIdListe("bob", "azeazeaz");
+        //SQLiteDataBase.getCollaborateurGoogleIdListe("bob1");
+        //SQLiteDataBase.getAllSynchroByCollaborateur("alex");
         SQLiteConnection.closeConnection();
+
         tache.writeFichier("liste.org", false);*/
 
 

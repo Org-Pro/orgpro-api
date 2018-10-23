@@ -1,9 +1,12 @@
 package fr.orgpro.api.local;
 
+import fr.orgpro.api.local.models.SQLSynchro;
 import fr.orgpro.api.project.Tache;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import static fr.orgpro.api.local.SQLiteConnection.getStatement;
@@ -163,6 +166,41 @@ public class SQLiteDataBase {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Récupère l'id de la liste de l'API google d'un collaborateur déjà existant
+     * @param collaborateur Le pseudo du collaborateur concerné
+     * @return L'id de la liste de l'API google, null sinon
+     */
+    public static String getCollaborateurGoogleIdListe(@Nonnull String collaborateur){
+        try {
+            ResultSet rst = getStatement().executeQuery("select google_id_liste from collaborateur where pseudo='" + collaborateur + "';");
+            rst.next();
+            return rst.getString("google_id_liste");
+        }catch ( Exception e ) {
+            //System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Récupère les synchro d'un collaborateur déjà existant
+     * @param collaborateur Le pseudo du collaborateur concerné
+     * @return La liste des synchro
+     */
+    public static List<SQLSynchro> getAllSynchroByCollaborateur(@Nonnull String collaborateur){
+        try {
+            List<SQLSynchro> listeSynchro = new ArrayList<SQLSynchro>();
+            ResultSet rst = getStatement().executeQuery("select * from synchro where pseudo_collaborateur='" + collaborateur + "';");
+            while(rst.next()){
+                listeSynchro.add(new SQLSynchro(rst.getString("uuid_tache"), rst.getString("pseudo_collaborateur"), rst.getString("google_id_tache"), rst.getBoolean("est_synchro")));
+            }
+            return listeSynchro;
+        }catch ( Exception e ) {
+            //System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return null;
+        }
     }
 
 
