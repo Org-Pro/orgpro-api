@@ -13,6 +13,10 @@ package fr.orgpro.api.project;
 //import fr.orgpro.api.local.SQLiteConnection;
 //import fr.orgpro.api.local.SQLiteDataBase;
 
+//import java.text.ParseException;
+//import java.text.SimpleDateFormat;
+//import java.util.Date;
+
 public class Main {
     public static void main(String[] args){
 
@@ -121,7 +125,30 @@ public class Main {
         liste = CollaborateurFichier.lectureFichier(path);
         for (CollaborateurInterface c : liste) {
             System.out.println(c.toString() + "\n");
-        }*/
+        }
+       Tache tache = new Tache("tache");
+        String date = "2018-10-23";
+       // tache.setDateSprint(date);
+       // System.out.println(tache.getDateSprint());
+        //
+
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date dateSprint = dateFormat.parse(date);
+            String dateValide = dateFormat.format(dateSprint);
+            if(dateValide.compareTo(date) != 0){
+                System.out.println("WRONG");
+            }else{
+                tache.addEnTete(tache.HEADER_SPRINT_DATE,date,true);
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        tache.writeFichier("test.org",false);
+        Date test = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(dateFormat.format(test));*/
     }
 
 
