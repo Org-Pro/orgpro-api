@@ -19,20 +19,27 @@ package fr.orgpro.api.project;
 
 public class Main {
     public static void main(String[] args){
-/*
+
 
         /*System.out.println("Org-Pro");
         Tache tache = new Tache("Faire les courses : 0");
         Tache.addEnTete("test", "ok", false);
 
         Tache.readFichier("liste.org");
-        tache.writeFichier("liste.org", true);
+        //tache.writeFichier("liste.org", true);
         SQLiteDataBase.addTache(tache);
         //SQLiteDataBase.addCollaborateur("bob", null, null, null);
         //SQLiteDataBase.deleteCollaborateur("test");
-        SQLiteDataBase.updateCollaborateur("bob", "alex");
-        //SQLiteDataBase.synchroAddTacheCollaborateur(tache, "alex", null, null);
+        //SQLiteDataBase.addCollaborateur("alex", null, null, null);
+        //SQLiteDataBase.updateCollaborateurGoogleIdListe("bob", null);
+        //SQLiteDataBase.synchroAddTacheCollaborateur(tache, "bob", null, null);
+        //SQLiteDataBase.synchroAddTacheCollaborateur(tache, "bob", null, null);
+        //SQLiteDataBase.synchroUpdateAllEstSynchroByTache(tache, true);
+        //SQLiteDataBase.updateCollaborateurGoogleIdListe("bob", "azeazeaz");
+        //SQLiteDataBase.getCollaborateurGoogleIdListe("bob1");
+        //SQLiteDataBase.getAllSynchroByCollaborateur("alex");
         SQLiteConnection.closeConnection();
+
         tache.writeFichier("liste.org", false);*/
 
 
