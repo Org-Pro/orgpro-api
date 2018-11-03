@@ -13,22 +13,33 @@ package fr.orgpro.api.project;
 //import fr.orgpro.api.local.SQLiteConnection;
 //import fr.orgpro.api.local.SQLiteDataBase;
 
+//import java.text.ParseException;
+//import java.text.SimpleDateFormat;
+//import java.util.Date;
+
 public class Main {
     public static void main(String[] args){
-/*
+
 
         /*System.out.println("Org-Pro");
         Tache tache = new Tache("Faire les courses : 0");
         Tache.addEnTete("test", "ok", false);
 
         Tache.readFichier("liste.org");
-        tache.writeFichier("liste.org", true);
+        //tache.writeFichier("liste.org", true);
         SQLiteDataBase.addTache(tache);
         //SQLiteDataBase.addCollaborateur("bob", null, null, null);
         //SQLiteDataBase.deleteCollaborateur("test");
-        SQLiteDataBase.updateCollaborateur("bob", "alex");
-        //SQLiteDataBase.synchroAddTacheCollaborateur(tache, "alex", null, null);
+        //SQLiteDataBase.addCollaborateur("alex", null, null, null);
+        //SQLiteDataBase.updateCollaborateurGoogleIdListe("bob", null);
+        //SQLiteDataBase.synchroAddTacheCollaborateur(tache, "bob", null, null);
+        //SQLiteDataBase.synchroAddTacheCollaborateur(tache, "bob", null, null);
+        //SQLiteDataBase.synchroUpdateAllEstSynchroByTache(tache, true);
+        //SQLiteDataBase.updateCollaborateurGoogleIdListe("bob", "azeazeaz");
+        //SQLiteDataBase.getCollaborateurGoogleIdListe("bob1");
+        //SQLiteDataBase.getAllSynchroByCollaborateur("alex");
         SQLiteConnection.closeConnection();
+
         tache.writeFichier("liste.org", false);*/
 
 
@@ -114,7 +125,30 @@ public class Main {
         liste = CollaborateurFichier.lectureFichier(path);
         for (CollaborateurInterface c : liste) {
             System.out.println(c.toString() + "\n");
-        }*/
+        }
+       Tache tache = new Tache("tache");
+        String date = "2018-10-23";
+       // tache.setDateSprint(date);
+       // System.out.println(tache.getDateSprint());
+        //
+
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date dateSprint = dateFormat.parse(date);
+            String dateValide = dateFormat.format(dateSprint);
+            if(dateValide.compareTo(date) != 0){
+                System.out.println("WRONG");
+            }else{
+                tache.addEnTete(tache.HEADER_SPRINT_DATE,date,true);
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        tache.writeFichier("test.org",false);
+        Date test = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(dateFormat.format(test));*/
     }
 
 

@@ -7,8 +7,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class SQLiteDataBaseTest {
@@ -90,6 +89,15 @@ public class SQLiteDataBaseTest {
     }
 
     @Test
+    public void testUpdateCollaborateurGoogleIdListe() throws Exception {
+        String col = nomCol();
+        SQLiteDataBase.addCollaborateur(col, null, null, null);
+        assertFalse(SQLiteDataBase.updateCollaborateurGoogleIdListe("aze", "id"));
+        assertTrue(SQLiteDataBase.updateCollaborateurGoogleIdListe(col, "id"));
+        assertTrue(SQLiteDataBase.updateCollaborateurGoogleIdListe(col, null));
+    }
+
+    @Test
     public void testSynchroAddTacheCollaborateur() throws Exception {
         String col = nomCol();
         Tache tache = new Tache("");
@@ -133,6 +141,36 @@ public class SQLiteDataBaseTest {
         SQLiteDataBase.addCollaborateur(col, null, null, null);
         SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null, null);
         assertTrue(SQLiteDataBase.synchroUpdateGoogleIdTache(tache, col, "id"));
+    }
+
+    @Test
+    public void testSynchroUpdateAllEstSynchroByTache() throws Exception {
+        String col = nomCol();
+        Tache tache = new Tache("");
+        assertFalse(SQLiteDataBase.synchroUpdateAllEstSynchroByTache(tache, false));
+        assertFalse(SQLiteDataBase.synchroUpdateAllEstSynchroByTache(null, false));
+        SQLiteDataBase.addTache(tache);
+        SQLiteDataBase.addCollaborateur(col, null, null, null);
+        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null, null);
+        assertTrue(SQLiteDataBase.synchroUpdateAllEstSynchroByTache(tache, true));
+    }
+
+    @Test
+    public void testGetCollaborateurGoogleIdListe() throws Exception {
+        String col = nomCol();
+        SQLiteDataBase.addCollaborateur(col, null, null, "test");
+        assertEquals(SQLiteDataBase.getCollaborateurGoogleIdListe(col), "test");
+        assertNull(SQLiteDataBase.getCollaborateurGoogleIdListe("aze"));
+    }
+
+    @Test
+    public void testGetAllSynchroByCollaborateur() throws Exception {
+        String col = nomCol();
+        Tache tache = new Tache("");
+        SQLiteDataBase.addTache(tache);
+        SQLiteDataBase.addCollaborateur(col, null, null, null);
+        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null, null);
+        assertEquals(SQLiteDataBase.getAllSynchroByCollaborateur(col).size(), 1);
     }
 
     private static String nomCol(){
