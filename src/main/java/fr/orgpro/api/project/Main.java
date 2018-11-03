@@ -17,9 +17,27 @@ package fr.orgpro.api.project;
 //import java.text.SimpleDateFormat;
 //import java.util.Date;
 
-public class Main {
-    public static void main(String[] args){
+/*import fr.orgpro.api.remote.trello.TrelloApi;
+import fr.orgpro.api.remote.trello.models.TrelloBoard;
+import fr.orgpro.api.remote.trello.services.TrelloBoardService;
+import retrofit2.Response;*/
 
+import java.io.IOException;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        /*Response<TrelloBoard> trello = TrelloApi.createService(TrelloBoardService.class)
+                .getBoard("", "", "")
+                .execute();
+
+        System.out.println(trello.body().toString());
+
+        trello = TrelloApi.createService(TrelloBoardService.class)
+                .addBoard("", "", "")
+                .execute();
+
+        System.out.println(trello.body().toString());*/
 
         /*System.out.println("Org-Pro");
         Tache tache = new Tache("Faire les courses : 0");

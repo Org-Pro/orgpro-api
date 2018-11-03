@@ -1,22 +1,20 @@
-package fr.orgpro.api.remotetrello;
-
-import java.util.Arrays;
+package fr.orgpro.api.remote.trello.models;
 
 public class TrelloBoard {
-    public String id;
-    public String name;
-    public String desc;
-    public String descData;
-    public boolean closed;
-    public String idOrganisation;
-    public boolean pinned;
-    public String url;
-    public String shortUrl;
-    public Object prefs;
-    public Object labelNames;
-    public boolean starred;
-    public Object limit;
-    public Object[] memberships;
+    private String id;
+    private String name;
+    private String desc;
+    private String descData;
+    private boolean closed;
+    private String idOrganisation;
+    private boolean pinned;
+    private String url;
+    private String shortUrl;
+    private Object prefs;
+    private Object labelNames;
+    private boolean starred;
+    private Object limit;
+    private Object[] memberships;
 
     @Override
     public String toString() {
