@@ -17,10 +17,14 @@ package fr.orgpro.api.project;
 //import java.text.SimpleDateFormat;
 //import java.util.Date;
 
-/*import fr.orgpro.api.remote.trello.TrelloApi;
+import fr.orgpro.api.remote.trello.TrelloApi;
 import fr.orgpro.api.remote.trello.models.TrelloBoard;
+import fr.orgpro.api.remote.trello.models.TrelloCard;
+import fr.orgpro.api.remote.trello.models.TrelloList;
 import fr.orgpro.api.remote.trello.services.TrelloBoardService;
-import retrofit2.Response;*/
+import fr.orgpro.api.remote.trello.services.TrelloCardService;
+import fr.orgpro.api.remote.trello.services.TrelloListService;
+import retrofit2.Response;
 
 import java.io.IOException;
 
@@ -30,15 +34,36 @@ public class Main {
         /*Response<TrelloBoard> trello = TrelloApi.createService(TrelloBoardService.class)
                 .getBoard("", "", "")
                 .execute();
+        */
+        /*
 
-        System.out.println(trello.body().toString());
+        Response<TrelloBoard> trelloBoard = TrelloApi.createService(TrelloBoardService.class)
+                .addBoard("", "", "NewBoard")
+                .execute();
+        System.out.println(trelloBoard.body().toString());
 
-        trello = TrelloApi.createService(TrelloBoardService.class)
-                .addBoard("", "", "")
+        Response<TrelloList> trelloList = TrelloApi.createService(TrelloListService.class)
+                .addList("", "",
+                        "NewList",
+                        trelloBoard.body().getId())
                 .execute();
 
-        System.out.println(trello.body().toString());*/
+        trelloList = TrelloApi.createService(TrelloListService.class)
+                .getList(trelloList.body().getId(), "", "")
+                .execute();
+        System.out.println(trelloList.body().toString());
 
+        Response<TrelloCard> trelloCard = TrelloApi.createService(TrelloCardService.class)
+                .addCard("", "",
+                "NewCard", trelloList.body().getId())
+                .execute();
+
+        trelloCard = TrelloApi.createService(TrelloCardService.class)
+                .getCard(trelloCard.body().getId(), "", "")
+                .execute();
+        System.out.println(trelloCard.body().toString());
+
+        */
         /*System.out.println("Org-Pro");
         Tache tache = new Tache("Faire les courses : 0");
         Tache.addEnTete("test", "ok", false);
