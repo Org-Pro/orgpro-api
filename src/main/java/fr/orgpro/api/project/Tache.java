@@ -176,6 +176,17 @@ public class Tache {
         return removeTag("SPRINT" + sprint);
     }
 
+    public boolean sprintActuel(){
+        List<String> tags = getTagListe();
+        String sprint = "SPRINT" + getSprint();
+        for(String tag : tags){
+            if(sprint.equalsIgnoreCase(tag)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean addDateSprint(){
         if(getEnTete(HEADER_SPRINT_DATE) == null){
             return false;
