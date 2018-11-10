@@ -10,21 +10,24 @@ package fr.orgpro.api.project;
 //import fr.orgpro.api.collaborateur.CollaborateurInterface;
 //import fr.orgpro.api.collaborateur.CollaborateurType;
 
-//import fr.orgpro.api.local.SQLiteConnection;
-//import fr.orgpro.api.local.SQLiteDataBase;
+import com.google.gson.internal.bind.SqlDateTypeAdapter;
+import fr.orgpro.api.local.SQLiteConnection;
+import fr.orgpro.api.local.SQLiteDataBase;
 
 //import java.text.ParseException;
 //import java.text.SimpleDateFormat;
 //import java.util.Date;
 
-import fr.orgpro.api.remote.trello.TrelloApi;
-import fr.orgpro.api.remote.trello.models.TrelloBoard;
-import fr.orgpro.api.remote.trello.models.TrelloCard;
-import fr.orgpro.api.remote.trello.models.TrelloList;
-import fr.orgpro.api.remote.trello.services.TrelloBoardService;
-import fr.orgpro.api.remote.trello.services.TrelloCardService;
-import fr.orgpro.api.remote.trello.services.TrelloListService;
-import retrofit2.Response;
+//import fr.orgpro.api.local.models.SQLCollaborateur;
+//import fr.orgpro.api.local.models.SQLSynchro;
+//import fr.orgpro.api.remote.trello.TrelloApi;
+//import fr.orgpro.api.remote.trello.models.TrelloBoard;
+//import fr.orgpro.api.remote.trello.models.TrelloCard;
+//import fr.orgpro.api.remote.trello.models.TrelloList;
+//import fr.orgpro.api.remote.trello.services.TrelloBoardService;
+//import fr.orgpro.api.remote.trello.services.TrelloCardService;
+//import fr.orgpro.api.remote.trello.services.TrelloListService;
+//import retrofit2.Response;
 
 import java.io.IOException;
 
@@ -72,6 +75,36 @@ public class Main {
         //tache.writeFichier("liste.org", true);
         SQLiteDataBase.addTache(tache);
         //SQLiteDataBase.addCollaborateur("bob", null, null, null);
+        //SQLiteDataBase.updateCollaborateurTrelloIdBoard("bob", "test");
+
+        /*SQLCollaborateur coll = new SQLCollaborateur("alex");
+        coll.setGoogle_id_liste("aze");
+        SQLiteDataBase.addCollaborateur(coll);*/
+
+        /*SQLCollaborateur collaborateur = new SQLCollaborateur("pseudo");
+        collaborateur.setNom("nom");
+        collaborateur.setPrenom("prenom");
+        collaborateur.setGoogle_id_liste("google_id_liste");
+        collaborateur.setTrello_id_board("trello_id_board");
+        collaborateur.setTrello_id_liste("trello_id_list");
+        SQLiteDataBase.addCollaborateur(collaborateur);*/
+
+        /*SQLCollaborateur col = SQLiteDataBase.getCollaborateur("pseudo");
+        SQLSynchro sync = new SQLSynchro(tache.getId(), col.getPseudo());
+        sync.setEst_synchro(true);
+        sync.setTrello_id_card("trello");
+        sync.setGoogle_id_tache("google");
+        SQLiteDataBase.addSynchroTacheCollaborateur(sync);
+        SQLSynchro sy = SQLiteDataBase.getSynchroTacheCollaborateur(col, tache);
+        sy.setEst_synchro(false);
+        sy.setGoogle_id_tache("lol");
+        SQLiteDataBase.updateSynchroTacheCollaborateur(sy);
+        SQLiteDataBase.deleteSynchroTacheCollaborateur(sy);*/
+
+        //SQLiteDataBase.updateCollaborateur(col);
+        //SQLiteDataBase.deleteCollaborateur(col);
+
+
         //SQLiteDataBase.deleteCollaborateur("test");
         //SQLiteDataBase.addCollaborateur("alex", null, null, null);
         //SQLiteDataBase.updateCollaborateurGoogleIdListe("bob", null);
@@ -81,9 +114,9 @@ public class Main {
         //SQLiteDataBase.updateCollaborateurGoogleIdListe("bob", "azeazeaz");
         //SQLiteDataBase.getCollaborateurGoogleIdListe("bob1");
         //SQLiteDataBase.getAllSynchroByCollaborateur("alex");
-        SQLiteConnection.closeConnection();
+        //SQLiteConnection.closeConnection();
 
-        tache.writeFichier("liste.org", false);*/
+        //tache.writeFichier("liste.org", false);
 
 
 
