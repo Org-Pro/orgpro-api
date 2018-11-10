@@ -1,11 +1,6 @@
-package fr.orgpro.api.remote;
-
-import com.google.api.services.tasks.Tasks;
-import com.google.api.services.tasks.model.Task;
-import com.google.api.services.tasks.model.TaskList;
+package fr.orgpro.api.remote.google;
 
 import java.io.IOException;
-import java.util.List;
 
 public class GoogleTasksApi {
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";

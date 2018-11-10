@@ -1,4 +1,4 @@
-package fr.orgpro.api.remote;
+package fr.orgpro.api.remote.google;
 
 import com.google.api.client.util.DateTime;
 import com.google.api.services.tasks.Tasks;
