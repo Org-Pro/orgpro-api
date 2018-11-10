@@ -17,16 +17,16 @@ package fr.orgpro.api.project;
 //import java.text.SimpleDateFormat;
 //import java.util.Date;
 
-import fr.orgpro.api.remote.trello.TrelloApi;
-import fr.orgpro.api.remote.trello.models.TrelloBoard;
-import fr.orgpro.api.remote.trello.models.TrelloCard;
-import fr.orgpro.api.remote.trello.models.TrelloList;
-import fr.orgpro.api.remote.trello.services.TrelloBoardService;
-import fr.orgpro.api.remote.trello.services.TrelloCardService;
-import fr.orgpro.api.remote.trello.services.TrelloListService;
-import retrofit2.Response;
+//import fr.orgpro.api.remote.trello.TrelloApi;
+//import fr.orgpro.api.remote.trello.models.TrelloBoard;
+//import fr.orgpro.api.remote.trello.models.TrelloCard;
+//import fr.orgpro.api.remote.trello.models.TrelloList;
+//import fr.orgpro.api.remote.trello.services.TrelloBoardService;
+//import fr.orgpro.api.remote.trello.services.TrelloCardService;
+//import fr.orgpro.api.remote.trello.services.TrelloListService;
+//import retrofit2.Response;
 
-import java.io.IOException;
+//import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
