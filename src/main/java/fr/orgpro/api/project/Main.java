@@ -1,38 +1,58 @@
 package fr.orgpro.api.project;
 
-//import fr.orgpro.api.scrum.Scrum;
+/*
 
-//import java.util.ArrayList;
-//import java.util.List;
+import fr.orgpro.api.scrum.Scrum;
 
-//import fr.orgpro.api.collaborateur.CollaborateurFactory;
-//import fr.orgpro.api.collaborateur.CollaborateurFichier;
-//import fr.orgpro.api.collaborateur.CollaborateurInterface;
-//import fr.orgpro.api.collaborateur.CollaborateurType;
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.orgpro.api.collaborateur.CollaborateurFactory;
+import fr.orgpro.api.collaborateur.CollaborateurFichier;
+import fr.orgpro.api.collaborateur.CollaborateurInterface;
+import fr.orgpro.api.collaborateur.CollaborateurType;
 
 import com.google.gson.internal.bind.SqlDateTypeAdapter;
 import fr.orgpro.api.local.SQLiteConnection;
 import fr.orgpro.api.local.SQLiteDataBase;
 
-//import java.text.ParseException;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-//import fr.orgpro.api.local.models.SQLCollaborateur;
-//import fr.orgpro.api.local.models.SQLSynchro;
-//import fr.orgpro.api.remote.trello.TrelloApi;
-//import fr.orgpro.api.remote.trello.models.TrelloBoard;
-//import fr.orgpro.api.remote.trello.models.TrelloCard;
-//import fr.orgpro.api.remote.trello.models.TrelloList;
-//import fr.orgpro.api.remote.trello.services.TrelloBoardService;
-//import fr.orgpro.api.remote.trello.services.TrelloCardService;
-//import fr.orgpro.api.remote.trello.services.TrelloListService;
-//import retrofit2.Response;
+import fr.orgpro.api.local.models.SQLCollaborateur;
+import fr.orgpro.api.local.models.SQLSynchro;
+import fr.orgpro.api.remote.trello.TrelloApi;
+import fr.orgpro.api.remote.trello.models.TrelloBoard;
+import fr.orgpro.api.remote.trello.models.TrelloCard;
+import fr.orgpro.api.remote.trello.models.TrelloList;
+import fr.orgpro.api.remote.trello.services.TrelloBoardService;
+import fr.orgpro.api.remote.trello.services.TrelloCardService;
+import fr.orgpro.api.remote.trello.services.TrelloListService;
+import retrofit2.Response;
+
+import com.google.api.services.tasks.model.Task;
+import com.google.api.services.tasks.model.TaskList;
+import fr.orgpro.api.remote.google.GoogleList;
+import fr.orgpro.api.remote.google.GoogleTasksService;
+
+*/
 
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+
+
+        //GoogleTasksService gts = GoogleTasksService.getInstance();
+        //GoogleList gl = GoogleList.getInstance();
+        //gl.postTache("alex", "test", null);
+        //TaskList tl = gl.postList("alex");
+
+        //Tache tache = new Tache("tache1");
+        //Task t = gl.postTask(tache, tl.getId(), "alex");
+
+        //System.out.println();
 
         /*Response<TrelloBoard> trello = TrelloApi.createService(TrelloBoardService.class)
                 .getBoard("", "", "")

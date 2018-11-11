@@ -5,6 +5,7 @@ import com.google.api.services.tasks.Tasks;
 import com.google.api.services.tasks.model.TaskList;
 import com.google.api.services.tasks.model.TaskLists;
 import com.google.api.services.tasks.model.Task;
+import fr.orgpro.api.project.Tache;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -15,6 +16,30 @@ public class GoogleList {
     private static GoogleList INSTANCE = new GoogleList();
     private static GoogleTasksService gts = GoogleTasksService.getInstance();
     private String orgpro = "ORGPRO";
+
+
+    public TaskList postList(String col) throws IOException {
+        Tasks tasks = gts.getTasks(col);
+        TaskList taskList = new TaskList().setTitle(this.orgpro);
+        return tasks.tasklists().insert(taskList).execute();
+    }
+
+    public Task postTask(Tache tache, String idTaskList, String col) throws IOException {
+        Tasks tasks = gts.getTasks(col);
+
+        final Task t = new Task().setTitle(tache.getTitre());
+        if(tache.getDateLimite() != null) {
+            Calendar c = Calendar.getInstance();
+            c.setTime(tache.getDateLimite());
+            c.add(Calendar.DATE, 1);
+            DateTime d = new DateTime(c.getTime());
+            t.setDue(d);
+        }
+        return tasks.tasks().insert(idTaskList, t).execute();
+    }
+
+
+
     /**
      * Cette fonction prend les informations de l'utilisateurs dans un Tasks
      * et renvoi toutes les liste de taches de l'utilisateur dans une liste
