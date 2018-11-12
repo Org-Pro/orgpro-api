@@ -80,6 +80,13 @@ public class SQLiteDataBaseTest {
         assertTrue(SQLiteDataBase.deleteCollaborateur(col));
         assertFalse(SQLiteDataBase.deleteCollaborateur(col));
         // TODO Passer dans le except
+        // ---
+        SQLCollaborateur collaborateur = new SQLCollaborateur(nomCol());
+        SQLiteDataBase.addCollaborateur(collaborateur);
+        SQLCollaborateur collaborateurNull = null;
+        assertFalse(SQLiteDataBase.deleteCollaborateur(collaborateurNull));
+        assertTrue(SQLiteDataBase.deleteCollaborateur(collaborateur));
+        assertFalse(SQLiteDataBase.deleteCollaborateur(collaborateur));
     }
 
     @Test
