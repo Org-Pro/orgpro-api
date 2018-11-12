@@ -26,7 +26,9 @@ public class SQLiteDataBase {
                     "prenom char(255)," +
                     "google_id_liste char(255)," +
                     "trello_id_board char(255)," +
-                    "trello_id_list char(255)" +
+                    "trello_id_list char(255)," +
+                    "trello_key char(255)," +
+                    "trello_token char(255)" +
                     ");");
 
             getStatement().execute("create table if not exists tache (" +
@@ -117,7 +119,9 @@ public class SQLiteDataBase {
                     + stringReqValue(collaborateur.getPrenom()) + ", "
                     + stringReqValue(collaborateur.getGoogle_id_liste()) + ", "
                     + stringReqValue(collaborateur.getTrello_id_board()) + ", "
-                    + stringReqValue(collaborateur.getTrello_id_liste())
+                    + stringReqValue(collaborateur.getTrello_id_liste()) + ", "
+                    + stringReqValue(collaborateur.getTrello_key()) + ", "
+                    + stringReqValue(collaborateur.getTrello_token())
                     + ");");
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -177,7 +181,9 @@ public class SQLiteDataBase {
                     + "prenom=" + stringReqValue(collaborateur.getPrenom()) + ","
                     + "google_id_liste=" + stringReqValue(collaborateur.getGoogle_id_liste()) + ","
                     + "trello_id_board=" + stringReqValue(collaborateur.getTrello_id_board()) + ","
-                    + "trello_id_list=" + stringReqValue(collaborateur.getTrello_id_liste())
+                    + "trello_id_list=" + stringReqValue(collaborateur.getTrello_id_liste()) + ","
+                    + "trello_key=" + stringReqValue(collaborateur.getTrello_key()) + ","
+                    + "trello_token=" + stringReqValue(collaborateur.getTrello_token())
                     + " where pseudo=" + stringReqValue(collaborateur.getPseudo()) + ";");
             if (rst == 0) return false;
         }catch ( Exception e ) {
@@ -198,6 +204,8 @@ public class SQLiteDataBase {
                 collaborateur.setGoogle_id_liste(rst.getString("google_id_liste"));
                 collaborateur.setTrello_id_board(rst.getString("trello_id_board"));
                 collaborateur.setTrello_id_liste(rst.getString("trello_id_list"));
+                collaborateur.setTrello_key("trello_key");
+                collaborateur.setTrello_token("trello_token");
             }
             return collaborateur;
         }catch ( Exception e ) {
@@ -389,7 +397,7 @@ public class SQLiteDataBase {
         return true;
     }
 
-    @Deprecated
+    /*@Deprecated
     public static boolean synchroUpdateTrelloIdCard(@Nonnull Tache tache, @Nonnull String collaborateur, @Nullable String trelloIdCard){
         try {
             int rst = getStatement().executeUpdate("update synchro set trello_id_card=" + stringReqValue(trelloIdCard) + " where uuid_tache='" + tache.getId() + "' and pseudo_collaborateur='" + collaborateur + "';");
@@ -399,7 +407,7 @@ public class SQLiteDataBase {
             return false;
         }
         return true;
-    }
+    }*/
 
     /**
      * Modifie l'état de synchronisation d'un lien entre une tâche et un collaborateur
@@ -462,7 +470,7 @@ public class SQLiteDataBase {
         return true;
     }
 
-    @Deprecated
+    /*@Deprecated
     public static boolean updateCollaborateurTrelloIdBoard(@Nonnull String collaborateur, @Nullable String trelloIdBoard){
         try {
             int rst;
@@ -473,9 +481,9 @@ public class SQLiteDataBase {
             return false;
         }
         return true;
-    }
+    }*/
 
-    @Deprecated
+    /*@Deprecated
     public static boolean updateCollaborateurTrelloIdList(@Nonnull String collaborateur, @Nullable String trelloIdList){
         try {
             int rst;
@@ -489,7 +497,7 @@ public class SQLiteDataBase {
             return false;
         }
         return true;
-    }
+    }*/
 
     /**
      * Récupère l'id de la liste de l'API google d'un collaborateur déjà existant
@@ -508,7 +516,7 @@ public class SQLiteDataBase {
         }
     }
 
-    @Deprecated
+    /*@Deprecated
     public static String getCollaborateurTrelloIdBoard(@Nonnull String collaborateur){
         try {
             ResultSet rst = getStatement().executeQuery("select trello_id_board from collaborateur where pseudo='" + collaborateur + "';");
@@ -518,9 +526,9 @@ public class SQLiteDataBase {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
             return null;
         }
-    }
+    }*/
 
-    @Deprecated
+    /*@Deprecated
     public static String getCollaborateurTrelloIdList(@Nonnull String collaborateur){
         try {
             ResultSet rst = getStatement().executeQuery("select trello_id_list from collaborateur where pseudo='" + collaborateur + "';");
@@ -530,7 +538,7 @@ public class SQLiteDataBase {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
             return null;
         }
-    }
+    }*/
 
 
 

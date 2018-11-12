@@ -1,5 +1,7 @@
 package fr.orgpro.api.local;
 
+import fr.orgpro.api.local.models.SQLCollaborateur;
+import fr.orgpro.api.local.models.SQLSynchro;
 import fr.orgpro.api.project.Tache;
 import org.junit.*;
 
@@ -66,6 +68,9 @@ public class SQLiteDataBaseTest {
         String col = nomCol();
         assertTrue(SQLiteDataBase.addCollaborateur(col, null, null, null));
         assertFalse(SQLiteDataBase.addCollaborateur(col, null, null, null));
+        // ---
+        assertFalse(SQLiteDataBase.addCollaborateur(null));
+        assertTrue(SQLiteDataBase.addCollaborateur(new SQLCollaborateur(nomCol())));
     }
 
     @Test
@@ -86,6 +91,17 @@ public class SQLiteDataBaseTest {
         assertFalse(SQLiteDataBase.updateCollaborateurPseudo(col1, col2));
         assertFalse(SQLiteDataBase.updateCollaborateurPseudo("aze", "eza"));
         assertTrue(SQLiteDataBase.updateCollaborateurPseudo(col1, "test"));
+        // ---
+        assertFalse(SQLiteDataBase.updateCollaborateur(null));
+        assertFalse(SQLiteDataBase.updateCollaborateur(new SQLCollaborateur("aze")));
+        assertTrue(SQLiteDataBase.updateCollaborateur(new SQLCollaborateur(col2)));
+    }
+
+    @Test
+    public void testGetCollaborateur() throws Exception {
+        SQLCollaborateur col = new SQLCollaborateur(nomCol());
+        SQLiteDataBase.addCollaborateur(col);
+        assertEquals(SQLiteDataBase.getCollaborateur(col.getPseudo()).getPseudo(), col.getPseudo());
     }
 
     @Test
@@ -98,6 +114,18 @@ public class SQLiteDataBaseTest {
     }
 
     @Test
+    public void testSynchroGetTacheCollaborateur() throws Exception {
+        SQLCollaborateur col = new SQLCollaborateur(nomCol());
+        Tache tache = new Tache("");
+        SQLSynchro synchro = new SQLSynchro(tache.getId(), col.getPseudo());
+        SQLiteDataBase.addCollaborateur(col);
+        SQLiteDataBase.addTache(tache);
+        SQLiteDataBase.addSynchroTacheCollaborateur(synchro);
+        assertNull(SQLiteDataBase.getSynchroTacheCollaborateur(null, null));
+        assertEquals(SQLiteDataBase.getSynchroTacheCollaborateur(col, tache).getPseudo_collaborateur(), col.getPseudo());
+    }
+
+    @Test
     public void testSynchroAddTacheCollaborateur() throws Exception {
         String col = nomCol();
         Tache tache = new Tache("");
@@ -105,6 +133,27 @@ public class SQLiteDataBaseTest {
         SQLiteDataBase.addTache(tache);
         SQLiteDataBase.addCollaborateur(col, null, null, null);
         assertTrue(SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, "id", true));
+        // ---
+        SQLCollaborateur col1 = new SQLCollaborateur(nomCol());
+        Tache tache1 = new Tache("");
+        SQLSynchro synchro = new SQLSynchro(tache1.getId(), col1.getPseudo());
+        SQLiteDataBase.addCollaborateur(col1);
+        SQLiteDataBase.addTache(tache1);
+        assertFalse(SQLiteDataBase.addSynchroTacheCollaborateur(null));
+        assertTrue(SQLiteDataBase.addSynchroTacheCollaborateur(synchro));
+    }
+
+    @Test
+    public void testSynchroUpdateTacheCollaborateur() throws Exception {
+        SQLCollaborateur col1 = new SQLCollaborateur(nomCol());
+        Tache tache1 = new Tache("");
+        SQLSynchro synchro = new SQLSynchro(tache1.getId(), col1.getPseudo());
+        SQLiteDataBase.addCollaborateur(col1);
+        SQLiteDataBase.addTache(tache1);
+        SQLiteDataBase.addSynchroTacheCollaborateur(synchro);
+        assertFalse(SQLiteDataBase.updateSynchroTacheCollaborateur(null));
+        assertFalse(SQLiteDataBase.updateSynchroTacheCollaborateur(new SQLSynchro("aze", "aze")));
+        assertTrue(SQLiteDataBase.updateSynchroTacheCollaborateur(synchro));
     }
 
     @Test
@@ -117,6 +166,16 @@ public class SQLiteDataBaseTest {
         SQLiteDataBase.addCollaborateur(col, null, null, null);
         SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null, null);
         assertTrue(SQLiteDataBase.synchroDeleteTacheCollaborateur(tache, col));
+        // ---
+        SQLCollaborateur col1 = new SQLCollaborateur(nomCol());
+        Tache tache1 = new Tache("");
+        SQLSynchro synchro = new SQLSynchro(tache1.getId(), col1.getPseudo());
+        SQLiteDataBase.addCollaborateur(col1);
+        SQLiteDataBase.addTache(tache1);
+        SQLiteDataBase.addSynchroTacheCollaborateur(synchro);
+        assertFalse(SQLiteDataBase.deleteSynchroTacheCollaborateur(null));
+        assertTrue(SQLiteDataBase.deleteSynchroTacheCollaborateur(synchro));
+        assertFalse(SQLiteDataBase.deleteSynchroTacheCollaborateur(synchro));
     }
 
     @Test

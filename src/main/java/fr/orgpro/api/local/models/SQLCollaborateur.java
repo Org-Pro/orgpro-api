@@ -7,6 +7,8 @@ public class SQLCollaborateur {
     private String google_id_liste;
     private String trello_id_board;
     private String trello_id_liste;
+    private String trello_key;
+    private String trello_token;
 
     public SQLCollaborateur(String pseudo) {
         this.pseudo = pseudo;
@@ -54,5 +56,21 @@ public class SQLCollaborateur {
 
     public void setTrello_id_liste(String trello_id_liste) {
         this.trello_id_liste = trello_id_liste;
+    }
+
+    public String getTrello_key() {
+        return trello_key;
+    }
+
+    public void setTrello_key(String trello_key) {
+        this.trello_key = trello_key;
+    }
+
+    public String getTrello_token() {
+        return trello_token;
+    }
+
+    public void setTrello_token(String trello_token) {
+        this.trello_token = trello_token;
     }
 }
