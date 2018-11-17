@@ -5,12 +5,14 @@ public class SQLSynchro {
     private String pseudo_collaborateur;
     private String google_id_tache;
     private String trello_id_card;
-    private boolean est_synchro;
+    private boolean google_est_synchro;
+    private boolean trello_est_synchro;
 
     public SQLSynchro(String uuid_tache, String pseudo_collaborateur) {
         this.uuid_tache = uuid_tache;
         this.pseudo_collaborateur = pseudo_collaborateur;
-        this.est_synchro = false;
+        this.google_est_synchro = false;
+        this.trello_est_synchro = false;
     }
 
     public String getUuid_tache() {
@@ -37,11 +39,19 @@ public class SQLSynchro {
         this.trello_id_card = trello_id_card;
     }
 
-    public boolean isEst_synchro() {
-        return est_synchro;
+    public boolean isGoogle_est_synchro() {
+        return google_est_synchro;
     }
 
-    public void setEst_synchro(boolean est_synchro) {
-        this.est_synchro = est_synchro;
+    public void setGoogle_est_synchro(boolean google_est_synchro) {
+        this.google_est_synchro = google_est_synchro;
+    }
+
+    public boolean isTrello_est_synchro() {
+        return trello_est_synchro;
+    }
+
+    public void setTrello_est_synchro(boolean trello_est_synchro) {
+        this.trello_est_synchro = trello_est_synchro;
     }
 }

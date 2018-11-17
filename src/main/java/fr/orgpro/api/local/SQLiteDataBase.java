@@ -40,7 +40,8 @@ public class SQLiteDataBase {
                     "pseudo_collaborateur char(255) not null," +
                     "google_id_tache char(255)," +
                     "trello_id_card char(255)," +
-                    "est_synchro boolean not null default false," +
+                    "google_est_synchro boolean not null default false," +
+                    "trello_est_synchro boolean not null default false," +
                     "unique (uuid_tache, pseudo_collaborateur)," +
                     "foreign key (uuid_tache) references tache(uuid) on delete cascade DEFERRABLE INITIALLY DEFERRED," +
                     "foreign key (pseudo_collaborateur) references collaborateur(pseudo) on delete cascade on update cascade DEFERRABLE INITIALLY DEFERRED" +
@@ -232,7 +233,8 @@ public class SQLiteDataBase {
                 tmpSynchro = new SQLSynchro(rst.getString("uuid_tache"), rst.getString("pseudo_collaborateur"));
                 tmpSynchro.setGoogle_id_tache(rst.getString("google_id_tache"));
                 tmpSynchro.setTrello_id_card(rst.getString("trello_id_card"));
-                tmpSynchro.setEst_synchro(Boolean.parseBoolean(rst.getString("est_synchro")));
+                tmpSynchro.setGoogle_est_synchro(Boolean.parseBoolean(rst.getString("google_est_synchro")));
+                tmpSynchro.setTrello_est_synchro(Boolean.parseBoolean(rst.getString("trello_est_synchro")));
                 listeSynchro.add(tmpSynchro);
             }
             return listeSynchro;
@@ -253,7 +255,8 @@ public class SQLiteDataBase {
                 synchro = new SQLSynchro(rst.getString("uuid_tache"), rst.getString("pseudo_collaborateur"));
                 synchro.setGoogle_id_tache(rst.getString("google_id_tache"));
                 synchro.setTrello_id_card(rst.getString("trello_id_card"));
-                synchro.setEst_synchro(Boolean.parseBoolean(rst.getString("est_synchro")));
+                synchro.setGoogle_est_synchro(Boolean.parseBoolean(rst.getString("google_est_synchro")));
+                synchro.setTrello_est_synchro(Boolean.parseBoolean(rst.getString("trello_est_synchro")));
             }
             return synchro;
         }catch ( Exception e ) {
@@ -269,7 +272,8 @@ public class SQLiteDataBase {
                     + stringReqValue(synchro.getPseudo_collaborateur()) + ", "
                     + stringReqValue(synchro.getGoogle_id_tache()) + ", "
                     + stringReqValue(synchro.getTrello_id_card()) + ", "
-                    + "'" + synchro.isEst_synchro() + "'"
+                    + "'" + synchro.isGoogle_est_synchro() + "',"
+                    + "'" + synchro.isTrello_est_synchro() + "'"
                     + ");");
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -283,7 +287,8 @@ public class SQLiteDataBase {
             int rst = getStatement().executeUpdate("update synchro set "
                     + "google_id_tache=" + stringReqValue(synchro.getGoogle_id_tache()) + ","
                     + "trello_id_card=" + stringReqValue(synchro.getTrello_id_card()) + ","
-                    + "est_synchro='" + synchro.isEst_synchro() + "'"
+                    + "google_est_synchro='" + synchro.isGoogle_est_synchro() + "',"
+                    + "trello_est_synchro='" + synchro.isTrello_est_synchro() + "'"
                     + " where uuid_tache=" + stringReqValue(synchro.getUuid_tache()) + " and pseudo_collaborateur=" + stringReqValue(synchro.getPseudo_collaborateur()) + ";");
             if (rst == 0) return false;
         }catch ( Exception e ) {
@@ -312,7 +317,36 @@ public class SQLiteDataBase {
      */
     public static boolean updateAllSynchroEstSynchroByTache(@Nonnull Tache tache, boolean estSynchro){
         try {
-            int rst = getStatement().executeUpdate("update synchro set est_synchro='" + estSynchro + "' where uuid_tache='" + tache.getId() + "';");
+            int rst = getStatement().executeUpdate("update synchro set "
+                    + "google_est_synchro='" + estSynchro + "',"
+                    + "trello_est_synchro='" + estSynchro + "'"
+                    + " where uuid_tache='" + tache.getId() + "';");
+            if (rst == 0) return false;
+        }catch ( Exception e ) {
+            //System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean updateAllSynchroGoogleEstSynchroByTache(@Nonnull Tache tache, boolean estSynchro){
+        try {
+            int rst = getStatement().executeUpdate("update synchro set "
+                    + "google_est_synchro='" + estSynchro + "'"
+                    + " where uuid_tache='" + tache.getId() + "';");
+            if (rst == 0) return false;
+        }catch ( Exception e ) {
+            //System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean updateAllSynchroTrelloEstSynchroByTache(@Nonnull Tache tache, boolean estSynchro){
+        try {
+            int rst = getStatement().executeUpdate("update synchro set "
+                    + "trello_est_synchro='" + estSynchro + "'"
+                    + " where uuid_tache='" + tache.getId() + "';");
             if (rst == 0) return false;
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -342,17 +376,13 @@ public class SQLiteDataBase {
      * @param tache La tâche à lier
      * @param collaborateur Le collaborateur à lier
      * @param googleIdTache L'id de la tâche créée par l'API Google
-     * @param estSynchro L'état de la synchronisation avec les APIs en ligne
      * @return False en cas d'erreur
      */
     @Deprecated
-    public static boolean synchroAddTacheCollaborateur(@Nonnull Tache tache, @Nonnull String collaborateur, @Nullable String googleIdTache, @Nullable Boolean estSynchro){
+    public static boolean synchroAddTacheCollaborateur(@Nonnull Tache tache, @Nonnull String collaborateur, @Nullable String googleIdTache){
         try {
-            boolean synchro_req = false;
-            // TODO google_id_tache != null -> à verifier ?
-            if(googleIdTache != null && estSynchro != null) synchro_req = estSynchro;
-            getStatement().execute("insert into synchro(uuid_tache, pseudo_collaborateur, google_id_tache, est_synchro) values('"
-                    + tache.getId() + "', '" + collaborateur + "', " + stringReqValue(googleIdTache) + ",'" + synchro_req + "');");
+            getStatement().execute("insert into synchro(uuid_tache, pseudo_collaborateur, google_id_tache) values('"
+                    + tache.getId() + "', '" + collaborateur + "', " + stringReqValue(googleIdTache) + ");");
         }catch ( Exception e ) {
             //System.err.println(e.getClass().getName() + ": " + e.getMessage());
             return false;
@@ -409,24 +439,25 @@ public class SQLiteDataBase {
         return true;
     }*/
 
-    /**
-     * Modifie l'état de synchronisation d'un lien entre une tâche et un collaborateur
-     * @param tache La tâche liée
-     * @param collaborateur Le pseudo du collaborateur lié
-     * @param estSynchro L'état de la synchronisation avec les APIs en ligne à modifier
-     * @return False en cas d'erreur
-     */
-    @Deprecated
-    public static boolean synchroUpdateEstSynchro(@Nonnull Tache tache, @Nonnull String collaborateur, boolean estSynchro){
-        try {
-            int rst = getStatement().executeUpdate("update synchro set est_synchro='" + estSynchro + "' where uuid_tache='" + tache.getId() + "' and pseudo_collaborateur='" + collaborateur + "';");
-            if (rst == 0) return false;
-        }catch ( Exception e ) {
-            //System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            return false;
-        }
-        return true;
-    }
+
+//    /**
+//     * Modifie l'état de synchronisation d'un lien entre une tâche et un collaborateur
+//     * @param tache La tâche liée
+//     * @param collaborateur Le pseudo du collaborateur lié
+//     * @param estSynchro L'état de la synchronisation avec les APIs en ligne à modifier
+//     * @return False en cas d'erreur
+//     */
+//    @Deprecated
+//    public static boolean synchroUpdateEstSynchro(@Nonnull Tache tache, @Nonnull String collaborateur, boolean estSynchro){
+//        try {
+//            int rst = getStatement().executeUpdate("update synchro set est_synchro='" + estSynchro + "' where uuid_tache='" + tache.getId() + "' and pseudo_collaborateur='" + collaborateur + "';");
+//            if (rst == 0) return false;
+//        }catch ( Exception e ) {
+//            //System.err.println(e.getClass().getName() + ": " + e.getMessage());
+//            return false;
+//        }
+//        return true;
+//    }
 
     /**
      * Ajoute un collaborateur à la base de données locale

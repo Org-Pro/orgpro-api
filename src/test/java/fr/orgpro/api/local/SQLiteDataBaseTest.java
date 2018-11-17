@@ -136,10 +136,10 @@ public class SQLiteDataBaseTest {
     public void testSynchroAddTacheCollaborateur() throws Exception {
         String col = nomCol();
         Tache tache = new Tache("");
-        assertFalse(SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null, null));
+        assertFalse(SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null));
         SQLiteDataBase.addTache(tache);
         SQLiteDataBase.addCollaborateur(col, null, null, null);
-        assertTrue(SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, "id", true));
+        assertTrue(SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, "id"));
         // ---
         SQLCollaborateur col1 = new SQLCollaborateur(nomCol());
         Tache tache1 = new Tache("");
@@ -171,7 +171,7 @@ public class SQLiteDataBaseTest {
         assertFalse(SQLiteDataBase.synchroDeleteTacheCollaborateur(null, col));
         SQLiteDataBase.addTache(tache);
         SQLiteDataBase.addCollaborateur(col, null, null, null);
-        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null, null);
+        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null);
         assertTrue(SQLiteDataBase.synchroDeleteTacheCollaborateur(tache, col));
         // ---
         SQLCollaborateur col1 = new SQLCollaborateur(nomCol());
@@ -185,17 +185,17 @@ public class SQLiteDataBaseTest {
         assertFalse(SQLiteDataBase.deleteSynchroTacheCollaborateur(synchro));
     }
 
-    @Test
-    public void testSynchroUpdateEstSynchro() throws Exception {
-        String col = nomCol();
-        Tache tache = new Tache("");
-        assertFalse(SQLiteDataBase.synchroUpdateEstSynchro(tache, col, false));
-        assertFalse(SQLiteDataBase.synchroUpdateEstSynchro(null, col, false));
-        SQLiteDataBase.addTache(tache);
-        SQLiteDataBase.addCollaborateur(col, null, null, null);
-        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null, null);
-        assertTrue(SQLiteDataBase.synchroUpdateEstSynchro(tache, col, true));
-    }
+//    @Test
+//    public void testSynchroUpdateEstSynchro() throws Exception {
+//        String col = nomCol();
+//        Tache tache = new Tache("");
+//        assertFalse(SQLiteDataBase.synchroUpdateEstSynchro(tache, col, false));
+//        assertFalse(SQLiteDataBase.synchroUpdateEstSynchro(null, col, false));
+//        SQLiteDataBase.addTache(tache);
+//        SQLiteDataBase.addCollaborateur(col, null, null, null);
+//        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null);
+//        assertTrue(SQLiteDataBase.synchroUpdateEstSynchro(tache, col, true));
+//    }
 
     @Test
     public void testSynchroUpdateGoogleIdTache() throws Exception {
@@ -205,7 +205,7 @@ public class SQLiteDataBaseTest {
         assertFalse(SQLiteDataBase.synchroUpdateGoogleIdTache(null, col, "id"));
         SQLiteDataBase.addTache(tache);
         SQLiteDataBase.addCollaborateur(col, null, null, null);
-        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null, null);
+        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null);
         assertTrue(SQLiteDataBase.synchroUpdateGoogleIdTache(tache, col, "id"));
     }
 
@@ -217,8 +217,32 @@ public class SQLiteDataBaseTest {
         assertFalse(SQLiteDataBase.updateAllSynchroEstSynchroByTache(null, false));
         SQLiteDataBase.addTache(tache);
         SQLiteDataBase.addCollaborateur(col, null, null, null);
-        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null, null);
+        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null);
         assertTrue(SQLiteDataBase.updateAllSynchroEstSynchroByTache(tache, true));
+    }
+
+    @Test
+    public void testUpdateAllSynchroGooleEstSynchroByTache() throws Exception {
+        String col = nomCol();
+        Tache tache = new Tache("");
+        assertFalse(SQLiteDataBase.updateAllSynchroGoogleEstSynchroByTache(tache, false));
+        assertFalse(SQLiteDataBase.updateAllSynchroGoogleEstSynchroByTache(null, false));
+        SQLiteDataBase.addTache(tache);
+        SQLiteDataBase.addCollaborateur(col, null, null, null);
+        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null);
+        assertTrue(SQLiteDataBase.updateAllSynchroGoogleEstSynchroByTache(tache, true));
+    }
+
+    @Test
+    public void testUpdateAllSynchroTrelloEstSynchroByTache() throws Exception {
+        String col = nomCol();
+        Tache tache = new Tache("");
+        assertFalse(SQLiteDataBase.updateAllSynchroTrelloEstSynchroByTache(tache, false));
+        assertFalse(SQLiteDataBase.updateAllSynchroTrelloEstSynchroByTache(null, false));
+        SQLiteDataBase.addTache(tache);
+        SQLiteDataBase.addCollaborateur(col, null, null, null);
+        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null);
+        assertTrue(SQLiteDataBase.updateAllSynchroTrelloEstSynchroByTache(tache, true));
     }
 
     @Test
@@ -235,7 +259,7 @@ public class SQLiteDataBaseTest {
         Tache tache = new Tache("");
         SQLiteDataBase.addTache(tache);
         SQLiteDataBase.addCollaborateur(col, null, null, null);
-        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null, null);
+        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col, null);
         assertEquals(SQLiteDataBase.getAllSynchroByCollaborateur(col).size(), 1);
     }
 
