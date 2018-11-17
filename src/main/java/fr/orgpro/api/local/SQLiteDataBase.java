@@ -205,8 +205,8 @@ public class SQLiteDataBase {
                 collaborateur.setGoogle_id_liste(rst.getString("google_id_liste"));
                 collaborateur.setTrello_id_board(rst.getString("trello_id_board"));
                 collaborateur.setTrello_id_liste(rst.getString("trello_id_list"));
-                collaborateur.setTrello_key("trello_key");
-                collaborateur.setTrello_token("trello_token");
+                collaborateur.setTrello_key(rst.getString("trello_key"));
+                collaborateur.setTrello_token(rst.getString("trello_token"));
             }
             return collaborateur;
         }catch ( Exception e ) {
