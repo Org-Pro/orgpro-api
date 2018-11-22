@@ -65,6 +65,20 @@ public class Scrum {
         return coutIteration-coutTache;
     }
 
+    public static Integer compareCoutSprint(List<Tache> liste){
+        if(liste.size() <= 0){
+            return null;
+        }
+        int coutIteration =  Integer.parseInt(liste.get(0).getEnTete(Tache.HEADER_COST));
+        int coutTache = 0;
+        for(Tache tache : liste){
+            if(tache.getNiveau() == 1 && tache.sprintActuel()){
+                coutTache += tache.getCout();
+            }
+        }
+        return coutIteration-coutTache;
+    }
+
     /**
      * Liste les tâches qui possèdent le tag indiqué en paramètre
      * @param liste La liste des tâches

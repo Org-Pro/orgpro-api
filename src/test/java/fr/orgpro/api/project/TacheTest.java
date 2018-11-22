@@ -761,4 +761,13 @@ public class TacheTest {
         assertEquals(true, tache.addDateSprint());
     }
 
+    @Test
+    public void testSprintActuel() throws Exception {
+        tache.incrementeSprint();
+        assertEquals(false, tache.sprintActuel());
+        tache.addSprint();
+        assertEquals(true, tache.sprintActuel());
+
+    }
+
 }

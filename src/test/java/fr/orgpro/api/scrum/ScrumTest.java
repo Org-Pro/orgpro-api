@@ -94,6 +94,27 @@ public class ScrumTest {
         Tache t1 = new Tache("t1");
         Tache t2 = new Tache("t2");
         Tache t3 = new Tache("t3");
+        t1.incrementeSprint();
+        Tache.addEnTete(Tache.HEADER_COST,"3",true);
+        t1.addCout(1);
+        t2.addCout(1);
+        t3.addCout(1);
+        t2.addSprint();
+        t3.addSprint();
+        taches.add(t1);
+        taches.add(t2);
+        taches.add(t3);
+        assertEquals(Scrum.compareCoutSprint(taches),1,0);
+        Tache.removeEnTete(Tache.HEADER_COST,true);
+    }
+
+    @Test
+    public void testCompareCoutSprint() throws Exception {
+        List<Tache> taches = new ArrayList<Tache>();
+        assertEquals(Scrum.compareCoutSprint(taches),null);
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        Tache t3 = new Tache("t3");
         Tache.addEnTete(Tache.HEADER_COST,"3",true);
         t1.addCout(1);
         t2.addCout(1);
