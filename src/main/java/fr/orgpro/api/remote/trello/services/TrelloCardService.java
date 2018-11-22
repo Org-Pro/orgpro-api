@@ -18,8 +18,8 @@ public interface TrelloCardService {
     Call<TrelloCard> addCard(
             @Field("key") String key,
             @Field("token") String token,
+            @Field("idList") String idList,
             @Field("name") String name,
-            @Field("idList") String idList
-
+            @Field("due") String date
     );
 }
