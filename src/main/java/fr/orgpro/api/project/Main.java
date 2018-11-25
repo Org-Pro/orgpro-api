@@ -1,7 +1,7 @@
 package fr.orgpro.api.project;
 
-/*
 
+/*
 import fr.orgpro.api.scrum.Scrum;
 
 import java.util.ArrayList;
@@ -36,8 +36,8 @@ import com.google.api.services.tasks.model.Task;
 import com.google.api.services.tasks.model.TaskList;
 import fr.orgpro.api.remote.google.GoogleList;
 import fr.orgpro.api.remote.google.GoogleTasksService;
-
 */
+
 
 import java.io.IOException;
 
@@ -98,7 +98,7 @@ public class Main {
         //SQLiteDataBase.addCollaborateur("bob", null, null, null);
         //SQLiteDataBase.updateCollaborateurTrelloIdBoard("bob", "test");
 
-        /*SQLCollaborateur coll = new SQLCollaborateur("alex");
+        SQLCollaborateur coll = new SQLCollaborateur("alex");
         coll.setGoogle_id_liste("aze");
         SQLiteDataBase.addCollaborateur(coll);*/
 
@@ -110,13 +110,13 @@ public class Main {
         collaborateur.setTrello_id_liste("trello_id_list");
         SQLiteDataBase.addCollaborateur(collaborateur);*/
 
-        /*SQLCollaborateur col = SQLiteDataBase.getCollaborateur("pseudo");
-        SQLSynchro sync = new SQLSynchro(tache.getId(), col.getPseudo());
-        sync.setEst_synchro(true);
-        sync.setTrello_id_card("trello");
-        sync.setGoogle_id_tache("google");
-        SQLiteDataBase.addSynchroTacheCollaborateur(sync);
-        SQLSynchro sy = SQLiteDataBase.getSynchroTacheCollaborateur(col, tache);
+        //SQLCollaborateur col = SQLiteDataBase.getCollaborateur("alex");
+        //SQLSynchro sync = new SQLSynchro(tache.getId(), col.getPseudo());
+        //sync.setEst_synchro(true);
+        //sync.setTrello_id_card("trello");
+        //sync.setGoogle_id_tache("google");
+        //SQLiteDataBase.addSynchroTacheCollaborateur(sync);
+        /*SQLSynchro sy = SQLiteDataBase.getSynchroTacheCollaborateur(col, tache);
         sy.setEst_synchro(false);
         sy.setGoogle_id_tache("lol");
         SQLiteDataBase.updateSynchroTacheCollaborateur(sy);
