@@ -108,4 +108,58 @@ public class Scrum {
         }
         return taches;
     }
+
+
+    /**
+     * Renvoie un code qui permet de savoir si une tache peut passer à l'état suivant
+     * @param liste La liste des tâches
+     * @param numTache Le numéro de la tache qui doit changer d'état
+     * @return Code : 1 = La tache peut changer d'état, 0 = Le numéro de la tache est hors de la liste, 2 = L'une des tâches n'a pas le bonne état, 3 = La tache ne peut plus changer d'état
+     *
+     */
+
+    public static int etatSuivant(List<Tache> liste, int numTache){
+        int size = liste.size();
+        if(size <= numTache)
+        {
+            return 0;
+        }
+        State state = liste.get(numTache).getEtat();
+        if(State.DONE.equals(state) || State.CANCELLED.equals(state)){
+            return 3;
+        }
+        int level = liste.get(numTache).getNiveau();
+        int i = numTache + 1;
+        while(size > i){
+            Tache temp = liste.get(i);
+            if(temp.getNiveau() > level){
+                if(!etatSuivantHelp(state,temp.getEtat())){
+                    return 2;
+                }
+            }else{
+                break;
+            }
+            i++;
+        }
+
+        return 1;
+    }
+
+    /**
+     * Renvoie un boolean pour savoir si l'état 2 est bien l'état qui suit logiquement l'état 1
+     * @param state1 Etat de la tache 1
+     * @param state2 Etat de la tache 2
+     * @return True si l'état 2 est bien la suite logique de l'état 1 (TODO=>ONGOING=>DONE)
+     *
+     */
+
+    private static boolean etatSuivantHelp(State state1, State state2){
+        if(State.TODO.equals(state1) && (State.ONGOING.equals(state2) || State.DONE.equals(state2)))
+        {
+            return true;
+        }else if(State.ONGOING.equals(state1) && State.DONE.equals(state2)){
+            return true;
+        }
+        return false;
+    }
 }

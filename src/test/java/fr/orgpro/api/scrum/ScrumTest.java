@@ -183,4 +183,24 @@ public class ScrumTest {
 
     }
 
+    @Test
+    public void testEtatSuivant() throws Exception {
+        List<Tache> list = new ArrayList<>();
+        Tache t1 = new Tache("t1");
+        Tache t2 = new Tache("t2");
+        list.add(t1);
+        list.add(t2);
+        Tache.setDependanceListe(list,1,0);
+        assertEquals(0, Scrum.etatSuivant(list,5));
+        assertEquals(2, Scrum.etatSuivant(list,0));
+        assertEquals(1, Scrum.etatSuivant(list,1));
+        list.get(1).setEtatSuivant();
+        assertEquals(1, Scrum.etatSuivant(list,0));
+        list.get(0).setEtatSuivant();
+        list.get(1).setEtatSuivant();
+        assertEquals(1, Scrum.etatSuivant(list,0));
+        list.get(0).setEtatSuivant();
+        assertEquals(3, Scrum.etatSuivant(list,0));
+    }
+
 }
