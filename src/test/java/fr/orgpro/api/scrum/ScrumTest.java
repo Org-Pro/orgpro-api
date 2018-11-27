@@ -198,6 +198,7 @@ public class ScrumTest {
         assertEquals(1, Scrum.etatSuivant(list,0));
         list.get(0).setEtatSuivant();
         list.get(1).setEtatSuivant();
+        assertEquals(1, Scrum.etatSuivant(list,0));
         list.get(0).setEtatSuivant();
         assertEquals(3, Scrum.etatSuivant(list,0));
     }
