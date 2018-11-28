@@ -222,6 +222,30 @@ public class SQLiteDataBaseTest {
     }
 
     @Test
+    public void testUpdateAllSynchroGoogleEstSynchroByCollaborateur() throws Exception {
+        SQLCollaborateur col = new SQLCollaborateur(nomCol());
+        Tache tache = new Tache("");
+        assertFalse(SQLiteDataBase.updateAllSynchroGoogleEstSynchroByCollaborateur(col, false));
+        assertFalse(SQLiteDataBase.updateAllSynchroGoogleEstSynchroByCollaborateur(null, false));
+        SQLiteDataBase.addTache(tache);
+        SQLiteDataBase.addCollaborateur(col);
+        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col.getPseudo(), null);
+        assertTrue(SQLiteDataBase.updateAllSynchroGoogleEstSynchroByCollaborateur(col, true));
+    }
+
+    @Test
+    public void testUpdateAllSynchroGoogleIdTacheNullByCollaborateur() throws Exception {
+        SQLCollaborateur col = new SQLCollaborateur(nomCol());
+        Tache tache = new Tache("");
+        assertFalse(SQLiteDataBase.updateAllSynchroGoogleIdTacheNullByCollaborateur(col));
+        assertFalse(SQLiteDataBase.updateAllSynchroGoogleIdTacheNullByCollaborateur(null));
+        SQLiteDataBase.addTache(tache);
+        SQLiteDataBase.addCollaborateur(col);
+        SQLiteDataBase.synchroAddTacheCollaborateur(tache, col.getPseudo(), null);
+        assertTrue(SQLiteDataBase.updateAllSynchroGoogleIdTacheNullByCollaborateur(col));
+    }
+
+    @Test
     public void testUpdateAllSynchroGooleEstSynchroByTache() throws Exception {
         String col = nomCol();
         Tache tache = new Tache("");

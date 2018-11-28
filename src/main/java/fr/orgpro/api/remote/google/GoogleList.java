@@ -18,13 +18,18 @@ public class GoogleList {
     private String orgpro = "ORGPRO";
 
 
-    public TaskList postList(String col) throws IOException {
+    public TaskList getList(String idTaskList, String col) throws IOException {
+        Tasks tasks = gts.getTasks(col);
+        return tasks.tasklists().get(idTaskList).execute();
+    }
+
+    public TaskList insertList(String col) throws IOException {
         Tasks tasks = gts.getTasks(col);
         TaskList taskList = new TaskList().setTitle(this.orgpro);
         return tasks.tasklists().insert(taskList).execute();
     }
 
-    public Task postTask(Tache tache, String idTaskList, String col) throws IOException {
+    public Task insertTask(Tache tache, String idTaskList, String col) throws IOException {
         Tasks tasks = gts.getTasks(col);
 
         final Task t = new Task().setTitle(tache.getTitre());
@@ -37,6 +42,29 @@ public class GoogleList {
         }
         return tasks.tasks().insert(idTaskList, t).execute();
     }
+
+    public Task updateTask(Tache tache, String idTask, String idTaskList, String col) throws IOException {
+        Tasks tasks = gts.getTasks(col);
+
+        final Task t = getTask(idTask, idTaskList, col);
+
+        t.setTitle(tache.getTitre());
+        if(tache.getDateLimite() != null) {
+            Calendar c = Calendar.getInstance();
+            c.setTime(tache.getDateLimite());
+            c.add(Calendar.DATE, 1);
+            DateTime d = new DateTime(c.getTime());
+            t.setDue(d);
+        }
+
+        return tasks.tasks().update(idTaskList, t.getId(), t).execute();
+    }
+
+    public Task getTask(String idTask, String idTaskList, String col) throws IOException {
+        Tasks tasks = gts.getTasks(col);
+        return tasks.tasks().get(idTaskList, idTask).execute();
+    }
+
 
 
 

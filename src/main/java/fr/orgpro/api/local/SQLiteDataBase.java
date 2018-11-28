@@ -342,6 +342,32 @@ public class SQLiteDataBase {
         return true;
     }
 
+    public static boolean updateAllSynchroGoogleEstSynchroByCollaborateur(@Nonnull SQLCollaborateur col, boolean estSynchro){
+        try {
+            int rst = getStatement().executeUpdate("update synchro set "
+                    + "google_est_synchro='" + estSynchro + "'"
+                    + " where pseudo_collaborateur=" + stringReqValue(col.getPseudo()) + ";");
+            if (rst == 0) return false;
+        }catch ( Exception e ) {
+            //System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean updateAllSynchroGoogleIdTacheNullByCollaborateur(@Nonnull SQLCollaborateur col){
+        try {
+            int rst = getStatement().executeUpdate("update synchro set "
+                    + "google_id_tache=null"
+                    + " where pseudo_collaborateur=" + stringReqValue(col.getPseudo()) + ";");
+            if (rst == 0) return false;
+        }catch ( Exception e ) {
+            //System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
     public static boolean updateAllSynchroTrelloEstSynchroByTache(@Nonnull Tache tache, boolean estSynchro){
         try {
             int rst = getStatement().executeUpdate("update synchro set "
