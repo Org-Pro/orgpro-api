@@ -23,6 +23,11 @@ public class GoogleList {
         return tasks.tasklists().get(idTaskList).execute();
     }
 
+    public List<Task> getAllTask(String idTaskList, String col) throws IOException {
+        Tasks tasks = gts.getTasks(col);
+        return tasks.tasks().list(idTaskList).execute().getItems();
+    }
+
     public TaskList insertList(String col) throws IOException {
         Tasks tasks = gts.getTasks(col);
         TaskList taskList = new TaskList().setTitle(this.orgpro);
