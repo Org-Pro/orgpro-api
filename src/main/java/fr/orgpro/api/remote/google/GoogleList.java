@@ -48,12 +48,13 @@ public class GoogleList {
         return tasks.tasks().insert(idTaskList, t).execute();
     }
 
-    public Task updateTask(Tache tache, String idTask, String idTaskList, String col) throws IOException {
+    public Task updateTask(Tache tache, String idTask, String idTaskList, String col, GoogleStateEnum state) throws IOException {
         Tasks tasks = gts.getTasks(col);
 
         final Task t = getTask(idTask, idTaskList, col);
 
         t.setTitle(tache.getTitre());
+        if(state != null) t.setStatus(state.toString());
         if(tache.getDateLimite() != null) {
             Calendar c = Calendar.getInstance();
             c.setTime(tache.getDateLimite());
