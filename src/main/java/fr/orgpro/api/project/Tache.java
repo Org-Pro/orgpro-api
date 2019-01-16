@@ -887,7 +887,7 @@ public class Tache {
      * Ajoute une ligne au registre de la tâche
      * @param log Valeur à ajouter au registre de la tâche
      */
-    private void addRegistre(String log){
+    public void addRegistre(String log){
         Date date = new Date();
         String newLog = log + new SimpleDateFormat("<yyyy-MM-dd HH:mm>").format(date);
         tache.addLog(newLog);
