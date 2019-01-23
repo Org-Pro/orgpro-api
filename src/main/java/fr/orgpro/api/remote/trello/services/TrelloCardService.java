@@ -22,4 +22,15 @@ public interface TrelloCardService {
             @Field("name") String name,
             @Field("due") String date
     );
+
+    @FormUrlEncoded
+    @PUT("cards/{id}")
+    Call<TrelloCard> updateCard(
+            @Path("id") String id,
+            @Field("key") String key,
+            @Field("token") String token,
+            @Field("idList") String idList,
+            @Field("name") String name,
+            @Field("due") String date
+    );
 }
