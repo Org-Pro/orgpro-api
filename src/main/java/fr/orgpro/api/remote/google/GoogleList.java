@@ -28,9 +28,9 @@ public class GoogleList {
         return tasks.tasks().list(idTaskList).execute().getItems();
     }
 
-    public TaskList insertList(String col) throws IOException {
+    public TaskList insertList(String col, String titreList) throws IOException {
         Tasks tasks = gts.getTasks(col);
-        TaskList taskList = new TaskList().setTitle(this.orgpro);
+        TaskList taskList = new TaskList().setTitle(titreList);
         return tasks.tasklists().insert(taskList).execute();
     }
 
