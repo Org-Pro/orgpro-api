@@ -17,23 +17,51 @@ public class GoogleList {
     private static GoogleTasksService gts = GoogleTasksService.getInstance();
     private String orgpro = "ORGPRO";
 
-
+    /**
+     * Récupère la liste de tâches de Google Task selon le collaborateur
+     * @param idTaskList L'identifiant de la liste
+     * @param col Le pseudo du collaborateur concerné
+     * @return La liste Google Task
+     * @throws IOException
+     */
     public TaskList getList(String idTaskList, String col) throws IOException {
         Tasks tasks = gts.getTasks(col);
         return tasks.tasklists().get(idTaskList).execute();
     }
 
+    /**
+     * Récupère les tâches d'une liste de tâches de Google Task selon le collaborateur
+     * @param idTaskList L'identifiant de la liste
+     * @param col Le pseudo du collaborateur concerné
+     * @return Une liste de tâches
+     * @throws IOException
+     */
     public List<Task> getAllTask(String idTaskList, String col) throws IOException {
         Tasks tasks = gts.getTasks(col);
         return tasks.tasks().list(idTaskList).execute().getItems();
     }
 
+    /**
+     * Ajoute une liste de tâches sur Google Task selon le collaborateur
+     * @param col Le pseudo du collaborateur concerné
+     * @param titreList Le nom de la liste
+     * @return La liste Google Task créée
+     * @throws IOException
+     */
     public TaskList insertList(String col, String titreList) throws IOException {
         Tasks tasks = gts.getTasks(col);
         TaskList taskList = new TaskList().setTitle(titreList);
         return tasks.tasklists().insert(taskList).execute();
     }
 
+    /**
+     * Ajoute une tâche sur une liste de tâches de Google Task selon le collaborateur
+     * @param tache La tâche à ajouter
+     * @param idTaskList L'identifiant de la liste
+     * @param col Le pseudo du collaborateur concerné
+     * @return La tâche Google Task créée
+     * @throws IOException
+     */
     public Task insertTask(Tache tache, String idTaskList, String col) throws IOException {
         Tasks tasks = gts.getTasks(col);
 
@@ -48,6 +76,16 @@ public class GoogleList {
         return tasks.tasks().insert(idTaskList, t).execute();
     }
 
+    /**
+     * Modifie une tâche sur une liste de tâches de Google Task selon le collaborateur
+     * @param tache La tâche modofiée
+     * @param idTask L'identidfiant le tâche
+     * @param idTaskList L'identifiant de la liste
+     * @param col Le pseudo du collaborateur concerné
+     * @param state Etat de la tâche
+     * @return La tâche Google Task modifiée
+     * @throws IOException
+     */
     public Task updateTask(Tache tache, String idTask, String idTaskList, String col, GoogleStateEnum state) throws IOException {
         Tasks tasks = gts.getTasks(col);
 
@@ -66,13 +104,18 @@ public class GoogleList {
         return tasks.tasks().update(idTaskList, t.getId(), t).execute();
     }
 
+    /**
+     * Récupère la tâche sur Google Task selon le collaborateur
+     * @param idTask L'identidfiant le tâche
+     * @param idTaskList L'identifiant de la liste
+     * @param col Le pseudo du collaborateur concerné
+     * @return La tâche Google Task
+     * @throws IOException
+     */
     public Task getTask(String idTask, String idTaskList, String col) throws IOException {
         Tasks tasks = gts.getTasks(col);
         return tasks.tasks().get(idTaskList, idTask).execute();
     }
-
-
-
 
     /**
      * Cette fonction prend les informations de l'utilisateurs dans un Tasks

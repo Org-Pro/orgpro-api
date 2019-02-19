@@ -120,6 +120,10 @@ public class Tache {
         lstHeader = null;
     }
 
+    /**
+     * Récupère le numéro du sprint en cours
+     * @return Le numéro
+     */
     public static Integer getSprint(){
         if(getEnTete(HEADER_SPRINT) == null){
             addEnTete(HEADER_SPRINT,"1",true);
@@ -129,6 +133,9 @@ public class Tache {
         return sprint;
     }
 
+    /**
+     * Ajoute 1 au numéro du sprint. Met à 1 si le sprint n'existe pas
+     */
     public static void incrementeSprint(){
         if(getEnTete(HEADER_SPRINT) == null){
             addEnTete(HEADER_SPRINT,"1",true);
@@ -139,6 +146,10 @@ public class Tache {
         setEnTete(HEADER_SPRINT,sprint.toString(),true);
     }
 
+    /**
+     * Récupère la deadline du sprint actuel
+     * @return La deadline si le sprint existe, null sinon
+     */
     public static String getDateSprint(){
         if(getEnTete(HEADER_SPRINT_DATE) == null){
             return null;
@@ -147,6 +158,11 @@ public class Tache {
         }
     }
 
+    /**
+     * Modifie la deadline du sprint actuel
+     * @param date Nouvelle date (doit être valide et ne doit pas dépasser la date actuel)
+     * @return True si la modification a été faite, false sinon
+     */
     public static boolean setDateSprint(String date){
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -168,14 +184,26 @@ public class Tache {
         return true;
     }
 
+    /**
+     * Ajouter le sprint dans les tags de la tâche
+     */
     public void addSprint(){
         addTag("SPRINT" + getSprint());
     }
 
+    /**
+     * Supprime le sprint de la tâche selon son numéro
+     * @param sprint Numéro du sprint
+     * @return True si le sprint a bien été supprimé, false sinon
+     */
     public boolean deleteSprint(int sprint){
         return removeTag("SPRINT" + sprint);
     }
 
+    /**
+     * Vérifie si la tâche fait partie du sprint actuel
+     * @return True si la tâche fait partie du sprint, false sinon
+     */
     public boolean sprintActuel(){
         List<String> tags = getTagListe();
         String sprint = "SPRINT" + getSprint();
@@ -187,6 +215,10 @@ public class Tache {
         return false;
     }
 
+    /**
+     * Modifie la deadline de la tâche selon la deadline du sprint actuel
+     * @return True si la modification a bien été faite, false sinon
+     */
     public boolean addDateSprint(){
         if(getEnTete(HEADER_SPRINT_DATE) == null){
             return false;
@@ -444,6 +476,9 @@ public class Tache {
         return false;
     }
 
+    /**
+     * Ecrit sur le fichier les collaborateurs associées à la tâche (Sous forme de propriété)
+     */
     private void writeCollaborateur(){
         if (lstCollaborateur == null || lstCollaborateur.isEmpty()){
             this.removePropriete(PROP_COLLABORATOR, true);

@@ -6,6 +6,13 @@ import retrofit2.Call;
 import retrofit2.http.*;
 
 public interface TrelloBoardService {
+    /**
+     * Récupère un tableau Trello selon l'identifiant
+     * @param id Identifiant du tableau
+     * @param key Clef de l'API dédiée à l'utilisateur
+     * @param token Token Trello de l'utilisateur
+     * @return L'objet du tableau Trello
+     */
     @GET("board/{id}")
     Call<TrelloBoard> getBoard(
             @Path("id") String id,
@@ -13,7 +20,13 @@ public interface TrelloBoardService {
             @Query("token") String token
     );
 
-
+    /**
+     * Créé un tableau Trello
+     * @param key Clef de l'API dédiée à l'utilisateur
+     * @param token Token Trello de l'utilisateur
+     * @param name Nom du tableau
+     * @return L'objet du tableau Trello
+     */
     @FormUrlEncoded
     @POST("boards/")
     Call<TrelloBoard> addBoard(

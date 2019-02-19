@@ -77,7 +77,7 @@ public class SQLiteDataBase {
     }
 
     /**
-     * Ajoute la tâche de la base de données locale
+     * Ajoute la tâche à la base de données locale
      * @param tache La tâche à ajouter
      * @return False en cas d'erreur
      */
@@ -112,6 +112,11 @@ public class SQLiteDataBase {
 
     // ----- COLLABORATEUR -----
 
+    /**
+     * Ajoute le collaborateur à base de données locale
+     * @param collaborateur Le collaborateur à ajouter
+     * @return Le collaborateur à ajouter
+     */
     public static boolean addCollaborateur(@Nonnull SQLCollaborateur collaborateur){
         try {
             getStatement().execute("insert into collaborateur values("
@@ -147,6 +152,11 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Supprime un collaborateur de la base de données locale
+     * @param collaborateur Le collaborateur à ajouter
+     * @return False en cas d'erreur
+     */
     public static boolean deleteCollaborateur(@Nonnull SQLCollaborateur collaborateur){
         try {
             int rst = getStatement().executeUpdate("delete from collaborateur where pseudo = (" + stringReqValue(collaborateur.getPseudo()) + ");");
@@ -175,6 +185,11 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Modifie le pseudo d'un collaborateur déjà existant
+     * @param collaborateur Le collaborateur à ajouter
+     * @return False en cas d'erreur
+     */
     public static boolean updateCollaborateur(@Nonnull SQLCollaborateur collaborateur){
         try {
             int rst = getStatement().executeUpdate("update collaborateur set "
@@ -194,6 +209,11 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Récupère le collaborateur selon son pseudo
+     * @param collaborateurPseudo Le pseudo du collaborateur à récupérer
+     * @return Le collaborateur s'il existe, null sinon
+     */
     public static SQLCollaborateur getCollaborateur(@Nonnull String collaborateurPseudo){
         try {
             SQLCollaborateur collaborateur = null;
@@ -220,7 +240,7 @@ public class SQLiteDataBase {
     // ----- SYNCHRO -----
 
     /**
-     * Récupère les synchro d'un collaborateur déjà existant
+     * Récupère les synchro (lien entre le collaborateur et la tâche) d'un collaborateur déjà existant
      * @param collaborateur Le pseudo du collaborateur concerné
      * @return La liste des synchro
      */
@@ -244,6 +264,12 @@ public class SQLiteDataBase {
         }
     }
 
+    /**
+     * Récupère la synchro (lien entre le collaborateur et la tâche) d'un collaborateur selon la tâche
+     * @param collaborateur Le collaborateur concerné
+     * @param tache La tâche concernée
+     * @return La synchro entre la tâche et le collaborateur si elle existe, null sinon
+     */
     public static SQLSynchro getSynchroTacheCollaborateur(@Nonnull SQLCollaborateur collaborateur, @Nonnull Tache tache){
         try {
             SQLSynchro synchro = null;
@@ -265,6 +291,11 @@ public class SQLiteDataBase {
         }
     }
 
+    /**
+     * Ajoute la synchro (lien entre le collaborateur et la tâche) d'un collaborateur selon la tâche
+     * @param synchro La synchro à ajouter
+     * @return False en cas d'erreur
+     */
     public static boolean addSynchroTacheCollaborateur(@Nonnull SQLSynchro synchro){
         try {
             getStatement().execute("insert into synchro values("
@@ -282,6 +313,11 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Modifie la synchro (lien entre le collaborateur et la tâche) d'un collaborateur
+     * @param synchro La synchro à modifer
+     * @return False en cas d'erreur
+     */
     public static boolean updateSynchroTacheCollaborateur(@Nonnull SQLSynchro synchro){
         try {
             int rst = getStatement().executeUpdate("update synchro set "
@@ -298,6 +334,11 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Supprime la synchro (lien entre le collaborateur et la tâche) d'un collaborateur
+     * @param synchro La synchro à supprimer
+     * @return False en cas d'erreur
+     */
     public static boolean deleteSynchroTacheCollaborateur(@Nonnull SQLSynchro synchro){
         try {
             int rst = getStatement().executeUpdate("delete from synchro where uuid_tache=" + stringReqValue(synchro.getUuid_tache()) + " and pseudo_collaborateur=" + stringReqValue(synchro.getPseudo_collaborateur()) + ";");
@@ -329,6 +370,12 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Modifie l'état de synchronisation de Google Task de tous les liens entre une tâche et un collaborateur selon une tâche choisie
+     * @param tache La tâche concernée
+     * @param estSynchro L'état de la synchronisation avec l'API en ligne à modifier de Google Task
+     * @return False en cas d'erreur
+     */
     public static boolean updateAllSynchroGoogleEstSynchroByTache(@Nonnull Tache tache, boolean estSynchro){
         try {
             int rst = getStatement().executeUpdate("update synchro set "
@@ -342,6 +389,12 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Modifie l'état de synchronisation de Google Task de tous les liens entre une tâche et un collaborateur selon un collaborateur choisi
+     * @param col Le collaborateur concerné
+     * @param estSynchro L'état de la synchronisation avec l'API en ligne à modifier de Google Task
+     * @return False en cas d'erreur
+     */
     public static boolean updateAllSynchroGoogleEstSynchroByCollaborateur(@Nonnull SQLCollaborateur col, boolean estSynchro){
         try {
             int rst = getStatement().executeUpdate("update synchro set "
@@ -355,6 +408,11 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Modifie l'identifiant Google Task (liés aux tâches) de tous les liens entre une tâche et un collaborateur selon un collaborateur choisi
+     * @param col Le collaborateur concerné
+     * @return False en cas d'erreur
+     */
     public static boolean updateAllSynchroGoogleIdTacheNullByCollaborateur(@Nonnull SQLCollaborateur col){
         try {
             int rst = getStatement().executeUpdate("update synchro set "
@@ -368,6 +426,12 @@ public class SQLiteDataBase {
         return true;
     }
 
+    /**
+     * Modifie l'état de synchronisation de Trello de tous les liens entre une tâche et un collaborateur selon une tâche choisie
+     * @param tache La tâche concernée
+     * @param estSynchro L'état de la synchronisation avec l'API en ligne à modifier de Trello
+     * @return False en cas d'erreur
+     */
     public static boolean updateAllSynchroTrelloEstSynchroByTache(@Nonnull Tache tache, boolean estSynchro){
         try {
             int rst = getStatement().executeUpdate("update synchro set "
