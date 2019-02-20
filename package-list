@@ -1,2 +1,8 @@
+fr.orgpro.api.local
+fr.orgpro.api.local.models
 fr.orgpro.api.project
+fr.orgpro.api.remote.google
+fr.orgpro.api.remote.trello
+fr.orgpro.api.remote.trello.models
+fr.orgpro.api.remote.trello.services
 fr.orgpro.api.scrum
